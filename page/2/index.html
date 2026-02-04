@@ -117,7 +117,7 @@
   </li>
         <li class="menu-item menu-item-archives">
 
-    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">12</span></a>
+    <a href="/archives/" rel="section"><i class="fa fa-archive fa-fw"></i>归档<span class="badge">13</span></a>
 
   </li>
       <li class="menu-item menu-item-search">
@@ -167,6 +167,91 @@
 
           <div class="content index posts-expand">
             
+      
+  
+  
+  <article itemscope itemtype="http://schema.org/Article" class="post-block" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/09/13/20200913/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Nick Liu">
+      <meta itemprop="description" content="">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="会电臀舞的小柯基">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          
+            <a href="/2020/09/13/20200913/" class="post-title-link" itemprop="url">APK缩减、混淆处理和优化</a>
+        </h2>
+
+        <div class="post-meta">
+            <span class="post-meta-item">
+              <span class="post-meta-item-icon">
+                <i class="far fa-calendar"></i>
+              </span>
+              <span class="post-meta-item-text">发表于</span>
+
+              <time title="创建时间：2020-09-13 18:04:13" itemprop="dateCreated datePublished" datetime="2020-09-13T18:04:13+08:00">2020-09-13</time>
+            </span>
+              <span class="post-meta-item">
+                <span class="post-meta-item-icon">
+                  <i class="far fa-calendar-check"></i>
+                </span>
+                <span class="post-meta-item-text">更新于</span>
+                <time title="修改时间：2020-09-20 16:25:55" itemprop="dateModified" datetime="2020-09-20T16:25:55+08:00">2020-09-20</time>
+              </span>
+
+          
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+
+      
+          <h2 id="问题背景"><a href="#问题背景" class="headerlink" title="问题背景"></a>问题背景</h2><p>手机射频前端、天线会有很多MIPI器件，而这些MIPI器件前期需要调试，为了方便硬件工程师调参数，会在调试的软件版本内置一些工模APK让其使用。而这些工模APK需要软件相关人员根据需求进行代码编写，在实现新的需求时，楼主就遇到了一个上层APK调用JNI接口的问题，JNI层的接口调试OK，APK的代码开发了主要功能，还有一些功能没开发完，先将接口层的代码合入了库中。</p>
+<p>CI流水线日构建的次日大版本刷测试机，使用需要调用JNI接口层代码的工模功能全部丧失，测试手机红屏报错。</p>
+<h2 id="问题分析"><a href="#问题分析" class="headerlink" title="问题分析"></a>问题分析</h2><p>通过adb指令抓起android侧的log。</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">adb logcat &gt; temp.txt</span><br></pre></td></tr></table></figure>
+
+<p>搜索了报错log打印的关键字，发现是新加的JNI层接口注册失败。提交接口代码前，还特意在APK层写了测试用例压测这个接口。</p>
+<p>将之前开发的APK代码加入再进行测试，发现注册成功。初步怀疑是APK层没有调用这个接口导致。</p>
+<p>开始在google上搜索是不是有想过的APK开发人员遇到过类似的问题，没有搜索到类似的案例。但是某个瞬间，想起自己在安卓官网有看到APK开发指南的一篇说明<a href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#keep-code" target="_blank" rel="noopener">《缩减、混淆处理和优化您的应用》</a>（其实楼主作为这方面开发的新人，问过一些工作七、八年开发较长时间的同事，是不太清楚这点的），猜测是上层没有调用JNI层的那个接口，导致java侧声明的JNI层的接口代码，在编译过程中删除了，通过<strong>APK反编译工具</strong>apktool（网上搜索下载），反编译已经编译出来的apk，发现在java代码中声明的那个接口代码被删除掉了。</p>
+<p>也在项目级 <code>build.gradle</code> 文件中看到了这个开发打开了minifyEnabled这个开关：</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">&#x2F;&#x2F; Enables code shrinking, obfuscation, and optimization for only</span><br><span class="line">                &#x2F;&#x2F; your project&#39;s release build type.</span><br><span class="line">                minifyEnabled true</span><br></pre></td></tr></table></figure>
+
+
+
+<h2 id="问题解决"><a href="#问题解决" class="headerlink" title="问题解决"></a>问题解决</h2><p>将已经开发的APK调用这个接口的模块代码合入仓库，一起编译版本。</p>
+<h2 id="问题总结"><a href="#问题总结" class="headerlink" title="问题总结"></a>问题总结</h2><p>下面安卓官网的文字，关于APK代码缩减的关键介绍，至于编译过程中实现代码缩减这项功能的源码具体实现，需要更多的APK编译想过的资料和代码查看，后续楼主会抽空多研究一些。</p>
+<ul>
+<li><strong>代码缩减（即摇树优化）</strong>：从应用及其库依赖项中检测并安全地移除未使用的类、字段、方法和属性（这使其成为了一个对于规避 <a href="https://developer.android.com/studio/build/multidex?hl=zh-cn" target="_blank" rel="noopener">64k 引用限制</a>非常有用的工具）。例如，如果您仅使用某个库依赖项的少数几个 API，缩减功能可以识别应用“未”使用的库代码并仅从应用中移除这部分代码。如需了解详情，请转到介绍如何<a href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#shrink-code" target="_blank" rel="noopener">缩减代码</a>的部分。</li>
+<li><strong>资源缩减</strong>：从封装应用中移除不使用的资源，包括应用库依赖项中的不使用的资源。此功能可与代码缩减功能结合使用，这样一来，移除不使用的代码后，也可以安全地移除不再引用的所有资源。如需了解详情，请转到介绍如何<a href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#shrink-resources" target="_blank" rel="noopener">缩减资源</a>的部分。</li>
+<li><strong>混淆处理</strong>：缩短类和成员的名称，从而减小 DEX 文件的大小。如需了解详情，请转到介绍如何<a href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#obfuscate" target="_blank" rel="noopener">对代码进行混淆处理</a>的部分。</li>
+<li><strong>优化</strong>：检查并重写代码，以进一步减小应用的 DEX 文件的大小。例如，如果 R8 检测到从未采用过给定 <code>if/else</code> 语句的 <code>else {}</code> 分支，则会移除 <code>else {}</code> 分支的代码。如需了解详情，请转到介绍<a href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#optimization" target="_blank" rel="noopener">代码优化</a>的部分。</li>
+</ul>
+
+      
+    </div>
+
+    
+    
+    
+      <footer class="post-footer">
+        <div class="post-eof"></div>
+      </footer>
+  </article>
+  
+  
+  
+
       
   
   
@@ -439,12 +524,12 @@
       <div class="site-state-item site-state-posts">
           <a href="/archives/">
         
-          <span class="site-state-item-count">12</span>
+          <span class="site-state-item-count">13</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
       <div class="site-state-item site-state-tags">
-        <span class="site-state-item-count">11</span>
+        <span class="site-state-item-count">12</span>
         <span class="site-state-item-name">标签</span>
       </div>
   </nav>
