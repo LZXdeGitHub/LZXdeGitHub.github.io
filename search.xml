@@ -1,102 +1,11 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>MAC OS修改自己电脑的环境变量</title>
-    <url>/2020/06/26/20200626/</url>
-    <content><![CDATA[<p>主要是如下两条bash命令完成如下的修改：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span> //这条指令可以查看电脑已经添加的环境变量路径</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.profile //进行增删改环境变量</span><br></pre></td></tr></table></figure>
-
-<p>ps：环境变量一般分先后为这几个文件，系统按从上倒下优先级进行加载，etc目录下的是系统级的，～下的为用户级：</p>
-<ol>
-<li>&#x2F;etc&#x2F;profile</li>
-<li>&#x2F;etc&#x2F;paths</li>
-<li>~&#x2F;.bash_profile</li>
-<li>~&#x2F;.bash_login</li>
-<li>~&#x2F;.profile</li>
-<li>~&#x2F;.bashrc</li>
-</ol>
-]]></content>
+    <title>Telephony框架</title>
+    <url>/2020/09/20/20200920/</url>
+    <content><![CDATA[]]></content>
       <tags>
-        <tag>配置</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AWS EC2配置个人VPN</title>
-    <url>/2020/06/26/20200525/</url>
-    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>亚马逊云服务（AWS）免费薅羊毛一年，创建个人EC2（Elastic Compute Cloud）搭建VPN，可以比较方便的Google一些文献。这个配置主要分两部分进行配置，AWS云端和Client（我自己是在Mac Pro上进行配置）。</p>
-<span id="more"></span>
-
-<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>注册aws个人账号，绑定一张信用卡（推荐visa），具体注册流程看<a href="https://aws.amazon.com/">官网</a>。</p>
-<h2 id="AWS云端配置"><a href="#AWS云端配置" class="headerlink" title="AWS云端配置"></a>AWS云端配置</h2><p>主要分四个步骤，创建EC2实例，设置安全组，给实例绑定弹性IP，然后安装<a href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a>。</p>
-<h3 id="创建EC2实例"><a href="#创建EC2实例" class="headerlink" title="创建EC2实例"></a>创建EC2实例</h3><p>1、如果在中国大陆，个人建议选择东京的服务器，这样访问Google的速度会快一些，自己可以ping一个网站测一下速度，示例选择的是Hong Kong。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/1.png" class="" title="服务器选择">
-
-<p>2、点击All services，然后选择EC2。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/2.png" class="" title="EC2">
-
-<p>3、启动一个实例。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/3.png" class="" title="启动实例">
-
-<p>4、过滤掉付费的AMI，勾选Free tier only，然后选择下图中的其中一个AMI进行Select。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/4.png" class="" title="AMI选择">
-
-<p>5、选择一个实例类型，勾选☑️哪个Free tier eligible，接着Review and Launch。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/5.png" class="" title="review and launch">
-
-<p>6、有兴趣的可以Review实例类型的一些参数，然后直接点击Launch，运行实例。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/6.png" class="" title="运行实例">
-
-<p>7、为你的实例创建一个密钥对，你本地电脑远程和AMI通讯密钥，一定要Download下来并保存在一个合适的地方，后续还会用到。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/7.png" class="" title="key pair">
-
-<p>8、点击查看你的实例。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/8.png" class="" title="view instance">
-
-<p>9、接下来选中你的实例，为你的实例配置安全组(Security Groups)和弹性IP(Elastic IPs)。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/9.png" class="" title="configure">
-
-<h3 id="安全组设置"><a href="#安全组设置" class="headerlink" title="安全组设置"></a>安全组设置</h3><p>安全组主要是实例的入站和出站规则进行设置。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/10.png" class="" title="security configure">
-
-<p>1、入站规则：三个端口，TCP类型的22port口和UDP类型的50和4500port口，见下图具体设置。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/11.png" class="" title="inbound rules">
-
-<img src="/LZXdeGitHub/2020/06/26/20200525/12.png" class="" title="save rules">
-
-<p>2、出站规则：所有流量和任何位置</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/13.png" class="" title="outbound rules">
-
-<h3 id="弹性IP设置"><a href="#弹性IP设置" class="headerlink" title="弹性IP设置"></a>弹性IP设置</h3><p>这个设置主要是为了这个目的，这是aws官网的原话：I want to have a public IP address for my EC2 instance that will persist even if my instance is stopped and restarted，主要为了防止实例停止运行和重启是，没有对外的有效IP。</p>
-<p>1、Allocate一个弹性IP。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/14.png" class="" title="elastic ip">
-
-<img src="/LZXdeGitHub/2020/06/26/20200525/15.png" class="" title="allocate">
-
-<p>2、关联实例。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/16.png" class="" title="associate elastic ip">
-
-<img src="/LZXdeGitHub/2020/06/26/20200525/17.png" class="" title="associate">
-
-<h3 id="安装ipsec-vpn"><a href="#安装ipsec-vpn" class="headerlink" title="安装ipsec-vpn"></a>安装<a href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a></h3><p>1、本地终端连接你创建的实例，在你创建实例保存密钥对的路径去开启终端，接着运行下图的1步骤，然后输入yes，按enter键，进行2步骤你就会连接到你创建的实例。（ps. 一般你执行过1后，后续连接你直接输入2指令就行）</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/18.png" class="" title="connect to your instance">
-
-<p>2、安装指令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://git.io/vpnsetup -O vpnsetup.sh &amp;&amp; sudo sh vpnsetup.sh</span><br></pre></td></tr></table></figure>
-
-<img src="/LZXdeGitHub/2020/06/26/20200525/19.png" class="" title="install vpnsetup">
-
-<p>3、安装完成之后，要记录下来你的vpn信息，本地客户端配置vpn的时候要用到。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/20.png" class="" title="save vpn information">
-
-<h2 id="本地客户端设置"><a href="#本地客户端设置" class="headerlink" title="本地客户端设置"></a>本地客户端设置</h2><p>依据自己的本地机装的操作系统类型，进行相应的配置，请参考GitHub上的这个<a href="https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md">链接</a>🔗。</p>
-<p>如果是mac os注意下图的这两处，一定要设置对。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/21.png" class="" title="local set">
-
-]]></content>
-      <tags>
-        <tag>配置</tag>
+        <tag>android</tag>
       </tags>
   </entry>
   <entry>
@@ -147,8 +56,7 @@
 <figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="keyword">for</span> x <span class="keyword">in</span> xrange(<span class="number">0</span>,<span class="built_in">int</span>(sys.argv[<span class="number">1</span>])):</span><br><span class="line">		<span class="built_in">print</span> <span class="string">&quot;Hello World&quot;</span> + <span class="built_in">str</span>(x)</span><br></pre></td></tr></table></figure>
 
 <p>运行结果：</p>
-<img src="/LZXdeGitHub/2020/10/05/20201005-1/script.png" class="" title="python.sh">
-
+<p><img src="/2020/10/05/20201005-1/script.png" alt="python.sh"></p>
 <h2 id="make"><a href="#make" class="headerlink" title="make"></a>make</h2><p>终端设备的代码主要分为AP(application processor)侧和CP(communication processor)侧，CP侧主要是一些通信模块，例如，基带处理器(baseband processor)、rf器件等，对应的代码这块都是用C&#x2F;C++语言编写，对于这些代码的编译就有很多值得学习的地方。</p>
 <p>对于C&#x2F;C++语言的编译分为四个阶段：预处理、编译、汇编和链接</p>
 <p>未完待续…….</p>
@@ -158,56 +66,25 @@
       </tags>
   </entry>
   <entry>
-    <title>Telephony框架</title>
-    <url>/2020/09/20/20200920/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>硬编码和软编码</title>
-    <url>/2020/10/05/20201005/</url>
-    <content><![CDATA[<p>在工作过程中，听到同事说起，硬编码和软编码，大脑大概明白其意思，具体一想，如何专业的表述这对孪生概念呢，需要展开来了解一下。</p>
-<span id="more"></span>
+    <title>MAC OS修改自己电脑的环境变量</title>
+    <url>/2020/06/26/20200626/</url>
+    <content><![CDATA[<p>主要是如下两条bash命令完成如下的修改：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span> //这条指令可以查看电脑已经添加的环境变量路径</span><br></pre></td></tr></table></figure>
 
-<p>在网上查阅这两个概念，由于当前短视频较火，这两个概念在视频编解码方面有所指，硬编码是利用硬件芯片本身GPU、DSP等非CPU去给视频编码，而软编码则指是通过软件本身或者CPU对视频进行编码。</p>
-<p>而目前我在工作中接触的这两个概念主要是针对代码的灵活性和可扩展性角度来讲的，更多的是一种设计思想。</p>
-<h2 id="硬编码"><a href="#硬编码" class="headerlink" title="硬编码"></a>硬编码</h2><p>简单直白的说就是写死值，之前博主在一家公司写代码的时候，称这种在代码中是一种<strong>坏味道</strong>，例如，<code>if（a == 10）</code>，这个10一看不知道是什么意思，直接用的<strong>魔数</strong>。亦或解析某个路径下的文件，写代码时，直接将这个文件路径固定，不管以后是否挪到了其他路径，默认它就永远是在那个路径下，没有考虑变化。</p>
-<h2 id="软编码"><a href="#软编码" class="headerlink" title="软编码"></a>软编码</h2><p>一句话来说，定好地方，方便后续修改和扩展。在大型软件编码中，软编码很重要，会有很多地方用到相同的值，如果是在某个地方定义好值，在代码中用它的别称，如果后续这个值有变化，可以很方便的修改，只需在一处修改。软编码可以理解为以不变应万变，这个不变是指在代码中大部分逻辑不需要动，变是指后续市场需求的变化而需要软件做的一些适配，而这种适配只需要修改某些小角落。</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.profile //进行增删改环境变量</span><br></pre></td></tr></table></figure>
+
+<p>ps：环境变量一般分先后为这几个文件，系统按从上倒下优先级进行加载，etc目录下的是系统级的，～下的为用户级：</p>
+<ol>
+<li>&#x2F;etc&#x2F;profile</li>
+<li>&#x2F;etc&#x2F;paths</li>
+<li>~&#x2F;.bash_profile</li>
+<li>~&#x2F;.bash_login</li>
+<li>~&#x2F;.profile</li>
+<li>~&#x2F;.bashrc</li>
+</ol>
 ]]></content>
       <tags>
-        <tag>概念</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>回顾大年初二 丢失手机事件总结</title>
-    <url>/2021/02/17/20210217/</url>
-    <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>大年初二世界之窗夜场游玩，逛到阿尔卑斯冰雪世界，买了游玩票，玩了陡长滑道，然后电话亭落雪场景拍照，接着到了儿童滑道，看到了很多小朋友，不要脸的和小朋友排滑道，接着不幸的事情发生了，滑下来后，走了几步，摸了下口袋，发现手机不见了。</p>
-<span id="more"></span>
-
-<h2 id="经过"><a href="#经过" class="headerlink" title="经过"></a>经过</h2><p>发现手机不见，第一反应是落在了滑圈里头。转过头发现，不知道自己用过的圈，是在哪个小朋友手里，然后就开始绷紧神经，快速在离自己附近的圈进行排查，在圈内花了不到三秒用手做圆弧的轨迹搜索（ps.因为圈在别人手里不好意思花太长时间占用别人游玩的时间，后面从监控视频里头看到，自己过于着急，并没有花较多的时间在每个圈找，其实自己在手机存在的那个圈里有找），没有找到。</p>
-<p>然后就开始用女友的电话打我的电话，我手表还能感受到电话，然后找圈，发现还是没有找到。接着第四个电话，手表感应不到了，说明有人捡走了，但是手机能打通。</p>
-<p>接着去前台寻求广播帮助和登记手机丢失。继续拨打手机号发现，已经被关机了，说明拾取手机的人不想交还。</p>
-<p>女友的手机find我的手机，需要登陆我的apple账号，但是我已经忘了，只能回去用我的Mac电脑或者我的另外一部iPhone手机用Find功能。</p>
-<p>自己借助女友的手机边走出世界之窗边紧急冻结微信，支付宝等关键账号。过程中急于冻结关键账号，没怎么看路，小转了一个弯。不能冻结的账号，只能回去用电脑去冻结。</p>
-<p>出来世界之窗门口，寻求站岗民警的帮助，其要我先拨打110。于是个人决定先回家冻结关键账号，再报警。由于期待能联系上拾取我手机的人，没有去挂失自己的手机号，想先等两天，再挂失。</p>
-<p>由于我住的离世界之窗只有10分钟左右的单车时间，走路大概18分钟左右，于是借助女友的手机扫开了美团单车，先行一步回家，冻结关键账号，然后将手机mark as lost，标记为丢失，只要我的手机开机就会被定位和锁定位置。接着我在住的地方进行了110报警，说明了手机丢失情况，寻求民警帮助。</p>
-<p>不到三分钟，接到了所在街道的民警电话，并来到了我所住的地方核实身份以及情况，并做好了录影。其建议我去查看监控，然后他说是想现在去看还是等到明天早上，因为是晚上10点多了，并且冰雪大世界工作人员已经下班，应该是无法查看监控了，于是我选择了明天去查看监控。</p>
-<p>于是上午10点，我带上了我的另外一部手机，去到了世界之窗门口，和世界之窗的站岗民警联系上，要求看监控，然后反馈是在冰雪世界丢的，就带我去对应的点查看监控，然后冰雪世界的监控负责人要11点才上班，然后就等到了11点，相关工作人员就带领我们去对应的监控室查看，反馈了是在儿童滑道并且是昨天下午7点20到7点30之间，监控的位置很好，确定了我出现在镜头，然后确定我坐的那个圈，过了两分钟发现了拾取手机的人。</p>
-<p>拾取手机的人是一个中年男人，他是看到了前一个小朋友的圈中一个亮屏幕的手机，因为那时候我正在用我女友的手机打，那个中年男人发现手机之后，立马拾取捡到兜里，然后在雪道上头要起孩子和老婆遮挡一下视线，然后将我的手机关机。接着他们一家先后开始离开滑雪场准备回家。</p>
-<p>和民警一起查看完监控，截取多个摄像头的视频，并下载好截取的关键视频。民警开始联系所里的人做相关的人脸识别，因为他们是一大家子，两个小孩两个大人，拾取手机的中年男子还手提两个明显的白色包，只要识别出任何一个就可以确认拾取手机的男子。并且民警也告诉我他这种行为是拾取，并不是偷，不能立案，只能协助你，尽量和那个人取得联系，要求其归还。</p>
-<p>接着中午在益田假日广场吃完饭，在女友的帮助下，扫码骑车去在新年营业的联通营业厅办理丢失补办新卡。</p>
-<p>上午和民警一起确认完监控，民警要我和女友该干嘛干嘛去，接下来他会去处理，下午就收到了民警联系电话，已经联系到拾取手机的人，其愿意归还，由于其住的较远，就采取了邮件方式。</p>
-<p>我和拾取我手机的人通过民警作为中间人，取得了微信联系。通过合适的文字表达，表示感谢，接着我向其发了2个200元感谢红包，告知其我的相对不是那么具体的地址和电话，要其通过顺丰到付邮寄过来。其下午通过顺丰给我邮寄了过来，我第二天上午收到我的手机。</p>
-<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>首先要称赞深圳民警的办事效率，花了不到一天的时间很幸运的找到了我的手机拾取人，并作为中间人要拾取人归还。</p>
-<p>手机作为现代人的必需品，和空气一样重要的东西，要妥善保管好，尤其在游玩的时候，要建立好足够的防丢意识。</p>
-<p>苹果手机内置不错的find防丢软件，即使电话卡注销，也是会通过GPS实时反馈所丢失的手机位置。</p>
-<p>遇事不慌张，镇定处理，控制好自己的大脑神经，要暗示自己，尽己所能的处理好自己所能做的就行，同时做好最坏的打算，不需要过分的焦虑。</p>
-<p>尽人事听天命。</p>
-]]></content>
-      <tags>
-        <tag>生活</tag>
+        <tag>配置</tag>
       </tags>
   </entry>
   <entry>
@@ -224,6 +101,17 @@
     <content><![CDATA[]]></content>
       <tags>
         <tag>compile scans</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>macOS+gtest+vscode环境搭建</title>
+    <url>/2022/03/20/20220320/</url>
+    <content><![CDATA[<p>cd 到某个目录，然后在command窗口git clone <a href="https://github.com/google/googletest.git">https://github.com/google/googletest.git</a> 下载gtest源码</p>
+<p>Reference</p>
+<p>​	<a href="https://www.bilibili.com/video/BV1L7411L7aZ?spm_id_from=333.337.search-card.all.click">https://www.bilibili.com/video/BV1L7411L7aZ?spm_id_from=333.337.search-card.all.click</a></p>
+]]></content>
+      <tags>
+        <tag>gtest vscode</tag>
       </tags>
   </entry>
   <entry>
@@ -348,14 +236,34 @@
       </tags>
   </entry>
   <entry>
-    <title>macOS+gtest+vscode环境搭建</title>
-    <url>/2022/03/20/20220320/</url>
-    <content><![CDATA[<p>cd 到某个目录，然后在command窗口git clone <a href="https://github.com/google/googletest.git">https://github.com/google/googletest.git</a> 下载gtest源码</p>
-<p>Reference</p>
-<p>​	<a href="https://www.bilibili.com/video/BV1L7411L7aZ?spm_id_from=333.337.search-card.all.click">https://www.bilibili.com/video/BV1L7411L7aZ?spm_id_from=333.337.search-card.all.click</a></p>
+    <title>ffmpeg_use</title>
+    <url>/2021/01/10/ffmpeg-use/</url>
+    <content><![CDATA[<h1 id="1-视频格式转换"><a href="#1-视频格式转换" class="headerlink" title="1. 视频格式转换"></a>1. 视频格式转换</h1><h2 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1. 前言"></a>1.1. 前言</h2><p>有位同仁，最近在拓展副业，将自己的作品上传到某网站，简介部分需要swf格式的video，而本地只有mov格式的，需要转换，寻求我的帮助。</p>
+<p>由于本人是程序员兼个人电脑是mac，周末有时间还能稍微折腾一下，不希望直接去app store寻找购买现成的软件，也不想去下载盗版破解软件不安全。在网上搜索到了一个开源的音视频处理软件FFmpeg，很多音视频软件是基于该开源软件进行的二次开发。本文是基于其提供的静态库，采用敲命令行的方式进行视频格式的转换。</p>
+<span id="more"></span>
+
+<h2 id="1-2-安装方式"><a href="#1-2-安装方式" class="headerlink" title="1.2. 安装方式"></a>1.2. 安装方式</h2><p>FFmpeg官网提供了三种方式<a href="https://trac.ffmpeg.org/wiki/CompilationGuide/macOS">安装</a>其软件：</p>
+<ol>
+<li><p>使用<a href="https://brew.sh/">Homebrew</a></p>
+<p><code>brew install ffmpeg</code></p>
+</li>
+<li><p>下载官网<a href="https://ffmpeg.org/download.html">static build for macOS</a></p>
+</li>
+<li><p>下载官网源代码自己编译</p>
+</li>
+</ol>
+<h2 id="1-3-static-build方式"><a href="#1-3-static-build方式" class="headerlink" title="1.3. static build方式"></a>1.3. static build方式</h2><p>由于博主升级了操作系统，Homebrew不能使用，使用brew install ffmpeg会自动updating homebrew，然后updating失败，可以使用<code>export HOMEBREW_NO_AUTO_UPDATE=true</code>取消自动升级，但是安装还是失败了，于是博主采用了第二种方式直接去ffmpeg官网下载<a href="https://ffmpeg.org/download.html">static build for macOS</a>。</p>
+<h3 id="1-3-1-安装与使用"><a href="#1-3-1-安装与使用" class="headerlink" title="1.3.1. 安装与使用"></a>1.3.1. 安装与使用</h3><ol>
+<li>将下载下来的压缩包解压</li>
+<li>将解压出来的文件放到&#x2F;usr&#x2F;local&#x2F;bin路径下（右键单击Finder–&gt;Go to Folder…—&gt;输入&#x2F;usr&#x2F;local&#x2F;bin—&gt;return键）</li>
+<li>打开terminal，cd到&#x2F;usr&#x2F;local&#x2F;bin&#x2F;，执行chmod 777 ffmpeg指令，修改该build的使用权限</li>
+<li>在你存放视频的目录打开terminal，执行ffmpeg -i xxx.mov -f swf xxx.swf指令</li>
+</ol>
+<h2 id="1-4-后继"><a href="#1-4-后继" class="headerlink" title="1.4. 后继"></a>1.4. 后继</h2><p>具体其他的使用指令可去其官网查看，会介绍其使用语法，或者ffmpeg -h也有简单的介绍。</p>
+<p>自己后续可能基于其库进行二次开发。</p>
 ]]></content>
       <tags>
-        <tag>gtest vscode</tag>
+        <tag>video_formate_convert</tag>
       </tags>
   </entry>
   <entry>
@@ -364,7 +272,7 @@
     <content><![CDATA[<p>在车上，想要弄一个存储空间大一些的SSD固态硬盘来存行车记录仪和哨兵模式下产生的视频，这样记录的视频被覆盖重写的周期会长一些。在小红书上查了一下，点赞评论数较多的是买的SSD固态盘加硬盘盒，图方便省事可以直接上移动固态硬盘盒或者三星迷你U盘fit plus 512G，最好根据自己车的品牌型号提前在网上收集一下其他人遇到的坑。</p>
 <span id="more"></span>
 
-<p>作为普通消费者，根据自己的预算和需求主要关注三个点：<em>SSD固态硬盘PCIe的版本、颗粒是TLC的还是QLC、是否原厂。</em></p>
+<p>作为普通消费者，根据自己的预算和需求主要关注三个点：*SSD固态硬盘PCIe的版本、颗粒是TLC的还是QLC、是否原厂。</p>
 <p>听网友说PCIe4.0遇到过发烫降速，SSD固态硬盘选了PCIe3.0，考虑环境温度、使用场景和安装场景的稳定性，选择了TLC颗粒，原厂JD官方旗舰店购买。</p>
 <p>我自己最后是买了一个前身东芝存储器的铠侠RC20 1TB PCIe3.0 1GB缓存（想支持国货，没货了，就很离谱），固态硬盘盒是佳翼NVMe 583 车载专用款，然后是买了3M家的20x60的魔术贴来固定硬盘，总共花费1032.52元（有点小贵了较年前）。</p>
 <p><strong>SSD固态硬盘：</strong> 在电脑上格式化选exFAT，（这里有一个在win10上格式化分区的具体操作<a href="https://zhuanlan.zhihu.com/p/73456495">链接</a>），网上说预留部分空间(OP)不分区，防止硬盘快写满时发生降速异常，没有必要去浪费存储空间，我们不是7*24小时高强度写入的服务器场景。可以在自己的车机系统上去试一下不分格外的空闲空间，实践出真知。插在车上时，再在车机上进行格式化一下。</p>
@@ -379,16 +287,47 @@
 <li>长江存储：国内唯一的3D NAND闪存原厂，自主研发Xtracjing架构，232层技术达到国际一线水平，2025年全球市占率约10%。（来自：Deepseek）</li>
 <li>长鑫存储：国内DRAM(内存)芯片龙头，已实现DDR4&#x2F;DDR5量产，2025年全球市占率预计突破5%。（来自：Deepseek）</li>
 </ul>
-<p><strong>固态硬盘原厂：</strong>“原厂”在固态硬盘领域，通常指能自主研发和生产闪存颗粒（NAND Flash）的厂商所推出的自由品牌固态硬盘，目前能称为原厂的品牌有：</p>
-<ul>
-<li>三星（SAMSUNG）韩国 零售品牌：三星</li>
-<li>西部数据（Western Digital&#x2F;WD） 美国 零售品牌：WD和闪迪</li>
-<li>铠侠（KIOXIA） 日本 前身是东芝存储器，闪存发明者之一 零售品牌：铠侠</li>
-<li>美光（Micron） 美国 零售品牌：英睿达（Crucial）</li>
-<li>SK海力士（SK hynix） 韩国 零售品牌：Solidigm</li>
-<li>长江存储（YMTC） 中国 零售品牌：致态(ZHITAI)</li>
-</ul>
-<p><strong>TLC颗粒和QLC颗粒的区别：</strong><br>最主要的区别在每个单元存储的位数，一个是三位一个是四位。</p>
+<h3 id="固态硬盘原厂："><a href="#固态硬盘原厂：" class="headerlink" title="固态硬盘原厂："></a>固态硬盘原厂：</h3><p>“原厂”在固态硬盘领域，通常指能自主研发和生产闪存颗粒（NAND Flash）的厂商所推出的自由品牌固态硬盘，目前能称为原厂的品牌有：</p>
+<table>
+<thead>
+<tr>
+<th align="left">公司</th>
+<th align="left">国家</th>
+<th align="left">零售品牌</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">三星（SAMSUNG）</td>
+<td align="left">韩国</td>
+<td align="left">三星</td>
+</tr>
+<tr>
+<td align="left">西部数据（Western Digital&#x2F;WD）</td>
+<td align="left">美国</td>
+<td align="left">WD和闪迪</td>
+</tr>
+<tr>
+<td align="left">铠侠（KIOXIA）</td>
+<td align="left">日本</td>
+<td align="left">铠侠</td>
+</tr>
+<tr>
+<td align="left">美光（Micron）</td>
+<td align="left">美国</td>
+<td align="left">英睿达（Crucial）</td>
+</tr>
+<tr>
+<td align="left">SK海力士（SK hynix）</td>
+<td align="left">韩国</td>
+<td align="left">Solidigm</td>
+</tr>
+<tr>
+<td align="left">长江存储（YMTC）</td>
+<td align="left">中国</td>
+<td align="left">致态(ZHITAI)</td>
+</tr>
+</tbody></table>
+<h3 id="TLC颗粒和QLC颗粒的区别："><a href="#TLC颗粒和QLC颗粒的区别：" class="headerlink" title="TLC颗粒和QLC颗粒的区别："></a>TLC颗粒和QLC颗粒的区别：</h3><p>最主要的区别在每个单元存储的位数，一个是三位一个是四位。</p>
 <ul>
 <li>TLC：Triple-Level Cell，三层单元</li>
 <li>QLC：Quad-Level Cell，四层单元</li>
@@ -432,7 +371,7 @@
 <td align="left">一般</td>
 </tr>
 </tbody></table>
-<p><strong>PCIe版本间的区别：</strong><br>最主要的区别在于传输速度，每一代是前一代的两倍。</p>
+<h3 id="PCIe版本间的区别："><a href="#PCIe版本间的区别：" class="headerlink" title="PCIe版本间的区别："></a>PCIe版本间的区别：</h3><p>最主要的区别在于传输速度，每一代是前一代的两倍。</p>
 <table>
 <thead>
 <tr>
@@ -473,13 +412,100 @@
 <td align="left">极致生产力，专业创作</td>
 </tr>
 </tbody></table>
-<p><strong>SSD固态硬盘配缓存：</strong><br>我买的1TB的硬盘配了1GB的缓存，可以方便在车机系统中视频快速写入和回放。</p>
+<h3 id="SSD固态硬盘配缓存："><a href="#SSD固态硬盘配缓存：" class="headerlink" title="SSD固态硬盘配缓存："></a>SSD固态硬盘配缓存：</h3><p>我买的1TB的硬盘配了1GB的缓存，可以方便在车机系统中视频快速写入和回放。</p>
 <p>在SSD（固态硬盘）语境下，通常是指1GB的独立DRAM缓存。对于1TB容量的SSD来说，这个1:1000的配比是一个非常经典的方案。</p>
 <p>它最核心的使命是：</p>
 <ul>
 <li>快速寻址：SSD读写数据时需要查一张“地址地图”（FTL映射表）。有缓存就可以把这整张地图放进去，主控芯片查路线的速度极快。</li>
 <li>避免卡顿：如果没独立缓存，地图就只能存在慢得多的闪存里。这会导致日常打开软件、小文件读写（即4K随机性能）变慢，SSD越用越卡的可能性也更高。</li>
 </ul>
+<h3 id="MBR-与-GPT-分区表：Windows-与-Linux-支持度对比"><a href="#MBR-与-GPT-分区表：Windows-与-Linux-支持度对比" class="headerlink" title="MBR 与 GPT 分区表：Windows 与 Linux 支持度对比"></a>MBR 与 GPT 分区表：Windows 与 Linux 支持度对比</h3><p>下表详细列出了 MBR（主引导记录）和 GPT（GUID 分区表）在 Windows 和 Linux 系统中的支持情况、限制及适用场景。</p>
+<table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">MBR (主引导记录)</th>
+<th align="left">GPT (GUID 分区表)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>硬盘容量支持</strong></td>
+<td align="left"><strong>最大 2TB</strong>。超过 2TB 的部分无法识别和使用。</td>
+<td align="left"><strong>无上限</strong>（理论最大 18EB）。完美支持 2TB 及以上的大容量硬盘。</td>
+</tr>
+<tr>
+<td align="left"><strong>分区数量</strong></td>
+<td align="left"><strong>最多 4 个主分区</strong>，或 <strong>3 个主分区 + 1 个扩展分区</strong>（扩展分区内可划分多个逻辑驱动器）。</td>
+<td align="left"><strong>最多 128 个主分区</strong>（Windows 下）。Linux 下同样支持多达 128 个分区，没有扩展&#x2F;逻辑分区的概念。</td>
+</tr>
+<tr>
+<td align="left"><strong>系统引导模式</strong></td>
+<td align="left">传统 <strong>BIOS</strong> 模式（也称 Legacy 模式）。</td>
+<td align="left">现代 <strong>UEFI</strong> 模式（必需）。<em>注：Linux 可通过特殊配置在 BIOS 模式下从 GPT 磁盘启动，但 Windows 不行。</em></td>
+</tr>
+<tr>
+<td align="left"><strong>数据安全与恢复</strong></td>
+<td align="left"><strong>较差</strong>。分区表仅有一份，存储在磁盘头部，容易因病毒或写入错误导致损坏，且难以恢复。</td>
+<td align="left"><strong>优秀</strong>。分区表在主次两端有多份备份，具有 CRC32 校验和容错机制，损坏后可自动从备份恢复。</td>
+</tr>
+<tr>
+<td align="left"><strong>操作系统兼容性</strong></td>
+<td align="left"><strong>极高</strong>。所有版本的 Windows（从 95 到 11）和 Linux 均可识别和使用 MBR 磁盘。</td>
+<td align="left"><strong>良好</strong>。<strong>Windows 要求</strong>：仅 Vista&#x2F;Server 2008 及之后版本支持作为数据盘；仅 64位 Windows 且配备 UEFI 才支持从 GPT 启动。<strong>Linux 要求</strong>：现代发行版（内核 2.6.38 以上）完美支持，包括启动和数据盘。</td>
+</tr>
+<tr>
+<td align="left"><strong>引导加载器</strong></td>
+<td align="left"><strong>Windows</strong>: <code>bootmgr</code> (位于活动分区) + <code>boot.ini</code> 或 BCD 存储。<br><strong>Linux</strong>: GRUB Legacy 或 GRUB2 (安装于 MBR 和分区引导扇区)。</td>
+<td align="left"><strong>Windows</strong>: <code>bootmgfw.efi</code> (位于 ESP - EFI 系统分区) + BCD 存储。<br><strong>Linux</strong>: GRUB2 (针对 UEFI 编译，安装于 ESP)、<code>systemd-boot</code> 或其他 UEFI 引导器。</td>
+</tr>
+<tr>
+<td align="left"><strong>适用场景</strong></td>
+<td align="left">• 老旧电脑（仅支持 BIOS 启动）。<br>• 小容量硬盘（≤ 2TB）。<br>• 需要安装 32位 Windows 或极老版本 Windows。<br>• 多系统兼容性要求极高的环境。</td>
+<td align="left">• <strong>现代电脑（2012 年后出厂，预装 Win8&#x2F;10&#x2F;11）</strong>。<br>• <strong>大容量硬盘（&gt; 2TB）</strong>。<br>• 需要 UEFI 安全启动（Secure Boot）功能。<br>• 希望获得更快的启动速度和更好的数据安全性。<br>• <strong>Linux 服务器或桌面（推荐首选）</strong>。</td>
+</tr>
+</tbody></table>
+<h4 id="🔍-如何查看当前磁盘的分区表类型？"><a href="#🔍-如何查看当前磁盘的分区表类型？" class="headerlink" title="🔍 如何查看当前磁盘的分区表类型？"></a>🔍 如何查看当前磁盘的分区表类型？</h4><h5 id="Windows-系统"><a href="#Windows-系统" class="headerlink" title="Windows 系统"></a>Windows 系统</h5><ol>
+<li>右键点击“开始”按钮（或按 <code>Win + X</code>），选择“磁盘管理”。</li>
+<li>在磁盘管理窗口底部，右键点击目标磁盘的标签（如“磁盘 0”），选择“属性”。</li>
+<li>切换到“卷”选项卡，查看“磁盘分区形式”一栏，会显示是“主引导记录(MBR)”还是“GUID 分区表(GPT)”。</li>
+</ol>
+<h5 id="Linux-系统"><a href="#Linux-系统" class="headerlink" title="Linux 系统"></a>Linux 系统</h5><p>可以使用以下任一命令查看：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 parted 命令</span></span><br><span class="line"><span class="built_in">sudo</span> parted -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 fdisk 命令</span></span><br><span class="line"><span class="built_in">sudo</span> fdisk -l /dev/sda</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 gdisk 命令（会明确提示）</span></span><br><span class="line"><span class="built_in">sudo</span> gdisk -l /dev/sda</span><br></pre></td></tr></table></figure>
+
+<h3 id="NTFS-vs-exFAT-核心对比"><a href="#NTFS-vs-exFAT-核心对比" class="headerlink" title="NTFS vs. exFAT 核心对比"></a>NTFS vs. exFAT 核心对比</h3><table>
+<thead>
+<tr>
+<th align="left">特性维度</th>
+<th align="left">NTFS</th>
+<th align="left">exFAT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>最佳适用场景</strong></td>
+<td align="left"><strong>Windows 系统盘、内部硬盘、游戏盘、企业服务器</strong></td>
+<td align="left"><strong>U盘、SD卡、移动硬盘，需在 Windows 和 Mac 间传输文件时</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>兼容性</strong></td>
+<td align="left"><strong>Windows</strong>完美支持；<strong>Mac</strong>默认只能读，无法写入；<strong>Linux</strong>部分发行版需安装驱动</td>
+<td align="left"><strong>跨平台王者</strong>，Windows&#x2F;macOS&#x2F;Linux 均可直接读写，无需额外设置</td>
+</tr>
+<tr>
+<td align="left"><strong>关键功能</strong></td>
+<td align="left"><strong>功能全面</strong>：支持文件加密、权限设置、磁盘配额、日志功能（可恢复数据）</td>
+<td align="left"><strong>功能精简</strong>：为了提高闪存设备效率和寿命，舍弃了NTFS的高级功能</td>
+</tr>
+<tr>
+<td align="left"><strong>安全性</strong></td>
+<td align="left"><strong>高</strong>。日志功能可避免因断电或意外拔出导致的数据损坏，支持文件加密（EFS）</td>
+<td align="left"><strong>低</strong>。缺乏日志功能，突然断电或直接拔出，数据损坏或丢失的风险更高</td>
+</tr>
+<tr>
+<td align="left"><strong>理论限制</strong></td>
+<td align="left">文件大小：<strong>16EB</strong>；分区大小：<strong>256TB</strong></td>
+<td align="left">文件大小：<strong>16EB</strong>；分区大小：<strong>128PB</strong></td>
+</tr>
+</tbody></table>
 ]]></content>
       <tags>
         <tag>行业体感</tag>
@@ -538,37 +564,6 @@
       </tags>
   </entry>
   <entry>
-    <title>ffmpeg_use</title>
-    <url>/2021/01/10/ffmpeg-use/</url>
-    <content><![CDATA[<h1 id="1-视频格式转换"><a href="#1-视频格式转换" class="headerlink" title="1. 视频格式转换"></a>1. 视频格式转换</h1><h2 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1. 前言"></a>1.1. 前言</h2><p>有位同仁，最近在拓展副业，将自己的作品上传到某网站，简介部分需要swf格式的video，而本地只有mov格式的，需要转换，寻求我的帮助。</p>
-<p>由于本人是程序员兼个人电脑是mac，周末有时间还能稍微折腾一下，不希望直接去app store寻找购买现成的软件，也不想去下载盗版破解软件不安全。在网上搜索到了一个开源的音视频处理软件FFmpeg，很多音视频软件是基于该开源软件进行的二次开发。本文是基于其提供的静态库，采用敲命令行的方式进行视频格式的转换。</p>
-<span id="more"></span>
-
-<h2 id="1-2-安装方式"><a href="#1-2-安装方式" class="headerlink" title="1.2. 安装方式"></a>1.2. 安装方式</h2><p>FFmpeg官网提供了三种方式<a href="https://trac.ffmpeg.org/wiki/CompilationGuide/macOS">安装</a>其软件：</p>
-<ol>
-<li><p>使用<a href="https://brew.sh/">Homebrew</a></p>
-<p><code>brew install ffmpeg</code></p>
-</li>
-<li><p>下载官网<a href="https://ffmpeg.org/download.html">static build for macOS</a></p>
-</li>
-<li><p>下载官网源代码自己编译</p>
-</li>
-</ol>
-<h2 id="1-3-static-build方式"><a href="#1-3-static-build方式" class="headerlink" title="1.3. static build方式"></a>1.3. static build方式</h2><p>由于博主升级了操作系统，Homebrew不能使用，使用brew install ffmpeg会自动updating homebrew，然后updating失败，可以使用<code>export HOMEBREW_NO_AUTO_UPDATE=true</code>取消自动升级，但是安装还是失败了，于是博主采用了第二种方式直接去ffmpeg官网下载<a href="https://ffmpeg.org/download.html">static build for macOS</a>。</p>
-<h3 id="1-3-1-安装与使用"><a href="#1-3-1-安装与使用" class="headerlink" title="1.3.1. 安装与使用"></a>1.3.1. 安装与使用</h3><ol>
-<li>将下载下来的压缩包解压</li>
-<li>将解压出来的文件放到&#x2F;usr&#x2F;local&#x2F;bin路径下（右键单击Finder–&gt;Go to Folder…—&gt;输入&#x2F;usr&#x2F;local&#x2F;bin—&gt;return键）</li>
-<li>打开terminal，cd到&#x2F;usr&#x2F;local&#x2F;bin&#x2F;，执行chmod 777 ffmpeg指令，修改该build的使用权限</li>
-<li>在你存放视频的目录打开terminal，执行ffmpeg -i xxx.mov -f swf xxx.swf指令</li>
-</ol>
-<h2 id="1-4-后继"><a href="#1-4-后继" class="headerlink" title="1.4. 后继"></a>1.4. 后继</h2><p>具体其他的使用指令可去其官网查看，会介绍其使用语法，或者ffmpeg -h也有简单的介绍。</p>
-<p>自己后续可能基于其库进行二次开发。</p>
-]]></content>
-      <tags>
-        <tag>video_formate_convert</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>硬盘文件在Mac上操作不了的问题</title>
     <url>/2021/02/17/mac-finder-file/</url>
     <content><![CDATA[<p>通过command指令修改在硬盘文件上的属性，移除只有finder可见属性。然后就可以操组，copy到mac上。</p>
@@ -579,6 +574,107 @@
 ]]></content>
       <tags>
         <tag>mac-finder-file</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硬编码和软编码</title>
+    <url>/2020/10/05/20201005/</url>
+    <content><![CDATA[<p>在工作过程中，听到同事说起，硬编码和软编码，大脑大概明白其意思，具体一想，如何专业的表述这对孪生概念呢，需要展开来了解一下。</p>
+<span id="more"></span>
+
+<p>在网上查阅这两个概念，由于当前短视频较火，这两个概念在视频编解码方面有所指，硬编码是利用硬件芯片本身GPU、DSP等非CPU去给视频编码，而软编码则指是通过软件本身或者CPU对视频进行编码。</p>
+<p>而目前我在工作中接触的这两个概念主要是针对代码的灵活性和可扩展性角度来讲的，更多的是一种设计思想。</p>
+<h2 id="硬编码"><a href="#硬编码" class="headerlink" title="硬编码"></a>硬编码</h2><p>简单直白的说就是写死值，之前博主在一家公司写代码的时候，称这种在代码中是一种<strong>坏味道</strong>，例如，<code>if（a == 10）</code>，这个10一看不知道是什么意思，直接用的<strong>魔数</strong>。亦或解析某个路径下的文件，写代码时，直接将这个文件路径固定，不管以后是否挪到了其他路径，默认它就永远是在那个路径下，没有考虑变化。</p>
+<h2 id="软编码"><a href="#软编码" class="headerlink" title="软编码"></a>软编码</h2><p>一句话来说，定好地方，方便后续修改和扩展。在大型软件编码中，软编码很重要，会有很多地方用到相同的值，如果是在某个地方定义好值，在代码中用它的别称，如果后续这个值有变化，可以很方便的修改，只需在一处修改。软编码可以理解为以不变应万变，这个不变是指在代码中大部分逻辑不需要动，变是指后续市场需求的变化而需要软件做的一些适配，而这种适配只需要修改某些小角落。</p>
+]]></content>
+      <tags>
+        <tag>概念</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>回顾大年初二 丢失手机事件总结</title>
+    <url>/2021/02/17/20210217/</url>
+    <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>大年初二世界之窗夜场游玩，逛到阿尔卑斯冰雪世界，买了游玩票，玩了陡长滑道，然后电话亭落雪场景拍照，接着到了儿童滑道，看到了很多小朋友，不要脸的和小朋友排滑道，接着不幸的事情发生了，滑下来后，走了几步，摸了下口袋，发现手机不见了。</p>
+<span id="more"></span>
+
+<h2 id="经过"><a href="#经过" class="headerlink" title="经过"></a>经过</h2><p>发现手机不见，第一反应是落在了滑圈里头。转过头发现，不知道自己用过的圈，是在哪个小朋友手里，然后就开始绷紧神经，快速在离自己附近的圈进行排查，在圈内花了不到三秒用手做圆弧的轨迹搜索（ps.因为圈在别人手里不好意思花太长时间占用别人游玩的时间，后面从监控视频里头看到，自己过于着急，并没有花较多的时间在每个圈找，其实自己在手机存在的那个圈里有找），没有找到。</p>
+<p>然后就开始用女友的电话打我的电话，我手表还能感受到电话，然后找圈，发现还是没有找到。接着第四个电话，手表感应不到了，说明有人捡走了，但是手机能打通。</p>
+<p>接着去前台寻求广播帮助和登记手机丢失。继续拨打手机号发现，已经被关机了，说明拾取手机的人不想交还。</p>
+<p>女友的手机find我的手机，需要登陆我的apple账号，但是我已经忘了，只能回去用我的Mac电脑或者我的另外一部iPhone手机用Find功能。</p>
+<p>自己借助女友的手机边走出世界之窗边紧急冻结微信，支付宝等关键账号。过程中急于冻结关键账号，没怎么看路，小转了一个弯。不能冻结的账号，只能回去用电脑去冻结。</p>
+<p>出来世界之窗门口，寻求站岗民警的帮助，其要我先拨打110。于是个人决定先回家冻结关键账号，再报警。由于期待能联系上拾取我手机的人，没有去挂失自己的手机号，想先等两天，再挂失。</p>
+<p>由于我住的离世界之窗只有10分钟左右的单车时间，走路大概18分钟左右，于是借助女友的手机扫开了美团单车，先行一步回家，冻结关键账号，然后将手机mark as lost，标记为丢失，只要我的手机开机就会被定位和锁定位置。接着我在住的地方进行了110报警，说明了手机丢失情况，寻求民警帮助。</p>
+<p>不到三分钟，接到了所在街道的民警电话，并来到了我所住的地方核实身份以及情况，并做好了录影。其建议我去查看监控，然后他说是想现在去看还是等到明天早上，因为是晚上10点多了，并且冰雪大世界工作人员已经下班，应该是无法查看监控了，于是我选择了明天去查看监控。</p>
+<p>于是上午10点，我带上了我的另外一部手机，去到了世界之窗门口，和世界之窗的站岗民警联系上，要求看监控，然后反馈是在冰雪世界丢的，就带我去对应的点查看监控，然后冰雪世界的监控负责人要11点才上班，然后就等到了11点，相关工作人员就带领我们去对应的监控室查看，反馈了是在儿童滑道并且是昨天下午7点20到7点30之间，监控的位置很好，确定了我出现在镜头，然后确定我坐的那个圈，过了两分钟发现了拾取手机的人。</p>
+<p>拾取手机的人是一个中年男人，他是看到了前一个小朋友的圈中一个亮屏幕的手机，因为那时候我正在用我女友的手机打，那个中年男人发现手机之后，立马拾取捡到兜里，然后在雪道上头要起孩子和老婆遮挡一下视线，然后将我的手机关机。接着他们一家先后开始离开滑雪场准备回家。</p>
+<p>和民警一起查看完监控，截取多个摄像头的视频，并下载好截取的关键视频。民警开始联系所里的人做相关的人脸识别，因为他们是一大家子，两个小孩两个大人，拾取手机的中年男子还手提两个明显的白色包，只要识别出任何一个就可以确认拾取手机的男子。并且民警也告诉我他这种行为是拾取，并不是偷，不能立案，只能协助你，尽量和那个人取得联系，要求其归还。</p>
+<p>接着中午在益田假日广场吃完饭，在女友的帮助下，扫码骑车去在新年营业的联通营业厅办理丢失补办新卡。</p>
+<p>上午和民警一起确认完监控，民警要我和女友该干嘛干嘛去，接下来他会去处理，下午就收到了民警联系电话，已经联系到拾取手机的人，其愿意归还，由于其住的较远，就采取了邮件方式。</p>
+<p>我和拾取我手机的人通过民警作为中间人，取得了微信联系。通过合适的文字表达，表示感谢，接着我向其发了2个200元感谢红包，告知其我的相对不是那么具体的地址和电话，要其通过顺丰到付邮寄过来。其下午通过顺丰给我邮寄了过来，我第二天上午收到我的手机。</p>
+<h2 id="总结"><a href="#总结" class="headerlink" title="总结"></a>总结</h2><p>首先要称赞深圳民警的办事效率，花了不到一天的时间很幸运的找到了我的手机拾取人，并作为中间人要拾取人归还。</p>
+<p>手机作为现代人的必需品，和空气一样重要的东西，要妥善保管好，尤其在游玩的时候，要建立好足够的防丢意识。</p>
+<p>苹果手机内置不错的find防丢软件，即使电话卡注销，也是会通过GPS实时反馈所丢失的手机位置。</p>
+<p>遇事不慌张，镇定处理，控制好自己的大脑神经，要暗示自己，尽己所能的处理好自己所能做的就行，同时做好最坏的打算，不需要过分的焦虑。</p>
+<p>尽人事听天命。</p>
+]]></content>
+      <tags>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AWS EC2配置个人VPN</title>
+    <url>/2020/06/26/20200525/</url>
+    <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>亚马逊云服务（AWS）免费薅羊毛一年，创建个人EC2（Elastic Compute Cloud）搭建VPN，可以比较方便的Google一些文献。这个配置主要分两部分进行配置，AWS云端和Client（我自己是在Mac Pro上进行配置）。</p>
+<span id="more"></span>
+
+<h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>注册aws个人账号，绑定一张信用卡（推荐visa），具体注册流程看<a href="https://aws.amazon.com/">官网</a>。</p>
+<h2 id="AWS云端配置"><a href="#AWS云端配置" class="headerlink" title="AWS云端配置"></a>AWS云端配置</h2><p>主要分四个步骤，创建EC2实例，设置安全组，给实例绑定弹性IP，然后安装<a href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a>。</p>
+<h3 id="创建EC2实例"><a href="#创建EC2实例" class="headerlink" title="创建EC2实例"></a>创建EC2实例</h3><p>1、如果在中国大陆，个人建议选择东京的服务器，这样访问Google的速度会快一些，自己可以ping一个网站测一下速度，示例选择的是Hong Kong。</p>
+<p><img src="/2020/06/26/20200525/1.png" alt="服务器选择"></p>
+<p>2、点击All services，然后选择EC2。</p>
+<p><img src="/2020/06/26/20200525/2.png" alt="EC2"></p>
+<p>3、启动一个实例。</p>
+<p><img src="/2020/06/26/20200525/3.png" alt="启动实例"></p>
+<p>4、过滤掉付费的AMI，勾选Free tier only，然后选择下图中的其中一个AMI进行Select。</p>
+<p><img src="/2020/06/26/20200525/4.png" alt="AMI选择"></p>
+<p>5、选择一个实例类型，勾选☑️哪个Free tier eligible，接着Review and Launch。</p>
+<p><img src="/2020/06/26/20200525/5.png" alt="review and launch"></p>
+<p>6、有兴趣的可以Review实例类型的一些参数，然后直接点击Launch，运行实例。</p>
+<p><img src="/2020/06/26/20200525/6.png" alt="运行实例"></p>
+<p>7、为你的实例创建一个密钥对，你本地电脑远程和AMI通讯密钥，一定要Download下来并保存在一个合适的地方，后续还会用到。</p>
+<p><img src="/2020/06/26/20200525/7.png" alt="key pair"></p>
+<p>8、点击查看你的实例。</p>
+<p><img src="/2020/06/26/20200525/8.png" alt="view instance"></p>
+<p>9、接下来选中你的实例，为你的实例配置安全组(Security Groups)和弹性IP(Elastic IPs)。</p>
+<p><img src="/2020/06/26/20200525/9.png" alt="configure"></p>
+<h3 id="安全组设置"><a href="#安全组设置" class="headerlink" title="安全组设置"></a>安全组设置</h3><p>安全组主要是实例的入站和出站规则进行设置。</p>
+<p><img src="/2020/06/26/20200525/10.png" alt="security configure"></p>
+<p>1、入站规则：三个端口，TCP类型的22port口和UDP类型的50和4500port口，见下图具体设置。</p>
+<p><img src="/2020/06/26/20200525/11.png" alt="inbound rules"></p>
+<p><img src="/2020/06/26/20200525/12.png" alt="save rules"></p>
+<p>2、出站规则：所有流量和任何位置</p>
+<p><img src="/2020/06/26/20200525/13.png" alt="outbound rules"></p>
+<h3 id="弹性IP设置"><a href="#弹性IP设置" class="headerlink" title="弹性IP设置"></a>弹性IP设置</h3><p>这个设置主要是为了这个目的，这是aws官网的原话：I want to have a public IP address for my EC2 instance that will persist even if my instance is stopped and restarted，主要为了防止实例停止运行和重启是，没有对外的有效IP。</p>
+<p>1、Allocate一个弹性IP。</p>
+<p><img src="/2020/06/26/20200525/14.png" alt="elastic ip"></p>
+<p><img src="/2020/06/26/20200525/15.png" alt="allocate"></p>
+<p>2、关联实例。</p>
+<p><img src="/2020/06/26/20200525/16.png" alt="associate elastic ip"></p>
+<p><img src="/2020/06/26/20200525/17.png" alt="associate"></p>
+<h3 id="安装ipsec-vpn"><a href="#安装ipsec-vpn" class="headerlink" title="安装ipsec-vpn"></a>安装<a href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a></h3><p>1、本地终端连接你创建的实例，在你创建实例保存密钥对的路径去开启终端，接着运行下图的1步骤，然后输入yes，按enter键，进行2步骤你就会连接到你创建的实例。（ps. 一般你执行过1后，后续连接你直接输入2指令就行）</p>
+<p><img src="/2020/06/26/20200525/18.png" alt="connect to your instance"></p>
+<p>2、安装指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://git.io/vpnsetup -O vpnsetup.sh &amp;&amp; sudo sh vpnsetup.sh</span><br></pre></td></tr></table></figure>
+
+<p><img src="/2020/06/26/20200525/19.png" alt="install vpnsetup"></p>
+<p>3、安装完成之后，要记录下来你的vpn信息，本地客户端配置vpn的时候要用到。</p>
+<p><img src="/2020/06/26/20200525/20.png" alt="save vpn information"></p>
+<h2 id="本地客户端设置"><a href="#本地客户端设置" class="headerlink" title="本地客户端设置"></a>本地客户端设置</h2><p>依据自己的本地机装的操作系统类型，进行相应的配置，请参考GitHub上的这个<a href="https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md">链接</a>🔗。</p>
+<p>如果是mac os注意下图的这两处，一定要设置对。</p>
+<p><img src="/2020/06/26/20200525/21.png" alt="local set"></p>
+]]></content>
+      <tags>
+        <tag>配置</tag>
       </tags>
   </entry>
 </search>

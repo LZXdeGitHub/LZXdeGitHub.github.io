@@ -24,36 +24,36 @@
 <meta property="og:type" content="article">
 <meta property="og:title" content="AWS EC2配置个人VPN">
 <meta property="og:url" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/index.html">
-<meta property="og:site_name" content="Nick Liu">
+<meta property="og:site_name" content="Nick Liu&#39;s Blog">
 <meta property="og:description" content="前言亚马逊云服务（AWS）免费薅羊毛一年，创建个人EC2（Elastic Compute Cloud）搭建VPN，可以比较方便的Google一些文献。这个配置主要分两部分进行配置，AWS云端和Client（我自己是在Mac Pro上进行配置）。">
 <meta property="og:locale" content="zh_CN">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/1.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/2.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/3.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/4.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/5.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/6.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/7.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/8.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/9.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/10.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/11.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/12.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/13.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/14.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/15.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/16.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/17.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/18.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/19.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/20.png">
-<meta property="og:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/21.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/1.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/2.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/3.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/4.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/5.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/6.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/7.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/8.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/9.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/10.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/11.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/12.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/13.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/14.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/15.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/16.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/17.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/18.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/19.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/20.png">
+<meta property="og:image" content="https://github.com/2020/06/26/20200525/21.png">
 <meta property="article:published_time" content="2020-06-26T07:18:22.000Z">
-<meta property="article:modified_time" content="2026-03-01T08:40:34.224Z">
+<meta property="article:modified_time" content="2026-03-04T14:23:19.544Z">
 <meta property="article:author" content="Nick Liu">
 <meta property="article:tag" content="配置">
 <meta name="twitter:card" content="summary">
-<meta name="twitter:image" content="https://github.com/LZXdeGitHub/2020/06/26/20200525/1.png">
+<meta name="twitter:image" content="https://github.com/2020/06/26/20200525/1.png">
 
 
 <link rel="canonical" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/">
@@ -62,7 +62,7 @@
 <script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/","path":"2020/06/26/20200525/","title":"AWS EC2配置个人VPN"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>AWS EC2配置个人VPN | Nick Liu</title>
+<title>AWS EC2配置个人VPN | Nick Liu's Blog</title>
   
 
 
@@ -109,7 +109,7 @@
 
     <a href="/" class="brand" rel="start">
       <i class="logo-line"></i>
-      <p class="site-title">Nick Liu</p>
+      <p class="site-title">Nick Liu's Blog</p>
       <i class="logo-line"></i>
     </a>
       <p class="site-subtitle" itemprop="description">Be Better & Be Smarter</p>
@@ -199,12 +199,12 @@
     </span>
 
     <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Nick Liu">
+      <meta itemprop="name" content="Nick Liu's Blog">
       <meta itemprop="description" content="My Blog">
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="AWS EC2配置个人VPN | Nick Liu">
+      <meta itemprop="name" content="AWS EC2配置个人VPN | Nick Liu's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
@@ -238,69 +238,48 @@
 <h2 id="准备工作"><a href="#准备工作" class="headerlink" title="准备工作"></a>准备工作</h2><p>注册aws个人账号，绑定一张信用卡（推荐visa），具体注册流程看<a target="_blank" rel="noopener" href="https://aws.amazon.com/">官网</a>。</p>
 <h2 id="AWS云端配置"><a href="#AWS云端配置" class="headerlink" title="AWS云端配置"></a>AWS云端配置</h2><p>主要分四个步骤，创建EC2实例，设置安全组，给实例绑定弹性IP，然后安装<a href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a>。</p>
 <h3 id="创建EC2实例"><a href="#创建EC2实例" class="headerlink" title="创建EC2实例"></a>创建EC2实例</h3><p>1、如果在中国大陆，个人建议选择东京的服务器，这样访问Google的速度会快一些，自己可以ping一个网站测一下速度，示例选择的是Hong Kong。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/1.png" class="" title="服务器选择">
-
+<p><img src="/2020/06/26/20200525/1.png" alt="服务器选择"></p>
 <p>2、点击All services，然后选择EC2。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/2.png" class="" title="EC2">
-
+<p><img src="/2020/06/26/20200525/2.png" alt="EC2"></p>
 <p>3、启动一个实例。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/3.png" class="" title="启动实例">
-
+<p><img src="/2020/06/26/20200525/3.png" alt="启动实例"></p>
 <p>4、过滤掉付费的AMI，勾选Free tier only，然后选择下图中的其中一个AMI进行Select。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/4.png" class="" title="AMI选择">
-
+<p><img src="/2020/06/26/20200525/4.png" alt="AMI选择"></p>
 <p>5、选择一个实例类型，勾选☑️哪个Free tier eligible，接着Review and Launch。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/5.png" class="" title="review and launch">
-
+<p><img src="/2020/06/26/20200525/5.png" alt="review and launch"></p>
 <p>6、有兴趣的可以Review实例类型的一些参数，然后直接点击Launch，运行实例。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/6.png" class="" title="运行实例">
-
+<p><img src="/2020/06/26/20200525/6.png" alt="运行实例"></p>
 <p>7、为你的实例创建一个密钥对，你本地电脑远程和AMI通讯密钥，一定要Download下来并保存在一个合适的地方，后续还会用到。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/7.png" class="" title="key pair">
-
+<p><img src="/2020/06/26/20200525/7.png" alt="key pair"></p>
 <p>8、点击查看你的实例。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/8.png" class="" title="view instance">
-
+<p><img src="/2020/06/26/20200525/8.png" alt="view instance"></p>
 <p>9、接下来选中你的实例，为你的实例配置安全组(Security Groups)和弹性IP(Elastic IPs)。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/9.png" class="" title="configure">
-
+<p><img src="/2020/06/26/20200525/9.png" alt="configure"></p>
 <h3 id="安全组设置"><a href="#安全组设置" class="headerlink" title="安全组设置"></a>安全组设置</h3><p>安全组主要是实例的入站和出站规则进行设置。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/10.png" class="" title="security configure">
-
+<p><img src="/2020/06/26/20200525/10.png" alt="security configure"></p>
 <p>1、入站规则：三个端口，TCP类型的22port口和UDP类型的50和4500port口，见下图具体设置。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/11.png" class="" title="inbound rules">
-
-<img src="/LZXdeGitHub/2020/06/26/20200525/12.png" class="" title="save rules">
-
+<p><img src="/2020/06/26/20200525/11.png" alt="inbound rules"></p>
+<p><img src="/2020/06/26/20200525/12.png" alt="save rules"></p>
 <p>2、出站规则：所有流量和任何位置</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/13.png" class="" title="outbound rules">
-
+<p><img src="/2020/06/26/20200525/13.png" alt="outbound rules"></p>
 <h3 id="弹性IP设置"><a href="#弹性IP设置" class="headerlink" title="弹性IP设置"></a>弹性IP设置</h3><p>这个设置主要是为了这个目的，这是aws官网的原话：I want to have a public IP address for my EC2 instance that will persist even if my instance is stopped and restarted，主要为了防止实例停止运行和重启是，没有对外的有效IP。</p>
 <p>1、Allocate一个弹性IP。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/14.png" class="" title="elastic ip">
-
-<img src="/LZXdeGitHub/2020/06/26/20200525/15.png" class="" title="allocate">
-
+<p><img src="/2020/06/26/20200525/14.png" alt="elastic ip"></p>
+<p><img src="/2020/06/26/20200525/15.png" alt="allocate"></p>
 <p>2、关联实例。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/16.png" class="" title="associate elastic ip">
-
-<img src="/LZXdeGitHub/2020/06/26/20200525/17.png" class="" title="associate">
-
+<p><img src="/2020/06/26/20200525/16.png" alt="associate elastic ip"></p>
+<p><img src="/2020/06/26/20200525/17.png" alt="associate"></p>
 <h3 id="安装ipsec-vpn"><a href="#安装ipsec-vpn" class="headerlink" title="安装ipsec-vpn"></a>安装<a href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a></h3><p>1、本地终端连接你创建的实例，在你创建实例保存密钥对的路径去开启终端，接着运行下图的1步骤，然后输入yes，按enter键，进行2步骤你就会连接到你创建的实例。（ps. 一般你执行过1后，后续连接你直接输入2指令就行）</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/18.png" class="" title="connect to your instance">
-
+<p><img src="/2020/06/26/20200525/18.png" alt="connect to your instance"></p>
 <p>2、安装指令</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://git.io/vpnsetup -O vpnsetup.sh &amp;&amp; sudo sh vpnsetup.sh</span><br></pre></td></tr></table></figure>
 
-<img src="/LZXdeGitHub/2020/06/26/20200525/19.png" class="" title="install vpnsetup">
-
+<p><img src="/2020/06/26/20200525/19.png" alt="install vpnsetup"></p>
 <p>3、安装完成之后，要记录下来你的vpn信息，本地客户端配置vpn的时候要用到。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/20.png" class="" title="save vpn information">
-
+<p><img src="/2020/06/26/20200525/20.png" alt="save vpn information"></p>
 <h2 id="本地客户端设置"><a href="#本地客户端设置" class="headerlink" title="本地客户端设置"></a>本地客户端设置</h2><p>依据自己的本地机装的操作系统类型，进行相应的配置，请参考GitHub上的这个<a href="https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md">链接</a>🔗。</p>
 <p>如果是mac os注意下图的这两处，一定要设置对。</p>
-<img src="/LZXdeGitHub/2020/06/26/20200525/21.png" class="" title="local set">
-
+<p><img src="/2020/06/26/20200525/21.png" alt="local set"></p>
 
     </div>
 
