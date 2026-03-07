@@ -159,6 +159,14 @@
       </tags>
   </entry>
   <entry>
+    <title>MMF</title>
+    <url>/2022/03/20/20220320-1/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>Memory-Map File</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>回顾大年初二 丢失手机事件总结</title>
     <url>/2021/02/17/20210217/</url>
     <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>大年初二世界之窗夜场游玩，逛到阿尔卑斯冰雪世界，买了游玩票，玩了陡长滑道，然后电话亭落雪场景拍照，接着到了儿童滑道，看到了很多小朋友，不要脸的和小朋友排滑道，接着不幸的事情发生了，滑下来后，走了几步，摸了下口袋，发现手机不见了。</p>
@@ -189,22 +197,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MMF</title>
-    <url>/2022/03/20/20220320-1/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>Memory-Map File</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>scons(a software constructe tool)</title>
-    <url>/2022/03/20/20220320-2/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>compile scans</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>macOS+gtest+vscode环境搭建</title>
     <url>/2022/03/20/20220320/</url>
     <content><![CDATA[<p>cd 到某个目录，然后在command窗口git clone <a href="https://github.com/google/googletest.git">https://github.com/google/googletest.git</a> 下载gtest源码</p>
@@ -216,159 +208,11 @@
       </tags>
   </entry>
   <entry>
-    <title>ffmpeg_use</title>
-    <url>/2021/01/10/ffmpeg-use/</url>
-    <content><![CDATA[<h1 id="1-视频格式转换"><a href="#1-视频格式转换" class="headerlink" title="1. 视频格式转换"></a>1. 视频格式转换</h1><h2 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1. 前言"></a>1.1. 前言</h2><p>有位同仁，最近在拓展副业，将自己的作品上传到某网站，简介部分需要swf格式的video，而本地只有mov格式的，需要转换，寻求我的帮助。</p>
-<p>由于本人是程序员兼个人电脑是mac，周末有时间还能稍微折腾一下，不希望直接去app store寻找购买现成的软件，也不想去下载盗版破解软件不安全。在网上搜索到了一个开源的音视频处理软件FFmpeg，很多音视频软件是基于该开源软件进行的二次开发。本文是基于其提供的静态库，采用敲命令行的方式进行视频格式的转换。</p>
-<span id="more"></span>
-
-<h2 id="1-2-安装方式"><a href="#1-2-安装方式" class="headerlink" title="1.2. 安装方式"></a>1.2. 安装方式</h2><p>FFmpeg官网提供了三种方式<a href="https://trac.ffmpeg.org/wiki/CompilationGuide/macOS">安装</a>其软件：</p>
-<ol>
-<li><p>使用<a href="https://brew.sh/">Homebrew</a></p>
-<p><code>brew install ffmpeg</code></p>
-</li>
-<li><p>下载官网<a href="https://ffmpeg.org/download.html">static build for macOS</a></p>
-</li>
-<li><p>下载官网源代码自己编译</p>
-</li>
-</ol>
-<h2 id="1-3-static-build方式"><a href="#1-3-static-build方式" class="headerlink" title="1.3. static build方式"></a>1.3. static build方式</h2><p>由于博主升级了操作系统，Homebrew不能使用，使用brew install ffmpeg会自动updating homebrew，然后updating失败，可以使用<code>export HOMEBREW_NO_AUTO_UPDATE=true</code>取消自动升级，但是安装还是失败了，于是博主采用了第二种方式直接去ffmpeg官网下载<a href="https://ffmpeg.org/download.html">static build for macOS</a>。</p>
-<h3 id="1-3-1-安装与使用"><a href="#1-3-1-安装与使用" class="headerlink" title="1.3.1. 安装与使用"></a>1.3.1. 安装与使用</h3><ol>
-<li>将下载下来的压缩包解压</li>
-<li>将解压出来的文件放到&#x2F;usr&#x2F;local&#x2F;bin路径下（右键单击Finder–&gt;Go to Folder…—&gt;输入&#x2F;usr&#x2F;local&#x2F;bin—&gt;return键）</li>
-<li>打开terminal，cd到&#x2F;usr&#x2F;local&#x2F;bin&#x2F;，执行chmod 777 ffmpeg指令，修改该build的使用权限</li>
-<li>在你存放视频的目录打开terminal，执行ffmpeg -i xxx.mov -f swf xxx.swf指令</li>
-</ol>
-<h2 id="1-4-后继"><a href="#1-4-后继" class="headerlink" title="1.4. 后继"></a>1.4. 后继</h2><p>具体其他的使用指令可去其官网查看，会介绍其使用语法，或者ffmpeg -h也有简单的介绍。</p>
-<p>自己后续可能基于其库进行二次开发。</p>
-]]></content>
+    <title>scons(a software constructe tool)</title>
+    <url>/2022/03/20/20220320-2/</url>
+    <content><![CDATA[]]></content>
       <tags>
-        <tag>video_formate_convert</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我在高通中国的五年</title>
-    <url>/2026/02/12/five-years-in-qcom/</url>
-    <content><![CDATA[<p>&emsp;&emsp; 我是在2020年12月份加入高通，那时候还是疫情期间，面试也是全程线上。苹果回到高通基带芯片的怀抱不久，iPhone和iPad大部分产线在深圳，需要人来做现场技术支持，所以我是以支持苹果的名义招进高通中国基带软件研发团队。因为苹果是高通的VIP客户（给的钱多），所以是研发团队作为主导来直接对接他们。</p>
-<span id="more"></span>
-
-<p>&emsp;&emsp; 转眼间五年过去了，正好趁这次高通中国modem软件研发团队的调整，可以做一些回顾和总结。</p>
-<p>&emsp;&emsp; 在高通中国我觉得比较棒的点是，公司相对信任员工，没有严格的打卡制度，相对灵活的上班时间；做需求push感没有那么强，可以按自己的workload和节奏去排时间。自己所在的团队氛围还不错，大家相互比较尊重，同事间的关系也相对简单。代码产生了bug更多的是专注于去解决问题，而不是去追责。技术总监会有人文关怀。</p>
-<p>&emsp;&emsp; 我是在RFSCA(Radio Frequency Sysytem Calibration and Analysis)团队，主要负责射频前端模拟器件的校准。刚入职的前一年半，主要用C++做在Windows系统上运行的产线校准工具的开发，后面三年半侧重做嵌入端（RTOS）C&#x2F;C++的开发。具体对接的业务有以下几块：</p>
-<ul>
-<li>苹果：针对iPhone各个硬件阶段做校准Bring Up，每年都有去苹果工厂实验室做现场技术支持和搭建支持远程的硬件环境。客户产线用自己的校准工具，新平台嵌入端校准框架发生变化，我针对客户特殊的校准流程设计了新的API来支持客户自己的工具。他们的校准工具依赖我们内部的ESC Parser DLL，要维护这个解码流的工具，他们提了不少相关的问题过来。还有就是维护该客户用的较多的feature，例如RxTrigger，FBRx offset(后续也推给了其他客户)等。可惜苹果要开始大规模上他们自己的基带了，深圳三个实验室的设备都已经撤出来了。</li>
-<li>Customer Engineer Team: 国内OEMs的校准问题解决和定制化需求实现，当然也有韩国、日本的一些客户，刚进来的时候还有只能用4G的H厂的cases。</li>
-<li>新平台QRD的校准Bring Up，国内的硬件团队会参考Global的新硬件设计来做给国内客户参考的硬件，软件团队要和硬件团队一起在项目的各个阶段完成各个支持的Bands校准。</li>
-<li>bAPT：China研发来负责这种关键的校准feature情况比较少，我的tech leader争取过来了，交给了我，也是对我的认可。这个是算法团队提出来的需求，做了几个平台的迭代，后续的算法优化，也参与了和算法团队的讨论。这个feature做的也是很动荡，第一版做完之后，合作的算法、RFLM、LTE Tech、NV MGR、测试人员被lay off，China只剩我一个负责这个feature的后续迭代开发。这个feature几个平台的优化也是换了两个算法的人员，其中一个还主动离开了高通去了其他公司。春节之后China Modem研发团队受美国BIS法案的影响，基带嵌入端代码权限被锁死，成了对接China CE团队和研发团队的中间件team。我本地开发的关于bAPT重构的代码也提交不了，并且自己还有一个更省校准时间的idea，有点小遗憾。但是通过这个需求，自己有从执行者到思考者的一个转变，不仅仅是去根据要求去做实现，会思考有没有更好的解决方案，会去针对算法团队给出的解决方案提出质疑并给出我认为更合适的方案进行商讨。</li>
-<li>仪表厂商：射频前端的校准是需要依赖第三方的仪表，所以我们这个组的工具代码是需要支持仪表厂商，目前OEMs工厂主流仪表用的是德国的罗德与施瓦茨CMW100，公司给我的工作站配的仪表也是CMW100。遇到仪表的软件的问题需要和他们一起co-debug，或者适配他们的新feature修改我们的工具代码。</li>
-</ul>
-<p>&emsp;&emsp; 个人感觉这个岗位还挺有意思，校准分很多硬件模块通路(XO、QET、SDR、PA、LNA、Tx、Rx、FBRx…)，需要打交道的人很多，也可以很深入的研究复杂的XPT算法。高通独有的QET硬件，配合独有IP的ET算法，这个ET算法挺复杂的，还用到了机器学习。如果是做射频前端的校准，相比其他厂商，高通的ET校准算法在能耗上面是有挺大优势。但是不知道和华为Mate 50上射频前端所用的Doherty PA的比较是怎么样的。还有很多高通独有硬件独有的VISPA features，很多是需要校准来配合的。</p>
-<p>&emsp;&emsp; 自己在这个岗位上幸福的时刻，是自己有过几次进入了心流体验，解bug解的很兴奋，忘记了时间，这种有些挑战，但是再给点时间，就能找到线索并fix它的bug很有意思。相比做需求，自己更加喜欢解bug，就像玩小游戏一样，不需要太多的时间，但是会有及时的反馈。所以我并不是很排斥上班这件事情。</p>
-]]></content>
-      <tags>
-        <tag>职场</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>How to fix your entire life in one day</title>
-    <url>/2026/02/24/how-to-fix-your-in-one-day/</url>
-    <content><![CDATA[<p>看到了一个博主DAN KOE分享了一篇文章：<a href="https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1">How to fix your entire life in 1 day</a>，感觉结合自己当前的状态还是所有感触，所以准备细细研读和做笔记。</p>
-<p>这篇文章的基石：阿德勒心理学（Adlerian Psychology）</p>
-<p>先抛一个问题：你对当前的生活是满意的、不满意的、还是假装满意的？</p>
-<span id="more"></span>
-
-<h2 id="1-改变身份"><a href="#1-改变身份" class="headerlink" title="1. 改变身份"></a>1. 改变身份</h2><h2 id="2-察觉自己"><a href="#2-察觉自己" class="headerlink" title="2. 察觉自己"></a>2. 察觉自己</h2><h2 id="3-付诸行动"><a href="#3-付诸行动" class="headerlink" title="3. 付诸行动"></a>3. 付诸行动</h2><p>工作就是玩</p>
-<p>健康的生活方式</p>
-<p>识人法则 看行动</p>
-<p>了解心智的运作方式，才可能编辑</p>
-<p>真的想改变并变更好，改变潜意识中的目标</p>
-<p>改变自己八步骤</p>
-<p>你的价值观来自父母</p>
-<p>自我发展9个阶段</p>
-<p>成功三要素 主动性 机会 智慧</p>
-<p>聪明不聪明的差别 迭代 坚持 洞察全局</p>
-<p>大部分人的一生</p>
-<p>提高认知6步骤来做出改变</p>
-<p>遇到人才 有智慧却没有勇气 不说服</p>
-<p>知难行易 察觉自己 是否改变 收获什么 付诸行动</p>
-<p>思考负能量激发正能量</p>
-<p>7步让自己变强</p>
-]]></content>
-      <tags>
-        <tag>心灵鸡汤</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>硬盘文件在Mac上操作不了的问题</title>
-    <url>/2021/02/17/mac-finder-file/</url>
-    <content><![CDATA[<p>通过command指令修改在硬盘文件上的属性，移除只有finder可见属性。然后就可以操组，copy到mac上。</p>
-<p>1,先安装软件 Mounty for NTFS，这个软件可以让Mac系统支持NTFS硬盘读写操作。</p>
-<p>2,文件变灰色的原因是文件的名后面多了一个@，可以在终端中用命令行消除。</p>
-<pre><code>  在终端中输入xattr -d com.apple.FinderInfo ，然后在后面输入文件地址(直接把文件拖入终端中就行了)。回车该文件就变回可用状态了。
-</code></pre>
-]]></content>
-      <tags>
-        <tag>mac-finder-file</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AI基础概念及理论学习</title>
-    <url>/2026/02/08/AI-Learn/</url>
-    <content><![CDATA[<p>&emsp;&emsp; 目前AI已经进入了普通老百姓视角的主舞台，各大科技公司在这个台上你方唱罢我来舞，日新月异，占据了不少公众视野。对于科技大厂而言，搞AI是一件政治正确的事情，你不搞不主动去靠就是不行，要被打入冷宫。既然潮水已来，就顺流而下，去拥抱它。作为个人如何拥抱AI，要么侧重去参与迭代AI功能本身，要么侧重如何为我所用，不管怎么样都是要略懂一些AI基础知识。可以初步防止在二级市场被割韭菜或者就业市场被动失业。</p>
-<span id="more"></span>
-
-<p><strong>洋气的名字</strong></p>
-<ul>
-<li>LLM(Large Language Model) 大语言模型：区别于古老的智障语言模型，前面加了个大，模型参数变多了，具备了一定的智能</li>
-<li>Prompt 提示词：一问一答</li>
-<li>Context  上下文：背景信息 </li>
-<li>Memory 记忆：不仅仅一问一答，对上下文进行压缩，可以进行追问</li>
-<li>Agent 智能体：不仅仅是和大模型交互，还拥有上网功能、搜索本地文档&#x2F;数据库、文件读取、执行脚本、PDF转换等能力，减少和大模型的沟通次数，处理一些大模型无法操作的东西，获取模型以外的信息能力，整合多方的结果发送给用户。相对于后面要讲的Function Call和MCP, 中间的Agent就像一个传话筒，把大模型的话转化成调用工具的代码，把工具调用的结果在原封不动的传话给大模型，同时不忘了给用户传话，主打一个我不生产信息，我只做一个信息的搬运工。Agent和用户对话，虽然最底层还是文字，但是交互形式上可以丰富多彩，可以是CLI(Command Line Interface)，Claude Code（早期是一个编程Agent，现在已经走上了通用Agent道路，名字起的很失败），现在大火的开源桌面助手OpenClaw等</li>
-<li>RAG(Retrieval-Augmented Generation) 检索增强生成，用于本地数据库搜索，与传统数据库不同，使用了向量数据库</li>
-<li>Web Search 联网搜索，提高实时性及减少token的消耗</li>
-<li>Function Calling：Agent和大模型之间，关于工具调用所约定的对话格式，让大模型按照死板的格式回复给Agent去调用工具，就像前端和后端开发一样，约定接口格式，例如一个json模版</li>
-<li>MCP(Model Context Protocol)模型上下文协议：Agent和工具集之间交互的一套约定，大模型是一个只会说话不会做事的智者，而MCP能提供各种工具的程序集,  tools&#x2F;list.. tools&#x2F;call.. </li>
-<li>Langchain ：纯编程来实现流程走向，全是硬编码，稳定但是缺乏灵活性</li>
-<li>Workflow 工作流：低代码，可以功能模块块拖拽</li>
-<li>Skill 技能：SKILL.md提前写好了说明文档和直接可以运行的脚本，即agent的技能，相比Langchain和Workflow兼顾了灵活性和稳定性</li>
-<li>SubAgent ：拆分复杂的任务，独立的子任务可以在子agent中完成，本质上就是做上下文隔离，子agent产生的上下文不会保留在主agent中</li>
-<li>Token 令牌：人工智能模型处理信息的最小单位，可以把它的工作原理想象成我们人类阅读和组词语的过程，当我们看到一句话，我们不会逐字停顿，而是会按词组来理解。比如“我喜欢解bug”，我们的大脑会处理成 “我&#x2F;喜欢&#x2F;解&#x2F;bug” 这几个片段。在人工智能的世界里，模型看到的也不是完整的句子，而是被切分成的Token。这些Token可能是一个词、一个汉字、一个标点符号，甚至是半个字（当用两个Token ID来表示一个字的时候）。对于主流的的人工智能模型，通常一个汉字大约是1到2个Token。</li>
-<li>AGI(Artifical General Intelligence) 通用人工智能：LLM算一个专才，还不是像“人类一样的通才”，不具备完整的人类级推理能力。AGI是一种像人类一样可以在几乎所有认知领域自主思考和学习的人工智能</li>
-<li>GPT(Generative Pre-trained Transformer) 生成式预训练变换模型：它是一种深度学习算法，属于自然语言处理（NLP）领域的人工智能模型，旨在生成具有连贯性和逻辑性的自然语言。</li>
-</ul>
-<p><strong>人工智能</strong></p>
-<p>&emsp;&emsp; 智能本质上就是针对不同情境给出针对性的输出反应，不会乱来的黑箱，数学表达就是$f(x) &#x3D; y$，引用一位美国的数学教授Thomas A. Garrity上课的一句话：Functions describe the world, everything is described by functions, the sound of my voice on your eardrum, function! That’s kind of hitting your eye balls right now, function! The entries you put in your random matrices, function! It’s all function!</p>
-<p><em>人工智能</em>：人工搭建起一套智能（黑箱），根据不同的环境信息给出针对性的输出和回应的系统，这个输出可以是动作、语言，也可以是一种判断和预测。人如果无法区分是和AI聊天还是和人聊天，那就实现了人的智能。</p>
-<p><em>专家系统</em>：清晰的规则，例如：疾病诊断和金融咨询，静态，不能自我迭代，完全是复制人类经验，能力上限就是人类专家的水平，无法做到比人更好。</p>
-<p><em>神经网络(Neural Network)</em>：是模拟人脑神经元连接方式的模型结构，具有可自动学习特征，不需要人工设计，有时候很难提取其中的规律和感觉，就可以通过大量的数据来提取特征。目前从理论上来说，它的准确率不是100%的，始终存在对抗样本，在噪声的世界中做稳定近似的学问。</p>
-<ul>
-<li>多层结构（输入层&#x2F;隐藏层&#x2F;输出层）</li>
-<li>通过反向传播训练</li>
-<li>参数量大</li>
-<li>表达能力强</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">人工智能（AI）</span><br><span class="line">    └── 机器学习（ML）</span><br><span class="line">            └── 深度学习（DL）</span><br><span class="line">                    └── 神经网络（Neural Network）</span><br></pre></td></tr></table></figure>
-<p>当神经网络层数很多时，就叫深度学习Deep Learning。</p>
-<p>多层神经网络(Deep Neural Network)的真正价值在于它的结构弹性：<br>&emsp;&emsp; 理论上，逼近任何复杂函数<br>&emsp;&emsp; 实践中，可以通过层级结构逐步逼近真实世界</p>
-<p>每一层神经网络都在做两件事：<br>&emsp;&emsp; 1、抽取更高层的语义特征<br>&emsp;&emsp; 2、压缩与去冗余</p>
-<p>Transformer思想源头：从压缩到重构，Encode-Decode架构，是工程极致化实现</p>
-<ul>
-<li>Compressed(x)，将x压缩为抽象语义</li>
-<li>Function(Compressed(x)) &#x3D; Compressed(y)，在语义空间中进行变换</li>
-<li>y &#x3D; Decompressed(Compressed(y))，再将其解压为目标语言</li>
-</ul>
-<p><em>大语言模型LLM</em></p>
-<ul>
-<li>模型结构：哪来这种神奇的黑箱，超大的多层神经网络</li>
-<li>损失函数：怎么奖励一个机器，损失函数是用来衡量模型预测结果与真实值之间差距的函数。在训练过程中，我们通过最小化损失函数来优化模型参数。它本质上是一个可微的优化目标函数，比如回归常用均方误差MSE(Mean Squared Error)，分类常用交叉熵。通过计算损失对参数的梯度，并进行反向传播，模型可以不断更新参数，使用预测结果越来越准确。</li>
-<li>训练过程：机器怎么建立条件反射，利于梯度下降找到损失函数低的参数，每次向着局部损失函数下降最快的方向前进，得出一套参数。</li>
-</ul>
-<p><em>泛化能力（Generalization）</em>：即规律，推广，举一反三，神经网络具有很强的泛化能力</p>
-<p>&emsp;&emsp; 我本科期间参加了数学建模比赛，学校派了很多理学院的数学老师在暑假给我们培训，讲过下面的各种智能模型，看到下面的名词很有熟悉感，尤其是那个神经网络模型的梯度下降(Gradient Vector)和反向传播(Back Propagation)，当时不怎么明白，现在回过头来看，感觉会清晰很多。</p>
-<p>&emsp;&emsp; 2026年，个人感觉，AI基座大模型的入场券基本已经发放完毕，AI大脑几家主流公司在堆算力优化模型，美国主要有5家：Open AI，Google DeepMind, Anthropic, Meta, xAI；中国主要有：深度求索，字节跳动，阿里巴巴，腾讯，百度，华为，智谱AI，MiniMax，月之暗面，百川智能（感谢Meta Llam3的开源，让大家知道了黑箱里头更多的细节，缩短了中国与美国在大模型领域的差距）。在基座模型上进行发展更多的能力，例如，给他们配上手、眼、脚，可能是机器人公司和一些智能硬件，垂直领域的发力。软件层面可能会有越来越多的行业推出类似Manus、OpenClaw这样的智能体，在垂直应用领域，中国会遍地开花。</p>
-]]></content>
-      <tags>
-        <tag>Artificial Intelligencs</tag>
+        <tag>compile scans</tag>
       </tags>
   </entry>
   <entry>
@@ -425,254 +269,11 @@
       </tags>
   </entry>
   <entry>
-    <title>SSD固态硬盘</title>
-    <url>/2026/02/27/SSD-DDR/</url>
-    <content><![CDATA[<p>在车上，想要弄一个存储空间大一些的SSD固态硬盘来存行车记录仪和哨兵模式下产生的视频，这样记录的视频被覆盖重写的周期会长一些。在小红书上查了一下，点赞评论数较多的是买的SSD固态盘加硬盘盒，图方便省事可以直接上移动固态硬盘盒或者三星迷你U盘fit plus 512G，最好根据自己车的品牌型号提前在网上收集一下其他人遇到的坑。</p>
-<span id="more"></span>
-
-<p>作为普通消费者，根据自己的预算和需求主要关注三个点：<em>SSD固态硬盘PCIe的版本、颗粒是TLC的还是QLC、是否原厂。</em> </p>
-<p>听网友说PCIe4.0遇到过发烫降速，SSD固态硬盘选了PCIe3.0，考虑环境温度、使用场景和安装场景的稳定性，选择了TLC颗粒，原厂JD官方旗舰店购买。</p>
-<p>我自己最后是买了一个前身东芝存储器的铠侠RC20 1TB PCIe3.0 1GB缓存（想支持国货，没货了，就很离谱），固态硬盘盒是佳翼NVMe 583 车载专用款，然后是买了3M家的20x60的魔术贴来固定硬盘，总共花费1032.52元（有点小贵了较年前）。</p>
-<p><strong>SSD固态硬盘：</strong> 在电脑上格式化选exFAT，（这里有一个在win10上格式化分区的具体操作<a href="https://zhuanlan.zhihu.com/p/73456495">链接</a>），网上说预留部分空间(OP)不分区，防止硬盘快写满时发生降速异常，没有必要去浪费存储空间，我们不是7*24小时高强度写入的服务器场景。可以在自己的车机系统上去试一下不分格外的空闲空间，实践出真知。插在车上时，再在车机上进行格式化一下。</p>
-<p><img src="/2026/02/27/SSD-DDR/Kioxia_SSD_1T.jpg" alt="铠侠SSD固态硬盘"></p>
-<p><strong>硬盘盒：</strong> 问卖家要重写驱动的程序，关掉自动休眠（设置自定义休眠时间为0）</p>
-<p><img src="/2026/02/27/SSD-DDR/JEYI583.jpg" alt="固态硬盘盒"></p>
-<p><img src="/2026/02/27/SSD-DDR/flash_driver.jpg" alt="硬盘盒固件重刷"></p>
-<p><strong>硬盘固定：</strong> 根据硬盘盒尺寸选购魔术贴来固定</p>
-<p><img src="/2026/02/27/SSD-DDR/3M_Velcro.jpg" alt="魔术贴"></p>
-<p>先来说一下固态硬盘的价格，由于这波AI浪潮，导致存储行业个人消费电子存储产能受限拉高了存储设备的价格，至少是在原来的基础上<strong>翻倍不止</strong>。希望中国芯片原厂与制造商长江存储（YMTC）和长鑫存储（CXMT）能利用这次机会再进一步发展，将价格稳下来，成为全球行业有话语权的玩家。</p>
-<ul>
-<li>长江存储：国内唯一的3D NAND闪存原厂，自主研发Xtracjing架构，232层技术达到国际一线水平，2025年全球市占率约10%。（来自：Deepseek）</li>
-<li>长鑫存储：国内DRAM(内存)芯片龙头，已实现DDR4&#x2F;DDR5量产，2025年全球市占率预计突破5%。（来自：Deepseek）</li>
-</ul>
-<h3 id="固态硬盘原厂："><a href="#固态硬盘原厂：" class="headerlink" title="固态硬盘原厂："></a>固态硬盘原厂：</h3><p>“原厂”在固态硬盘领域，通常指能自主研发和生产闪存颗粒（NAND Flash）的厂商所推出的自由品牌固态硬盘，目前能称为原厂的品牌有：</p>
-<table>
-<thead>
-<tr>
-<th align="left">公司</th>
-<th align="left">国家</th>
-<th align="left">零售品牌</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left">三星（SAMSUNG）</td>
-<td align="left">韩国</td>
-<td align="left">三星</td>
-</tr>
-<tr>
-<td align="left">西部数据（Western Digital&#x2F;WD）</td>
-<td align="left">美国</td>
-<td align="left">WD和闪迪</td>
-</tr>
-<tr>
-<td align="left">铠侠（KIOXIA）</td>
-<td align="left">日本</td>
-<td align="left">铠侠</td>
-</tr>
-<tr>
-<td align="left">美光（Micron）</td>
-<td align="left">美国</td>
-<td align="left">英睿达（Crucial）</td>
-</tr>
-<tr>
-<td align="left">SK海力士（SK hynix）</td>
-<td align="left">韩国</td>
-<td align="left">Solidigm</td>
-</tr>
-<tr>
-<td align="left">长江存储（YMTC）</td>
-<td align="left">中国</td>
-<td align="left">致态(ZHITAI)</td>
-</tr>
-</tbody></table>
-<h3 id="TLC颗粒和QLC颗粒的区别："><a href="#TLC颗粒和QLC颗粒的区别：" class="headerlink" title="TLC颗粒和QLC颗粒的区别："></a>TLC颗粒和QLC颗粒的区别：</h3><p>最主要的区别在每个单元存储的位数，一个是三位一个是四位。</p>
-<ul>
-<li>TLC：Triple-Level Cell，三层单元</li>
-<li>QLC：Quad-Level Cell，四层单元</li>
-</ul>
-<table>
-<thead>
-<tr>
-<th align="left">对比维度</th>
-<th align="left">TLC</th>
-<th align="left">QLC</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>每个单元存储位数</strong></td>
-<td align="left">3位</td>
-<td align="left">4位</td>
-</tr>
-<tr>
-<td align="left"><strong>存储密度</strong></td>
-<td align="left">较高</td>
-<td align="left"><strong>最高</strong> (同样物理空间容量更大)</td>
-</tr>
-<tr>
-<td align="left"><strong>制造成本</strong></td>
-<td align="left">较低</td>
-<td align="left"><strong>最低</strong></td>
-</tr>
-<tr>
-<td align="left"><strong>理论擦写寿命</strong></td>
-<td align="left">约 1000-3000 次</td>
-<td align="left">约 100-1500 次</td>
-</tr>
-<tr>
-<td align="left"><strong>读写速度</strong></td>
-<td align="left"><strong>快</strong></td>
-<td align="left">较快 (但大文件写入易掉速)</td>
-</tr>
-<tr>
-<td align="left"><strong>数据保持性</strong></td>
-<td align="left"><strong>好</strong></td>
-<td align="left">一般</td>
-</tr>
-</tbody></table>
-<h3 id="PCIe版本间的区别："><a href="#PCIe版本间的区别：" class="headerlink" title="PCIe版本间的区别："></a>PCIe版本间的区别：</h3><p>最主要的区别在于传输速度，每一代是前一代的两倍。</p>
-<table>
-<thead>
-<tr>
-<th align="left">对比维度</th>
-<th align="left">PCIe 3.0</th>
-<th align="left">PCIe 4.0</th>
-<th align="left">PCIe 5.0</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>通俗比喻</strong></td>
-<td align="left">双向8车道高速</td>
-<td align="left">双向16车道高速</td>
-<td align="left">双向32车道高速</td>
-</tr>
-<tr>
-<td align="left"><strong>传输速率</strong></td>
-<td align="left">8 GT&#x2F;s</td>
-<td align="left">16 GT&#x2F;s</td>
-<td align="left">32 GT&#x2F;s</td>
-</tr>
-<tr>
-<td align="left"><strong>理论带宽 (x4)</strong></td>
-<td align="left">约 <strong>4 GB&#x2F;s</strong></td>
-<td align="left">约 <strong>8 GB&#x2F;s</strong></td>
-<td align="left">约 <strong>16 GB&#x2F;s</strong></td>
-</tr>
-<tr>
-<td align="left"><strong>实际速度 (顺序读写)</strong></td>
-<td align="left">约 <strong>3500 MB&#x2F;s</strong></td>
-<td align="left">约 <strong>7000 - 7500 MB&#x2F;s</strong></td>
-<td align="left">约 <strong>10000 - 14000+ MB&#x2F;s</strong></td>
-</tr>
-<tr>
-<td align="left"><strong>主流定位</strong></td>
-<td align="left">性价比之选，满足日常</td>
-<td align="left">高性能游戏&#x2F;办公主流</td>
-<td align="left">极致生产力，专业创作</td>
-</tr>
-</tbody></table>
-<h3 id="SSD固态硬盘配缓存："><a href="#SSD固态硬盘配缓存：" class="headerlink" title="SSD固态硬盘配缓存："></a>SSD固态硬盘配缓存：</h3><p>我买的1TB的硬盘配了1GB的缓存，可以方便在车机系统中视频快速写入和回放。</p>
-<p>在SSD（固态硬盘）语境下，通常是指1GB的独立DRAM缓存。对于1TB容量的SSD来说，这个1:1000的配比是一个非常经典的方案。</p>
-<p>它最核心的使命是：</p>
-<ul>
-<li>快速寻址：SSD读写数据时需要查一张“地址地图”（FTL映射表）。有缓存就可以把这整张地图放进去，主控芯片查路线的速度极快。</li>
-<li>避免卡顿：如果没独立缓存，地图就只能存在慢得多的闪存里。这会导致日常打开软件、小文件读写（即4K随机性能）变慢，SSD越用越卡的可能性也更高。</li>
-</ul>
-<h3 id="MBR-与-GPT-分区表：Windows-与-Linux-支持度对比"><a href="#MBR-与-GPT-分区表：Windows-与-Linux-支持度对比" class="headerlink" title="MBR 与 GPT 分区表：Windows 与 Linux 支持度对比"></a>MBR 与 GPT 分区表：Windows 与 Linux 支持度对比</h3><p>下表详细列出了 MBR（主引导记录）和 GPT（GUID 分区表）在 Windows 和 Linux 系统中的支持情况、限制及适用场景。</p>
-<table>
-<thead>
-<tr>
-<th align="left">特性</th>
-<th align="left">MBR (主引导记录)</th>
-<th align="left">GPT (GUID 分区表)</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>硬盘容量支持</strong></td>
-<td align="left"><strong>最大 2TB</strong>。超过 2TB 的部分无法识别和使用。</td>
-<td align="left"><strong>无上限</strong>（理论最大 18EB）。完美支持 2TB 及以上的大容量硬盘。</td>
-</tr>
-<tr>
-<td align="left"><strong>分区数量</strong></td>
-<td align="left"><strong>最多 4 个主分区</strong>，或 <strong>3 个主分区 + 1 个扩展分区</strong>（扩展分区内可划分多个逻辑驱动器）。</td>
-<td align="left"><strong>最多 128 个主分区</strong>（Windows 下）。Linux 下同样支持多达 128 个分区，没有扩展&#x2F;逻辑分区的概念。</td>
-</tr>
-<tr>
-<td align="left"><strong>系统引导模式</strong></td>
-<td align="left">传统 <strong>BIOS</strong> 模式（也称 Legacy 模式）。</td>
-<td align="left">现代 <strong>UEFI</strong> 模式（必需）。<em>注：Linux 可通过特殊配置在 BIOS 模式下从 GPT 磁盘启动，但 Windows 不行。</em></td>
-</tr>
-<tr>
-<td align="left"><strong>数据安全与恢复</strong></td>
-<td align="left"><strong>较差</strong>。分区表仅有一份，存储在磁盘头部，容易因病毒或写入错误导致损坏，且难以恢复。</td>
-<td align="left"><strong>优秀</strong>。分区表在主次两端有多份备份，具有 CRC32 校验和容错机制，损坏后可自动从备份恢复。</td>
-</tr>
-<tr>
-<td align="left"><strong>操作系统兼容性</strong></td>
-<td align="left"><strong>极高</strong>。所有版本的 Windows（从 95 到 11）和 Linux 均可识别和使用 MBR 磁盘。</td>
-<td align="left"><strong>良好</strong>。<strong>Windows 要求</strong>：仅 Vista&#x2F;Server 2008 及之后版本支持作为数据盘；仅 64位 Windows 且配备 UEFI 才支持从 GPT 启动。<strong>Linux 要求</strong>：现代发行版（内核 2.6.38 以上）完美支持，包括启动和数据盘。</td>
-</tr>
-<tr>
-<td align="left"><strong>引导加载器</strong></td>
-<td align="left"><strong>Windows</strong>: <code>bootmgr</code> (位于活动分区) + <code>boot.ini</code> 或 BCD 存储。<br><strong>Linux</strong>: GRUB Legacy 或 GRUB2 (安装于 MBR 和分区引导扇区)。</td>
-<td align="left"><strong>Windows</strong>: <code>bootmgfw.efi</code> (位于 ESP - EFI 系统分区) + BCD 存储。<br><strong>Linux</strong>: GRUB2 (针对 UEFI 编译，安装于 ESP)、<code>systemd-boot</code> 或其他 UEFI 引导器。</td>
-</tr>
-<tr>
-<td align="left"><strong>适用场景</strong></td>
-<td align="left">• 老旧电脑（仅支持 BIOS 启动）。<br>• 小容量硬盘（≤ 2TB）。<br>• 需要安装 32位 Windows 或极老版本 Windows。<br>• 多系统兼容性要求极高的环境。</td>
-<td align="left">• <strong>现代电脑（2012 年后出厂，预装 Win8&#x2F;10&#x2F;11）</strong>。<br>• <strong>大容量硬盘（&gt; 2TB）</strong>。<br>• 需要 UEFI 安全启动（Secure Boot）功能。<br>• 希望获得更快的启动速度和更好的数据安全性。<br>• <strong>Linux 服务器或桌面（推荐首选）</strong>。</td>
-</tr>
-</tbody></table>
-<h4 id="🔍-如何查看当前磁盘的分区表类型？"><a href="#🔍-如何查看当前磁盘的分区表类型？" class="headerlink" title="🔍 如何查看当前磁盘的分区表类型？"></a>🔍 如何查看当前磁盘的分区表类型？</h4><h5 id="Windows-系统"><a href="#Windows-系统" class="headerlink" title="Windows 系统"></a>Windows 系统</h5><ol>
-<li>右键点击“开始”按钮（或按 <code>Win + X</code>），选择“磁盘管理”。</li>
-<li>在磁盘管理窗口底部，右键点击目标磁盘的标签（如“磁盘 0”），选择“属性”。</li>
-<li>切换到“卷”选项卡，查看“磁盘分区形式”一栏，会显示是“主引导记录(MBR)”还是“GUID 分区表(GPT)”。</li>
-</ol>
-<h5 id="Linux-系统"><a href="#Linux-系统" class="headerlink" title="Linux 系统"></a>Linux 系统</h5><p>可以使用以下任一命令查看：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 parted 命令</span></span><br><span class="line"><span class="built_in">sudo</span> parted -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 fdisk 命令</span></span><br><span class="line"><span class="built_in">sudo</span> fdisk -l /dev/sda</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 gdisk 命令（会明确提示）</span></span><br><span class="line"><span class="built_in">sudo</span> gdisk -l /dev/sda</span><br></pre></td></tr></table></figure>
-
-<h3 id="NTFS-vs-exFAT-核心对比"><a href="#NTFS-vs-exFAT-核心对比" class="headerlink" title="NTFS vs. exFAT 核心对比"></a>NTFS vs. exFAT 核心对比</h3><table>
-<thead>
-<tr>
-<th align="left">特性维度</th>
-<th align="left">NTFS</th>
-<th align="left">exFAT</th>
-</tr>
-</thead>
-<tbody><tr>
-<td align="left"><strong>最佳适用场景</strong></td>
-<td align="left"><strong>Windows 系统盘、内部硬盘、游戏盘、企业服务器</strong></td>
-<td align="left"><strong>U盘、SD卡、移动硬盘，需在 Windows 和 Mac 间传输文件时</strong></td>
-</tr>
-<tr>
-<td align="left"><strong>兼容性</strong></td>
-<td align="left"><strong>Windows</strong>完美支持；<strong>Mac</strong>默认只能读，无法写入；<strong>Linux</strong>部分发行版需安装驱动</td>
-<td align="left"><strong>跨平台王者</strong>，Windows&#x2F;macOS&#x2F;Linux 均可直接读写，无需额外设置</td>
-</tr>
-<tr>
-<td align="left"><strong>关键功能</strong></td>
-<td align="left"><strong>功能全面</strong>：支持文件加密、权限设置、磁盘配额、日志功能（可恢复数据）</td>
-<td align="left"><strong>功能精简</strong>：为了提高闪存设备效率和寿命，舍弃了NTFS的高级功能</td>
-</tr>
-<tr>
-<td align="left"><strong>安全性</strong></td>
-<td align="left"><strong>高</strong>。日志功能可避免因断电或意外拔出导致的数据损坏，支持文件加密（EFS）</td>
-<td align="left"><strong>低</strong>。缺乏日志功能，突然断电或直接拔出，数据损坏或丢失的风险更高</td>
-</tr>
-<tr>
-<td align="left"><strong>理论限制</strong></td>
-<td align="left">文件大小：<strong>16EB</strong>；分区大小：<strong>256TB</strong></td>
-<td align="left">文件大小：<strong>16EB</strong>；分区大小：<strong>128PB</strong></td>
-</tr>
-</tbody></table>
-]]></content>
-      <tags>
-        <tag>行业体感</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>RTOS</title>
     <url>/2026/02/28/RTOS/</url>
     <content><![CDATA[<h1 id="RTOS学习笔记"><a href="#RTOS学习笔记" class="headerlink" title="RTOS学习笔记"></a>RTOS学习笔记</h1><h2 id="一、什么是RTOS？"><a href="#一、什么是RTOS？" class="headerlink" title="一、什么是RTOS？"></a>一、什么是RTOS？</h2><p>RTOS(Real-Time Operating System，实时操作系统)是一种专门为“必须在规定时间内完成指定任务”而设计的操作系统。它像一个严格的时间管家，确保每个任务在截止时间前被执行，而不是“尽量快”地执行。</p>
+<span id="more"></span>
+
 <h3 id="1-1-RTOS-vs-普通操作系统"><a href="#1-1-RTOS-vs-普通操作系统" class="headerlink" title="1.1 RTOS vs 普通操作系统"></a>1.1 RTOS vs 普通操作系统</h3><table>
 <thead>
 <tr>
@@ -1006,6 +607,407 @@
 ]]></content>
       <tags>
         <tag>操作系统</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>SSD固态硬盘</title>
+    <url>/2026/02/27/SSD-DDR/</url>
+    <content><![CDATA[<p>在车上，想要弄一个存储空间大一些的SSD固态硬盘来存行车记录仪和哨兵模式下产生的视频，这样记录的视频被覆盖重写的周期会长一些。在小红书上查了一下，点赞评论数较多的是买的SSD固态盘加硬盘盒，图方便省事可以直接上移动固态硬盘盒或者三星迷你U盘fit plus 512G，最好根据自己车的品牌型号提前在网上收集一下其他人遇到的坑。</p>
+<span id="more"></span>
+
+<p>作为普通消费者，根据自己的预算和需求主要关注三个点：<em>SSD固态硬盘PCIe的版本、颗粒是TLC的还是QLC、是否原厂。</em> </p>
+<p>听网友说PCIe4.0遇到过发烫降速，SSD固态硬盘选了PCIe3.0，考虑环境温度、使用场景和安装场景的稳定性，选择了TLC颗粒，原厂JD官方旗舰店购买。</p>
+<p>我自己最后是买了一个前身东芝存储器的铠侠RC20 1TB PCIe3.0 1GB缓存（想支持国货，没货了，就很离谱），固态硬盘盒是佳翼NVMe 583 车载专用款，然后是买了3M家的20x60的魔术贴来固定硬盘，总共花费1032.52元（有点小贵了较年前）。</p>
+<p><strong>SSD固态硬盘：</strong> 在电脑上格式化选exFAT，（这里有一个在win10上格式化分区的具体操作<a href="https://zhuanlan.zhihu.com/p/73456495">链接</a>），网上说预留部分空间(OP)不分区，防止硬盘快写满时发生降速异常，没有必要去浪费存储空间，我们不是7*24小时高强度写入的服务器场景。可以在自己的车机系统上去试一下不分格外的空闲空间，实践出真知。插在车上时，再在车机上进行格式化一下。</p>
+<p><img src="/2026/02/27/SSD-DDR/Kioxia_SSD_1T.jpg" alt="铠侠SSD固态硬盘"></p>
+<p><strong>硬盘盒：</strong> 问卖家要重写驱动的程序，关掉自动休眠（设置自定义休眠时间为0）</p>
+<p><img src="/2026/02/27/SSD-DDR/JEYI583.jpg" alt="固态硬盘盒"></p>
+<p><img src="/2026/02/27/SSD-DDR/flash_driver.jpg" alt="硬盘盒固件重刷"></p>
+<p><strong>硬盘固定：</strong> 根据硬盘盒尺寸选购魔术贴来固定</p>
+<p><img src="/2026/02/27/SSD-DDR/3M_Velcro.jpg" alt="魔术贴"></p>
+<p>先来说一下固态硬盘的价格，由于这波AI浪潮，导致存储行业个人消费电子存储产能受限拉高了存储设备的价格，至少是在原来的基础上<strong>翻倍不止</strong>。希望中国芯片原厂与制造商长江存储（YMTC）和长鑫存储（CXMT）能利用这次机会再进一步发展，将价格稳下来，成为全球行业有话语权的玩家。</p>
+<ul>
+<li>长江存储：国内唯一的3D NAND闪存原厂，自主研发Xtracjing架构，232层技术达到国际一线水平，2025年全球市占率约10%。（来自：Deepseek）</li>
+<li>长鑫存储：国内DRAM(内存)芯片龙头，已实现DDR4&#x2F;DDR5量产，2025年全球市占率预计突破5%。（来自：Deepseek）</li>
+</ul>
+<h3 id="固态硬盘原厂："><a href="#固态硬盘原厂：" class="headerlink" title="固态硬盘原厂："></a>固态硬盘原厂：</h3><p>“原厂”在固态硬盘领域，通常指能自主研发和生产闪存颗粒（NAND Flash）的厂商所推出的自由品牌固态硬盘，目前能称为原厂的品牌有：</p>
+<table>
+<thead>
+<tr>
+<th align="left">公司</th>
+<th align="left">国家</th>
+<th align="left">零售品牌</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left">三星（SAMSUNG）</td>
+<td align="left">韩国</td>
+<td align="left">三星</td>
+</tr>
+<tr>
+<td align="left">西部数据（Western Digital&#x2F;WD）</td>
+<td align="left">美国</td>
+<td align="left">WD和闪迪</td>
+</tr>
+<tr>
+<td align="left">铠侠（KIOXIA）</td>
+<td align="left">日本</td>
+<td align="left">铠侠</td>
+</tr>
+<tr>
+<td align="left">美光（Micron）</td>
+<td align="left">美国</td>
+<td align="left">英睿达（Crucial）</td>
+</tr>
+<tr>
+<td align="left">SK海力士（SK hynix）</td>
+<td align="left">韩国</td>
+<td align="left">Solidigm</td>
+</tr>
+<tr>
+<td align="left">长江存储（YMTC）</td>
+<td align="left">中国</td>
+<td align="left">致态(ZHITAI)</td>
+</tr>
+</tbody></table>
+<h3 id="TLC颗粒和QLC颗粒的区别："><a href="#TLC颗粒和QLC颗粒的区别：" class="headerlink" title="TLC颗粒和QLC颗粒的区别："></a>TLC颗粒和QLC颗粒的区别：</h3><p>最主要的区别在每个单元存储的位数，一个是三位一个是四位。</p>
+<ul>
+<li>TLC：Triple-Level Cell，三层单元</li>
+<li>QLC：Quad-Level Cell，四层单元</li>
+</ul>
+<table>
+<thead>
+<tr>
+<th align="left">对比维度</th>
+<th align="left">TLC</th>
+<th align="left">QLC</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>每个单元存储位数</strong></td>
+<td align="left">3位</td>
+<td align="left">4位</td>
+</tr>
+<tr>
+<td align="left"><strong>存储密度</strong></td>
+<td align="left">较高</td>
+<td align="left"><strong>最高</strong> (同样物理空间容量更大)</td>
+</tr>
+<tr>
+<td align="left"><strong>制造成本</strong></td>
+<td align="left">较低</td>
+<td align="left"><strong>最低</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>理论擦写寿命</strong></td>
+<td align="left">约 1000-3000 次</td>
+<td align="left">约 100-1500 次</td>
+</tr>
+<tr>
+<td align="left"><strong>读写速度</strong></td>
+<td align="left"><strong>快</strong></td>
+<td align="left">较快 (但大文件写入易掉速)</td>
+</tr>
+<tr>
+<td align="left"><strong>数据保持性</strong></td>
+<td align="left"><strong>好</strong></td>
+<td align="left">一般</td>
+</tr>
+</tbody></table>
+<h3 id="PCIe版本间的区别："><a href="#PCIe版本间的区别：" class="headerlink" title="PCIe版本间的区别："></a>PCIe版本间的区别：</h3><p>最主要的区别在于传输速度，每一代是前一代的两倍。</p>
+<table>
+<thead>
+<tr>
+<th align="left">对比维度</th>
+<th align="left">PCIe 3.0</th>
+<th align="left">PCIe 4.0</th>
+<th align="left">PCIe 5.0</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>通俗比喻</strong></td>
+<td align="left">双向8车道高速</td>
+<td align="left">双向16车道高速</td>
+<td align="left">双向32车道高速</td>
+</tr>
+<tr>
+<td align="left"><strong>传输速率</strong></td>
+<td align="left">8 GT&#x2F;s</td>
+<td align="left">16 GT&#x2F;s</td>
+<td align="left">32 GT&#x2F;s</td>
+</tr>
+<tr>
+<td align="left"><strong>理论带宽 (x4)</strong></td>
+<td align="left">约 <strong>4 GB&#x2F;s</strong></td>
+<td align="left">约 <strong>8 GB&#x2F;s</strong></td>
+<td align="left">约 <strong>16 GB&#x2F;s</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>实际速度 (顺序读写)</strong></td>
+<td align="left">约 <strong>3500 MB&#x2F;s</strong></td>
+<td align="left">约 <strong>7000 - 7500 MB&#x2F;s</strong></td>
+<td align="left">约 <strong>10000 - 14000+ MB&#x2F;s</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>主流定位</strong></td>
+<td align="left">性价比之选，满足日常</td>
+<td align="left">高性能游戏&#x2F;办公主流</td>
+<td align="left">极致生产力，专业创作</td>
+</tr>
+</tbody></table>
+<h3 id="SSD固态硬盘配缓存："><a href="#SSD固态硬盘配缓存：" class="headerlink" title="SSD固态硬盘配缓存："></a>SSD固态硬盘配缓存：</h3><p>我买的1TB的硬盘配了1GB的缓存，可以方便在车机系统中视频快速写入和回放。</p>
+<p>在SSD（固态硬盘）语境下，通常是指1GB的独立DRAM缓存。对于1TB容量的SSD来说，这个1:1000的配比是一个非常经典的方案。</p>
+<p>它最核心的使命是：</p>
+<ul>
+<li>快速寻址：SSD读写数据时需要查一张“地址地图”（FTL映射表）。有缓存就可以把这整张地图放进去，主控芯片查路线的速度极快。</li>
+<li>避免卡顿：如果没独立缓存，地图就只能存在慢得多的闪存里。这会导致日常打开软件、小文件读写（即4K随机性能）变慢，SSD越用越卡的可能性也更高。</li>
+</ul>
+<h3 id="MBR-与-GPT-分区表：Windows-与-Linux-支持度对比"><a href="#MBR-与-GPT-分区表：Windows-与-Linux-支持度对比" class="headerlink" title="MBR 与 GPT 分区表：Windows 与 Linux 支持度对比"></a>MBR 与 GPT 分区表：Windows 与 Linux 支持度对比</h3><p>下表详细列出了 MBR（主引导记录）和 GPT（GUID 分区表）在 Windows 和 Linux 系统中的支持情况、限制及适用场景。</p>
+<table>
+<thead>
+<tr>
+<th align="left">特性</th>
+<th align="left">MBR (主引导记录)</th>
+<th align="left">GPT (GUID 分区表)</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>硬盘容量支持</strong></td>
+<td align="left"><strong>最大 2TB</strong>。超过 2TB 的部分无法识别和使用。</td>
+<td align="left"><strong>无上限</strong>（理论最大 18EB）。完美支持 2TB 及以上的大容量硬盘。</td>
+</tr>
+<tr>
+<td align="left"><strong>分区数量</strong></td>
+<td align="left"><strong>最多 4 个主分区</strong>，或 <strong>3 个主分区 + 1 个扩展分区</strong>（扩展分区内可划分多个逻辑驱动器）。</td>
+<td align="left"><strong>最多 128 个主分区</strong>（Windows 下）。Linux 下同样支持多达 128 个分区，没有扩展&#x2F;逻辑分区的概念。</td>
+</tr>
+<tr>
+<td align="left"><strong>系统引导模式</strong></td>
+<td align="left">传统 <strong>BIOS</strong> 模式（也称 Legacy 模式）。</td>
+<td align="left">现代 <strong>UEFI</strong> 模式（必需）。<em>注：Linux 可通过特殊配置在 BIOS 模式下从 GPT 磁盘启动，但 Windows 不行。</em></td>
+</tr>
+<tr>
+<td align="left"><strong>数据安全与恢复</strong></td>
+<td align="left"><strong>较差</strong>。分区表仅有一份，存储在磁盘头部，容易因病毒或写入错误导致损坏，且难以恢复。</td>
+<td align="left"><strong>优秀</strong>。分区表在主次两端有多份备份，具有 CRC32 校验和容错机制，损坏后可自动从备份恢复。</td>
+</tr>
+<tr>
+<td align="left"><strong>操作系统兼容性</strong></td>
+<td align="left"><strong>极高</strong>。所有版本的 Windows（从 95 到 11）和 Linux 均可识别和使用 MBR 磁盘。</td>
+<td align="left"><strong>良好</strong>。<strong>Windows 要求</strong>：仅 Vista&#x2F;Server 2008 及之后版本支持作为数据盘；仅 64位 Windows 且配备 UEFI 才支持从 GPT 启动。<strong>Linux 要求</strong>：现代发行版（内核 2.6.38 以上）完美支持，包括启动和数据盘。</td>
+</tr>
+<tr>
+<td align="left"><strong>引导加载器</strong></td>
+<td align="left"><strong>Windows</strong>: <code>bootmgr</code> (位于活动分区) + <code>boot.ini</code> 或 BCD 存储。<br><strong>Linux</strong>: GRUB Legacy 或 GRUB2 (安装于 MBR 和分区引导扇区)。</td>
+<td align="left"><strong>Windows</strong>: <code>bootmgfw.efi</code> (位于 ESP - EFI 系统分区) + BCD 存储。<br><strong>Linux</strong>: GRUB2 (针对 UEFI 编译，安装于 ESP)、<code>systemd-boot</code> 或其他 UEFI 引导器。</td>
+</tr>
+<tr>
+<td align="left"><strong>适用场景</strong></td>
+<td align="left">• 老旧电脑（仅支持 BIOS 启动）。<br>• 小容量硬盘（≤ 2TB）。<br>• 需要安装 32位 Windows 或极老版本 Windows。<br>• 多系统兼容性要求极高的环境。</td>
+<td align="left">• <strong>现代电脑（2012 年后出厂，预装 Win8&#x2F;10&#x2F;11）</strong>。<br>• <strong>大容量硬盘（&gt; 2TB）</strong>。<br>• 需要 UEFI 安全启动（Secure Boot）功能。<br>• 希望获得更快的启动速度和更好的数据安全性。<br>• <strong>Linux 服务器或桌面（推荐首选）</strong>。</td>
+</tr>
+</tbody></table>
+<h4 id="🔍-如何查看当前磁盘的分区表类型？"><a href="#🔍-如何查看当前磁盘的分区表类型？" class="headerlink" title="🔍 如何查看当前磁盘的分区表类型？"></a>🔍 如何查看当前磁盘的分区表类型？</h4><h5 id="Windows-系统"><a href="#Windows-系统" class="headerlink" title="Windows 系统"></a>Windows 系统</h5><ol>
+<li>右键点击“开始”按钮（或按 <code>Win + X</code>），选择“磁盘管理”。</li>
+<li>在磁盘管理窗口底部，右键点击目标磁盘的标签（如“磁盘 0”），选择“属性”。</li>
+<li>切换到“卷”选项卡，查看“磁盘分区形式”一栏，会显示是“主引导记录(MBR)”还是“GUID 分区表(GPT)”。</li>
+</ol>
+<h5 id="Linux-系统"><a href="#Linux-系统" class="headerlink" title="Linux 系统"></a>Linux 系统</h5><p>可以使用以下任一命令查看：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="comment"># 使用 parted 命令</span></span><br><span class="line"><span class="built_in">sudo</span> parted -l</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 fdisk 命令</span></span><br><span class="line"><span class="built_in">sudo</span> fdisk -l /dev/sda</span><br><span class="line"></span><br><span class="line"><span class="comment"># 使用 gdisk 命令（会明确提示）</span></span><br><span class="line"><span class="built_in">sudo</span> gdisk -l /dev/sda</span><br></pre></td></tr></table></figure>
+
+<h3 id="NTFS-vs-exFAT-核心对比"><a href="#NTFS-vs-exFAT-核心对比" class="headerlink" title="NTFS vs. exFAT 核心对比"></a>NTFS vs. exFAT 核心对比</h3><table>
+<thead>
+<tr>
+<th align="left">特性维度</th>
+<th align="left">NTFS</th>
+<th align="left">exFAT</th>
+</tr>
+</thead>
+<tbody><tr>
+<td align="left"><strong>最佳适用场景</strong></td>
+<td align="left"><strong>Windows 系统盘、内部硬盘、游戏盘、企业服务器</strong></td>
+<td align="left"><strong>U盘、SD卡、移动硬盘，需在 Windows 和 Mac 间传输文件时</strong></td>
+</tr>
+<tr>
+<td align="left"><strong>兼容性</strong></td>
+<td align="left"><strong>Windows</strong>完美支持；<strong>Mac</strong>默认只能读，无法写入；<strong>Linux</strong>部分发行版需安装驱动</td>
+<td align="left"><strong>跨平台王者</strong>，Windows&#x2F;macOS&#x2F;Linux 均可直接读写，无需额外设置</td>
+</tr>
+<tr>
+<td align="left"><strong>关键功能</strong></td>
+<td align="left"><strong>功能全面</strong>：支持文件加密、权限设置、磁盘配额、日志功能（可恢复数据）</td>
+<td align="left"><strong>功能精简</strong>：为了提高闪存设备效率和寿命，舍弃了NTFS的高级功能</td>
+</tr>
+<tr>
+<td align="left"><strong>安全性</strong></td>
+<td align="left"><strong>高</strong>。日志功能可避免因断电或意外拔出导致的数据损坏，支持文件加密（EFS）</td>
+<td align="left"><strong>低</strong>。缺乏日志功能，突然断电或直接拔出，数据损坏或丢失的风险更高</td>
+</tr>
+<tr>
+<td align="left"><strong>理论限制</strong></td>
+<td align="left">文件大小：<strong>16EB</strong>；分区大小：<strong>256TB</strong></td>
+<td align="left">文件大小：<strong>16EB</strong>；分区大小：<strong>128PB</strong></td>
+</tr>
+</tbody></table>
+]]></content>
+      <tags>
+        <tag>行业体感</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ffmpeg_use</title>
+    <url>/2021/01/10/ffmpeg-use/</url>
+    <content><![CDATA[<h1 id="1-视频格式转换"><a href="#1-视频格式转换" class="headerlink" title="1. 视频格式转换"></a>1. 视频格式转换</h1><h2 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1. 前言"></a>1.1. 前言</h2><p>有位同仁，最近在拓展副业，将自己的作品上传到某网站，简介部分需要swf格式的video，而本地只有mov格式的，需要转换，寻求我的帮助。</p>
+<p>由于本人是程序员兼个人电脑是mac，周末有时间还能稍微折腾一下，不希望直接去app store寻找购买现成的软件，也不想去下载盗版破解软件不安全。在网上搜索到了一个开源的音视频处理软件FFmpeg，很多音视频软件是基于该开源软件进行的二次开发。本文是基于其提供的静态库，采用敲命令行的方式进行视频格式的转换。</p>
+<span id="more"></span>
+
+<h2 id="1-2-安装方式"><a href="#1-2-安装方式" class="headerlink" title="1.2. 安装方式"></a>1.2. 安装方式</h2><p>FFmpeg官网提供了三种方式<a href="https://trac.ffmpeg.org/wiki/CompilationGuide/macOS">安装</a>其软件：</p>
+<ol>
+<li><p>使用<a href="https://brew.sh/">Homebrew</a></p>
+<p><code>brew install ffmpeg</code></p>
+</li>
+<li><p>下载官网<a href="https://ffmpeg.org/download.html">static build for macOS</a></p>
+</li>
+<li><p>下载官网源代码自己编译</p>
+</li>
+</ol>
+<h2 id="1-3-static-build方式"><a href="#1-3-static-build方式" class="headerlink" title="1.3. static build方式"></a>1.3. static build方式</h2><p>由于博主升级了操作系统，Homebrew不能使用，使用brew install ffmpeg会自动updating homebrew，然后updating失败，可以使用<code>export HOMEBREW_NO_AUTO_UPDATE=true</code>取消自动升级，但是安装还是失败了，于是博主采用了第二种方式直接去ffmpeg官网下载<a href="https://ffmpeg.org/download.html">static build for macOS</a>。</p>
+<h3 id="1-3-1-安装与使用"><a href="#1-3-1-安装与使用" class="headerlink" title="1.3.1. 安装与使用"></a>1.3.1. 安装与使用</h3><ol>
+<li>将下载下来的压缩包解压</li>
+<li>将解压出来的文件放到&#x2F;usr&#x2F;local&#x2F;bin路径下（右键单击Finder–&gt;Go to Folder…—&gt;输入&#x2F;usr&#x2F;local&#x2F;bin—&gt;return键）</li>
+<li>打开terminal，cd到&#x2F;usr&#x2F;local&#x2F;bin&#x2F;，执行chmod 777 ffmpeg指令，修改该build的使用权限</li>
+<li>在你存放视频的目录打开terminal，执行ffmpeg -i xxx.mov -f swf xxx.swf指令</li>
+</ol>
+<h2 id="1-4-后继"><a href="#1-4-后继" class="headerlink" title="1.4. 后继"></a>1.4. 后继</h2><p>具体其他的使用指令可去其官网查看，会介绍其使用语法，或者ffmpeg -h也有简单的介绍。</p>
+<p>自己后续可能基于其库进行二次开发。</p>
+]]></content>
+      <tags>
+        <tag>video_formate_convert</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我在高通中国的五年</title>
+    <url>/2026/02/12/five-years-in-qcom/</url>
+    <content><![CDATA[<p>&emsp;&emsp; 我是在2020年12月份加入高通，那时候还是疫情期间，面试也是全程线上。苹果回到高通基带芯片的怀抱不久，iPhone和iPad大部分产线在深圳，需要人来做现场技术支持，所以我是以支持苹果的名义招进高通中国基带软件研发团队。因为苹果是高通的VIP客户（给的钱多），所以是研发团队作为主导来直接对接他们。</p>
+<span id="more"></span>
+
+<p>&emsp;&emsp; 转眼间五年过去了，正好趁这次高通中国modem软件研发团队的调整，可以做一些回顾和总结。</p>
+<p>&emsp;&emsp; 在高通中国我觉得比较棒的点是，公司相对信任员工，没有严格的打卡制度，相对灵活的上班时间；做需求push感没有那么强，可以按自己的workload和节奏去排时间。自己所在的团队氛围还不错，大家相互比较尊重，同事间的关系也相对简单。代码产生了bug更多的是专注于去解决问题，而不是去追责。技术总监会有人文关怀。</p>
+<p>&emsp;&emsp; 我是在RFSCA(Radio Frequency Sysytem Calibration and Analysis)团队，主要负责射频前端模拟器件的校准。刚入职的前一年半，主要用C++做在Windows系统上运行的产线校准工具的开发，后面三年半侧重做嵌入端（RTOS）C&#x2F;C++的开发。具体对接的业务有以下几块：</p>
+<ul>
+<li>苹果：针对iPhone各个硬件阶段做校准Bring Up，每年都有去苹果工厂实验室做现场技术支持和搭建支持远程的硬件环境。客户产线用自己的校准工具，新平台嵌入端校准框架发生变化，我针对客户特殊的校准流程设计了新的API来支持客户自己的工具。他们的校准工具依赖我们内部的ESC Parser DLL，要维护这个解码流的工具，他们提了不少相关的问题过来。还有就是维护该客户用的较多的feature，例如RxTrigger，FBRx offset(后续也推给了其他客户)等。可惜苹果要开始大规模上他们自己的基带了，深圳三个实验室的设备都已经撤出来了。</li>
+<li>Customer Engineer Team: 国内OEMs的校准问题解决和定制化需求实现，当然也有韩国、日本的一些客户，刚进来的时候还有只能用4G的H厂的cases。</li>
+<li>新平台QRD的校准Bring Up，国内的硬件团队会参考Global的新硬件设计来做给国内客户参考的硬件，软件团队要和硬件团队一起在项目的各个阶段完成各个支持的Bands校准。</li>
+<li>bAPT：China研发来负责这种关键的校准feature情况比较少，我的tech leader争取过来了，交给了我，也是对我的认可。这个是算法团队提出来的需求，做了几个平台的迭代，后续的算法优化，也参与了和算法团队的讨论。这个feature做的也是很动荡，第一版做完之后，合作的算法、RFLM、LTE Tech、NV MGR、测试人员被lay off，China只剩我一个负责这个feature的后续迭代开发。这个feature几个平台的优化也是换了两个算法的人员，其中一个还主动离开了高通去了其他公司。春节之后China Modem研发团队受美国BIS法案的影响，基带嵌入端代码权限被锁死，成了对接China CE团队和研发团队的中间件team。我本地开发的关于bAPT重构的代码也提交不了，并且自己还有一个更省校准时间的idea，有点小遗憾。但是通过这个需求，自己有从执行者到思考者的一个转变，不仅仅是去根据要求去做实现，会思考有没有更好的解决方案，会去针对算法团队给出的解决方案提出质疑并给出我认为更合适的方案进行商讨。</li>
+<li>仪表厂商：射频前端的校准是需要依赖第三方的仪表，所以我们这个组的工具代码是需要支持仪表厂商，目前OEMs工厂主流仪表用的是德国的罗德与施瓦茨CMW100，公司给我的工作站配的仪表也是CMW100。遇到仪表的软件的问题需要和他们一起co-debug，或者适配他们的新feature修改我们的工具代码。</li>
+</ul>
+<p>&emsp;&emsp; 个人感觉这个岗位还挺有意思，校准分很多硬件模块通路(XO、QET、SDR、PA、LNA、Tx、Rx、FBRx…)，需要打交道的人很多，也可以很深入的研究复杂的XPT算法。高通独有的QET硬件，配合独有IP的ET算法，这个ET算法挺复杂的，还用到了机器学习。如果是做射频前端的校准，相比其他厂商，高通的ET校准算法在能耗上面是有挺大优势。但是不知道和华为Mate 50上射频前端所用的Doherty PA的比较是怎么样的。还有很多高通独有硬件独有的VISPA features，很多是需要校准来配合的。</p>
+<p>&emsp;&emsp; 自己在这个岗位上幸福的时刻，是自己有过几次进入了心流体验，解bug解的很兴奋，忘记了时间，这种有些挑战，但是再给点时间，就能找到线索并fix它的bug很有意思。相比做需求，自己更加喜欢解bug，就像玩小游戏一样，不需要太多的时间，但是会有及时的反馈。所以我并不是很排斥上班这件事情。</p>
+]]></content>
+      <tags>
+        <tag>职场</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to fix your entire life in one day</title>
+    <url>/2026/02/24/how-to-fix-your-in-one-day/</url>
+    <content><![CDATA[<p>看到了一个博主DAN KOE分享了一篇文章：<a href="https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1">How to fix your entire life in 1 day</a>，感觉结合自己当前的状态还是所有感触，所以准备细细研读和做笔记。</p>
+<p>这篇文章的基石：阿德勒心理学（Adlerian Psychology）</p>
+<p>先抛一个问题：你对当前的生活是满意的、不满意的、还是假装满意的？</p>
+<span id="more"></span>
+
+<h2 id="1-改变身份"><a href="#1-改变身份" class="headerlink" title="1. 改变身份"></a>1. 改变身份</h2><h2 id="2-察觉自己"><a href="#2-察觉自己" class="headerlink" title="2. 察觉自己"></a>2. 察觉自己</h2><h2 id="3-付诸行动"><a href="#3-付诸行动" class="headerlink" title="3. 付诸行动"></a>3. 付诸行动</h2><p>工作就是玩</p>
+<p>健康的生活方式</p>
+<p>识人法则 看行动</p>
+<p>了解心智的运作方式，才可能编辑</p>
+<p>真的想改变并变更好，改变潜意识中的目标</p>
+<p>改变自己八步骤</p>
+<p>你的价值观来自父母</p>
+<p>自我发展9个阶段</p>
+<p>成功三要素 主动性 机会 智慧</p>
+<p>聪明不聪明的差别 迭代 坚持 洞察全局</p>
+<p>大部分人的一生</p>
+<p>提高认知6步骤来做出改变</p>
+<p>遇到人才 有智慧却没有勇气 不说服</p>
+<p>知难行易 察觉自己 是否改变 收获什么 付诸行动</p>
+<p>思考负能量激发正能量</p>
+<p>7步让自己变强</p>
+]]></content>
+      <tags>
+        <tag>心灵鸡汤</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硬盘文件在Mac上操作不了的问题</title>
+    <url>/2021/02/17/mac-finder-file/</url>
+    <content><![CDATA[<p>通过command指令修改在硬盘文件上的属性，移除只有finder可见属性。然后就可以操组，copy到mac上。</p>
+<p>1,先安装软件 Mounty for NTFS，这个软件可以让Mac系统支持NTFS硬盘读写操作。</p>
+<p>2,文件变灰色的原因是文件的名后面多了一个@，可以在终端中用命令行消除。</p>
+<pre><code>  在终端中输入xattr -d com.apple.FinderInfo ，然后在后面输入文件地址(直接把文件拖入终端中就行了)。回车该文件就变回可用状态了。
+</code></pre>
+]]></content>
+      <tags>
+        <tag>mac-finder-file</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AI基础概念及理论学习</title>
+    <url>/2026/02/08/AI-Learn/</url>
+    <content><![CDATA[<p>&emsp;&emsp; 目前AI已经进入了普通老百姓视角的主舞台，各大科技公司在这个台上你方唱罢我来舞，日新月异，占据了不少公众视野。对于科技大厂而言，搞AI是一件政治正确的事情，你不搞不主动去靠就是不行，要被打入冷宫。既然潮水已来，就顺流而下，去拥抱它。作为个人如何拥抱AI，要么侧重去参与迭代AI功能本身，要么侧重如何为我所用，不管怎么样都是要略懂一些AI基础知识。可以初步防止在二级市场被割韭菜或者就业市场被动失业。</p>
+<span id="more"></span>
+
+<p><strong>洋气的名字</strong></p>
+<ul>
+<li>LLM(Large Language Model) 大语言模型：区别于古老的智障语言模型，前面加了个大，模型参数变多了，具备了一定的智能</li>
+<li>Prompt 提示词：一问一答</li>
+<li>Context  上下文：背景信息 </li>
+<li>Memory 记忆：不仅仅一问一答，对上下文进行压缩，可以进行追问</li>
+<li>Agent 智能体：不仅仅是和大模型交互，还拥有上网功能、搜索本地文档&#x2F;数据库、文件读取、执行脚本、PDF转换等能力，减少和大模型的沟通次数，处理一些大模型无法操作的东西，获取模型以外的信息能力，整合多方的结果发送给用户。相对于后面要讲的Function Call和MCP, 中间的Agent就像一个传话筒，把大模型的话转化成调用工具的代码，把工具调用的结果在原封不动的传话给大模型，同时不忘了给用户传话，主打一个我不生产信息，我只做一个信息的搬运工。Agent和用户对话，虽然最底层还是文字，但是交互形式上可以丰富多彩，可以是CLI(Command Line Interface)，Claude Code（早期是一个编程Agent，现在已经走上了通用Agent道路，名字起的很失败），现在大火的开源桌面助手OpenClaw等</li>
+<li>RAG(Retrieval-Augmented Generation) 检索增强生成，用于本地数据库搜索，与传统数据库不同，使用了向量数据库</li>
+<li>Web Search 联网搜索，提高实时性及减少token的消耗</li>
+<li>Function Calling：Agent和大模型之间，关于工具调用所约定的对话格式，让大模型按照死板的格式回复给Agent去调用工具，就像前端和后端开发一样，约定接口格式，例如一个json模版</li>
+<li>MCP(Model Context Protocol)模型上下文协议：Agent和工具集之间交互的一套约定，大模型是一个只会说话不会做事的智者，而MCP能提供各种工具的程序集,  tools&#x2F;list.. tools&#x2F;call.. </li>
+<li>Langchain ：纯编程来实现流程走向，全是硬编码，稳定但是缺乏灵活性</li>
+<li>Workflow 工作流：低代码，可以功能模块块拖拽</li>
+<li>Skill 技能：SKILL.md提前写好了说明文档和直接可以运行的脚本，即agent的技能，相比Langchain和Workflow兼顾了灵活性和稳定性</li>
+<li>SubAgent ：拆分复杂的任务，独立的子任务可以在子agent中完成，本质上就是做上下文隔离，子agent产生的上下文不会保留在主agent中</li>
+<li>Token 令牌：人工智能模型处理信息的最小单位，可以把它的工作原理想象成我们人类阅读和组词语的过程，当我们看到一句话，我们不会逐字停顿，而是会按词组来理解。比如“我喜欢解bug”，我们的大脑会处理成 “我&#x2F;喜欢&#x2F;解&#x2F;bug” 这几个片段。在人工智能的世界里，模型看到的也不是完整的句子，而是被切分成的Token。这些Token可能是一个词、一个汉字、一个标点符号，甚至是半个字（当用两个Token ID来表示一个字的时候）。对于主流的的人工智能模型，通常一个汉字大约是1到2个Token。</li>
+<li>AGI(Artifical General Intelligence) 通用人工智能：LLM算一个专才，还不是像“人类一样的通才”，不具备完整的人类级推理能力。AGI是一种像人类一样可以在几乎所有认知领域自主思考和学习的人工智能</li>
+<li>GPT(Generative Pre-trained Transformer) 生成式预训练变换模型：它是一种深度学习算法，属于自然语言处理（NLP）领域的人工智能模型，旨在生成具有连贯性和逻辑性的自然语言。</li>
+</ul>
+<p><strong>人工智能</strong></p>
+<p>&emsp;&emsp; 智能本质上就是针对不同情境给出针对性的输出反应，不会乱来的黑箱，数学表达就是$f(x) &#x3D; y$，引用一位美国的数学教授Thomas A. Garrity上课的一句话：Functions describe the world, everything is described by functions, the sound of my voice on your eardrum, function! That’s kind of hitting your eye balls right now, function! The entries you put in your random matrices, function! It’s all function!</p>
+<p><em>人工智能</em>：人工搭建起一套智能（黑箱），根据不同的环境信息给出针对性的输出和回应的系统，这个输出可以是动作、语言，也可以是一种判断和预测。人如果无法区分是和AI聊天还是和人聊天，那就实现了人的智能。</p>
+<p><em>专家系统</em>：清晰的规则，例如：疾病诊断和金融咨询，静态，不能自我迭代，完全是复制人类经验，能力上限就是人类专家的水平，无法做到比人更好。</p>
+<p><em>神经网络(Neural Network)</em>：是模拟人脑神经元连接方式的模型结构，具有可自动学习特征，不需要人工设计，有时候很难提取其中的规律和感觉，就可以通过大量的数据来提取特征。目前从理论上来说，它的准确率不是100%的，始终存在对抗样本，在噪声的世界中做稳定近似的学问。</p>
+<ul>
+<li>多层结构（输入层&#x2F;隐藏层&#x2F;输出层）</li>
+<li>通过反向传播训练</li>
+<li>参数量大</li>
+<li>表达能力强</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">人工智能（AI）</span><br><span class="line">    └── 机器学习（ML）</span><br><span class="line">            └── 深度学习（DL）</span><br><span class="line">                    └── 神经网络（Neural Network）</span><br></pre></td></tr></table></figure>
+<p>当神经网络层数很多时，就叫深度学习Deep Learning。</p>
+<p>多层神经网络(Deep Neural Network)的真正价值在于它的结构弹性：<br>&emsp;&emsp; 理论上，逼近任何复杂函数<br>&emsp;&emsp; 实践中，可以通过层级结构逐步逼近真实世界</p>
+<p>每一层神经网络都在做两件事：<br>&emsp;&emsp; 1、抽取更高层的语义特征<br>&emsp;&emsp; 2、压缩与去冗余</p>
+<p>Transformer思想源头：从压缩到重构，Encode-Decode架构，是工程极致化实现</p>
+<ul>
+<li>Compressed(x)，将x压缩为抽象语义</li>
+<li>Function(Compressed(x)) &#x3D; Compressed(y)，在语义空间中进行变换</li>
+<li>y &#x3D; Decompressed(Compressed(y))，再将其解压为目标语言</li>
+</ul>
+<p><em>大语言模型LLM</em></p>
+<ul>
+<li>模型结构：哪来这种神奇的黑箱，超大的多层神经网络</li>
+<li>损失函数：怎么奖励一个机器，损失函数是用来衡量模型预测结果与真实值之间差距的函数。在训练过程中，我们通过最小化损失函数来优化模型参数。它本质上是一个可微的优化目标函数，比如回归常用均方误差MSE(Mean Squared Error)，分类常用交叉熵。通过计算损失对参数的梯度，并进行反向传播，模型可以不断更新参数，使用预测结果越来越准确。</li>
+<li>训练过程：机器怎么建立条件反射，利于梯度下降找到损失函数低的参数，每次向着局部损失函数下降最快的方向前进，得出一套参数。</li>
+</ul>
+<p><em>泛化能力（Generalization）</em>：即规律，推广，举一反三，神经网络具有很强的泛化能力</p>
+<p>&emsp;&emsp; 我本科期间参加了数学建模比赛，学校派了很多理学院的数学老师在暑假给我们培训，讲过下面的各种智能模型，看到下面的名词很有熟悉感，尤其是那个神经网络模型的梯度下降(Gradient Vector)和反向传播(Back Propagation)，当时不怎么明白，现在回过头来看，感觉会清晰很多。</p>
+<p>&emsp;&emsp; 2026年，个人感觉，AI基座大模型的入场券基本已经发放完毕，AI大脑几家主流公司在堆算力优化模型，美国主要有5家：Open AI，Google DeepMind, Anthropic, Meta, xAI；中国主要有：深度求索，字节跳动，阿里巴巴，腾讯，百度，华为，智谱AI，MiniMax，月之暗面，百川智能（感谢Meta Llam3的开源，让大家知道了黑箱里头更多的细节，缩短了中国与美国在大模型领域的差距）。在基座模型上进行发展更多的能力，例如，给他们配上手、眼、脚，可能是机器人公司和一些智能硬件，垂直领域的发力。软件层面可能会有越来越多的行业推出类似Manus、OpenClaw这样的智能体，在垂直应用领域，中国会遍地开花。</p>
+]]></content>
+      <tags>
+        <tag>Artificial Intelligencs</tag>
       </tags>
   </entry>
 </search>
