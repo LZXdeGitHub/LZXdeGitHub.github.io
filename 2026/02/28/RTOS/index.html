@@ -20,15 +20,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","darkmode":true,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="RTOS学习笔记一、什么是RTOS？RTOS(Real-Time Operating System，实时操作系统)是一种专门为“必须在规定时间内完成指定任务”而设计的操作系统。它像一个严格的时间管家，确保每个任务在截止时间前被执行，而不是“尽量快”地执行。">
+    <meta name="description" content="RTOS学习笔记一、什么是RTOS？RTOS(Real-Time Operating System，实时操作系统)是一种专门为“必须在规定时间内完成指定任务”而设计的操作系统。它像一个严格的时间管家，确保每个任务在截止时间前被执行，而不是“尽量快”地执行。 1.1 RTOS vs 普通操作系统   对比项 普通操作系统（如Windows、Linux） RTOS（如FreeRTOS、VxWorks）">
 <meta property="og:type" content="article">
 <meta property="og:title" content="RTOS">
 <meta property="og:url" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/02/28/RTOS/index.html">
 <meta property="og:site_name" content="Nick Liu&#39;s Blog">
-<meta property="og:description" content="RTOS学习笔记一、什么是RTOS？RTOS(Real-Time Operating System，实时操作系统)是一种专门为“必须在规定时间内完成指定任务”而设计的操作系统。它像一个严格的时间管家，确保每个任务在截止时间前被执行，而不是“尽量快”地执行。">
+<meta property="og:description" content="RTOS学习笔记一、什么是RTOS？RTOS(Real-Time Operating System，实时操作系统)是一种专门为“必须在规定时间内完成指定任务”而设计的操作系统。它像一个严格的时间管家，确保每个任务在截止时间前被执行，而不是“尽量快”地执行。 1.1 RTOS vs 普通操作系统   对比项 普通操作系统（如Windows、Linux） RTOS（如FreeRTOS、VxWorks）">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-02-28T06:43:36.000Z">
-<meta property="article:modified_time" content="2026-03-06T00:45:35.325Z">
+<meta property="article:modified_time" content="2026-03-07T09:40:33.337Z">
 <meta property="article:author" content="Nick Liu">
 <meta property="article:tag" content="操作系统">
 <meta name="twitter:card" content="summary">
@@ -220,8 +220,6 @@
     
     
     <div class="post-body" itemprop="articleBody"><h1 id="RTOS学习笔记"><a href="#RTOS学习笔记" class="headerlink" title="RTOS学习笔记"></a>RTOS学习笔记</h1><h2 id="一、什么是RTOS？"><a href="#一、什么是RTOS？" class="headerlink" title="一、什么是RTOS？"></a>一、什么是RTOS？</h2><p>RTOS(Real-Time Operating System，实时操作系统)是一种专门为“必须在规定时间内完成指定任务”而设计的操作系统。它像一个严格的时间管家，确保每个任务在截止时间前被执行，而不是“尽量快”地执行。</p>
-<span id="more"></span>
-
 <h3 id="1-1-RTOS-vs-普通操作系统"><a href="#1-1-RTOS-vs-普通操作系统" class="headerlink" title="1.1 RTOS vs 普通操作系统"></a>1.1 RTOS vs 普通操作系统</h3><table>
 <thead>
 <tr>
@@ -383,6 +381,8 @@
 <li>A恢复原优先级</li>
 <li>C获得资源继续运行</li>
 </ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant H as 高优先级任务C</span><br><span class="line">    participant M as 中优先级任务B</span><br><span class="line">    participant L as 低优先级任务A</span><br><span class="line">    participant R as 共享资源</span><br><span class="line"></span><br><span class="line">    Note over L,R: 步骤1：A获得资源锁</span><br><span class="line">    L-&gt;&gt;R: 获取锁（正在使用资源）</span><br><span class="line">    </span><br><span class="line">    Note over H: 步骤2：C就绪，抢占A</span><br><span class="line">    H-&gt;&gt;H: 开始运行</span><br><span class="line">    H-&gt;&gt;R: 请求资源锁（被A持有）</span><br><span class="line">    R--&gt;&gt;H: 锁不可用，C进入阻塞</span><br><span class="line">    </span><br><span class="line">    Note over M: 步骤3：B就绪，抢占A</span><br><span class="line">    M-&gt;&gt;M: 开始运行（B优先级高于A）</span><br><span class="line">    Note over H: 此时C被B间接阻塞&lt;br&gt;优先级反转发生</span><br><span class="line">    </span><br><span class="line">    Note over L: 步骤4：优先级继承</span><br><span class="line">    L-&gt;&gt;L: 临时继承C的优先级&lt;br&gt;快速运行释放锁</span><br><span class="line">    L-&gt;&gt;R: 释放锁</span><br><span class="line">    </span><br><span class="line">    R--&gt;&gt;H: 锁可用，C就绪</span><br><span class="line">    H-&gt;&gt;H: 抢占B，获取锁运行</span><br></pre></td></tr></table></figure>
+
 <h3 id="4-3-死锁必要条件"><a href="#4-3-死锁必要条件" class="headerlink" title="4.3 死锁必要条件"></a>4.3 死锁必要条件</h3><p>死锁发生的四个必要条件：</p>
 <table>
 <thead>
@@ -555,8 +555,8 @@
 </tr>
 </tbody></table>
 <hr>
-<h2 id="八、项目经验"><a href="#八、项目经验" class="headerlink" title="八、项目经验"></a>八、项目经验</h2><p>根据modem运行特点，裁剪了一个我们内部专用的QuRT，我们的业务都是在这个QuRT上面运行</p>
-<p>曾遇到优先级反转问题，通过优先级继承机制解决。</p>
+<h2 id="八、项目经验"><a href="#八、项目经验" class="headerlink" title="八、项目经验"></a>八、项目经验</h2><p>根据modem运行特点，我们内部做了一个专用的嵌入式RTOS，我们的业务逻辑都是在这个嵌入式操作系统上面运行（有些早期的产品有些是用Linux裁剪）。</p>
+<p>Radio Setup的segment设定的build和execute时间优化的过于严格，导致少部分板子出现稳定性问题，概率性的crash。加入时间戳表格信息在校准的xml log中，超过设定时间的报fail并且不继续执行后续的流程不crash在tech侧，通过给部分bands的corner case重新优化build和execute的时间分配解决了这种corner case。</p>
 
     </div>
 
