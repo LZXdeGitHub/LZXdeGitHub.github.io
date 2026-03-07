@@ -1,28 +1,6 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
-    <title>MAC OS修改自己电脑的环境变量</title>
-    <url>/2020/06/26/20200626/</url>
-    <content><![CDATA[<p>主要是如下两条bash命令完成如下的修改：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span> //这条指令可以查看电脑已经添加的环境变量路径</span><br></pre></td></tr></table></figure>
-
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.profile //进行增删改环境变量</span><br></pre></td></tr></table></figure>
-
-<p>ps：环境变量一般分先后为这几个文件，系统按从上倒下优先级进行加载，etc目录下的是系统级的，～下的为用户级：</p>
-<ol>
-<li>&#x2F;etc&#x2F;profile</li>
-<li>&#x2F;etc&#x2F;paths</li>
-<li>~&#x2F;.bash_profile</li>
-<li>~&#x2F;.bash_login</li>
-<li>~&#x2F;.profile</li>
-<li>~&#x2F;.bashrc</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>配置</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>AWS EC2配置个人VPN</title>
     <url>/2020/06/26/20200525/</url>
     <content><![CDATA[<h2 id="前言"><a href="#前言" class="headerlink" title="前言"></a>前言</h2><p>亚马逊云服务（AWS）免费薅羊毛一年，创建个人EC2（Elastic Compute Cloud）搭建VPN，可以比较方便的Google一些文献。这个配置主要分两部分进行配置，AWS云端和Client（我自己是在Mac Pro上进行配置）。</p>
@@ -110,11 +88,25 @@
       </tags>
   </entry>
   <entry>
-    <title>Telephony框架</title>
-    <url>/2020/09/20/20200920/</url>
-    <content><![CDATA[]]></content>
+    <title>MAC OS修改自己电脑的环境变量</title>
+    <url>/2020/06/26/20200626/</url>
+    <content><![CDATA[<p>主要是如下两条bash命令完成如下的修改：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span> //这条指令可以查看电脑已经添加的环境变量路径</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.profile //进行增删改环境变量</span><br></pre></td></tr></table></figure>
+
+<p>ps：环境变量一般分先后为这几个文件，系统按从上倒下优先级进行加载，etc目录下的是系统级的，～下的为用户级：</p>
+<ol>
+<li>&#x2F;etc&#x2F;profile</li>
+<li>&#x2F;etc&#x2F;paths</li>
+<li>~&#x2F;.bash_profile</li>
+<li>~&#x2F;.bash_login</li>
+<li>~&#x2F;.profile</li>
+<li>~&#x2F;.bashrc</li>
+</ol>
+]]></content>
       <tags>
-        <tag>android</tag>
+        <tag>配置</tag>
       </tags>
   </entry>
   <entry>
@@ -144,18 +136,11 @@
       </tags>
   </entry>
   <entry>
-    <title>硬编码和软编码</title>
-    <url>/2020/10/05/20201005/</url>
-    <content><![CDATA[<p>在工作过程中，听到同事说起，硬编码和软编码，大脑大概明白其意思，具体一想，如何专业的表述这对孪生概念呢，需要展开来了解一下。</p>
-<span id="more"></span>
-
-<p>在网上查阅这两个概念，由于当前短视频较火，这两个概念在视频编解码方面有所指，硬编码是利用硬件芯片本身GPU、DSP等非CPU去给视频编码，而软编码则指是通过软件本身或者CPU对视频进行编码。</p>
-<p>而目前我在工作中接触的这两个概念主要是针对代码的灵活性和可扩展性角度来讲的，更多的是一种设计思想。</p>
-<h2 id="硬编码"><a href="#硬编码" class="headerlink" title="硬编码"></a>硬编码</h2><p>简单直白的说就是写死值，之前博主在一家公司写代码的时候，称这种在代码中是一种<strong>坏味道</strong>，例如，<code>if（a == 10）</code>，这个10一看不知道是什么意思，直接用的<strong>魔数</strong>。亦或解析某个路径下的文件，写代码时，直接将这个文件路径固定，不管以后是否挪到了其他路径，默认它就永远是在那个路径下，没有考虑变化。</p>
-<h2 id="软编码"><a href="#软编码" class="headerlink" title="软编码"></a>软编码</h2><p>一句话来说，定好地方，方便后续修改和扩展。在大型软件编码中，软编码很重要，会有很多地方用到相同的值，如果是在某个地方定义好值，在代码中用它的别称，如果后续这个值有变化，可以很方便的修改，只需在一处修改。软编码可以理解为以不变应万变，这个不变是指在代码中大部分逻辑不需要动，变是指后续市场需求的变化而需要软件做的一些适配，而这种适配只需要修改某些小角落。</p>
-]]></content>
+    <title>Telephony框架</title>
+    <url>/2020/09/20/20200920/</url>
+    <content><![CDATA[]]></content>
       <tags>
-        <tag>概念</tag>
+        <tag>android</tag>
       </tags>
   </entry>
   <entry>
@@ -186,6 +171,21 @@
 ]]></content>
       <tags>
         <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硬编码和软编码</title>
+    <url>/2020/10/05/20201005/</url>
+    <content><![CDATA[<p>在工作过程中，听到同事说起，硬编码和软编码，大脑大概明白其意思，具体一想，如何专业的表述这对孪生概念呢，需要展开来了解一下。</p>
+<span id="more"></span>
+
+<p>在网上查阅这两个概念，由于当前短视频较火，这两个概念在视频编解码方面有所指，硬编码是利用硬件芯片本身GPU、DSP等非CPU去给视频编码，而软编码则指是通过软件本身或者CPU对视频进行编码。</p>
+<p>而目前我在工作中接触的这两个概念主要是针对代码的灵活性和可扩展性角度来讲的，更多的是一种设计思想。</p>
+<h2 id="硬编码"><a href="#硬编码" class="headerlink" title="硬编码"></a>硬编码</h2><p>简单直白的说就是写死值，之前博主在一家公司写代码的时候，称这种在代码中是一种<strong>坏味道</strong>，例如，<code>if（a == 10）</code>，这个10一看不知道是什么意思，直接用的<strong>魔数</strong>。亦或解析某个路径下的文件，写代码时，直接将这个文件路径固定，不管以后是否挪到了其他路径，默认它就永远是在那个路径下，没有考虑变化。</p>
+<h2 id="软编码"><a href="#软编码" class="headerlink" title="软编码"></a>软编码</h2><p>一句话来说，定好地方，方便后续修改和扩展。在大型软件编码中，软编码很重要，会有很多地方用到相同的值，如果是在某个地方定义好值，在代码中用它的别称，如果后续这个值有变化，可以很方便的修改，只需在一处修改。软编码可以理解为以不变应万变，这个不变是指在代码中大部分逻辑不需要动，变是指后续市场需求的变化而需要软件做的一些适配，而这种适配只需要修改某些小角落。</p>
+]]></content>
+      <tags>
+        <tag>概念</tag>
       </tags>
   </entry>
   <entry>
@@ -332,7 +332,7 @@
     <title>RTOS</title>
     <url>/2026/02/28/RTOS/</url>
     <content><![CDATA[<div class="mermaid">
-<svg id="mermaid-svg-cb934eeea9268943" width="100%" xmlns="http://www.w3.org/2000/svg" height="100%" style="max-width:875px;" viewBox="-75 -10 875 899"><style>
+<svg id="mermaid-svg-2a4790e86ea205ad" width="100%" xmlns="http://www.w3.org/2000/svg" height="100%" style="max-width:875px;" viewBox="-75 -10 875 899"><style>
   .mermaid .label{font-family:trebuchet ms,verdana,arial;color:#333}.node circle,.node ellipse,.node polygon,.node rect{fill:#cde498;stroke:#13540c;stroke-width:1px}.node.clickable{cursor:pointer}.arrowheadPath{fill:green}.edgePath .path{stroke:green;stroke-width:1.5px}.edgeLabel{background-color:#e8e8e8}.cluster rect{fill:#cdffb2!important;rx:4!important;stroke:#6eaa49!important;stroke-width:1px!important}.cluster text{fill:#333}.actor{stroke:#13540c;fill:#cde498}text.actor{fill:#000;stroke:none}.actor-line{stroke:grey}.messageLine0{marker-end:"url(#arrowhead)"}.messageLine0,.messageLine1{stroke-width:1.5;stroke-dasharray:"2 2";stroke:#333}#arrowhead{fill:#333}#crosshead path{fill:#333!important;stroke:#333!important}.messageText{fill:#333;stroke:none}.labelBox{stroke:#326932;fill:#cde498}.labelText,.loopText{fill:#000;stroke:none}.loopLine{stroke-width:2;stroke-dasharray:"2 2";marker-end:"url(#arrowhead)";stroke:#326932}.note{stroke:#6eaa49;fill:#fff5ad}.noteText{fill:#000;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:14px}.section{stroke:none;opacity:.2}.section0,.section2{fill:#6eaa49}.section1,.section3{fill:#fff;opacity:.2}.sectionTitle0,.sectionTitle1,.sectionTitle2,.sectionTitle3{fill:#333}.sectionTitle{text-anchor:start;font-size:11px;text-height:14px}.grid .tick{stroke:#d3d3d3;opacity:.3;shape-rendering:crispEdges}.grid path{stroke-width:0}.today{fill:none;stroke:red;stroke-width:2px}.task{stroke-width:2}.taskText{text-anchor:middle;font-size:11px}.taskTextOutsideRight{fill:#000;text-anchor:start;font-size:11px}.taskTextOutsideLeft{fill:#000;text-anchor:end;font-size:11px}.taskText0,.taskText1,.taskText2,.taskText3{fill:#fff}.task0,.task1,.task2,.task3{fill:#487e3a;stroke:#13540c}.taskTextOutside0,.taskTextOutside1,.taskTextOutside2,.taskTextOutside3{fill:#000}.active0,.active1,.active2,.active3{fill:#cde498;stroke:#13540c}.activeText0,.activeText1,.activeText2,.activeText3{fill:#000!important}.done0,.done1,.done2,.done3{stroke:grey;fill:#d3d3d3;stroke-width:2}.doneText0,.doneText1,.doneText2,.doneText3{fill:#000!important}.crit0,.crit1,.crit2,.crit3{stroke:#f88;fill:red;stroke-width:2}.activeCrit0,.activeCrit1,.activeCrit2,.activeCrit3{stroke:#f88;fill:#cde498;stroke-width:2}.doneCrit0,.doneCrit1,.doneCrit2,.doneCrit3{stroke:#f88;fill:#d3d3d3;stroke-width:2;cursor:pointer;shape-rendering:crispEdges}.activeCritText0,.activeCritText1,.activeCritText2,.activeCritText3,.doneCritText0,.doneCritText1,.doneCritText2,.doneCritText3{fill:#000!important}.titleText{text-anchor:middle;font-size:18px;fill:#000}g.classGroup text{fill:#13540c;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:10px}g.classGroup rect{fill:#cde498;stroke:#13540c}g.classGroup line{stroke:#13540c;stroke-width:1}svg .classLabel .box{stroke:none;stroke-width:0;fill:#cde498;opacity:.5}svg .classLabel .label{fill:#13540c;font-size:10px}.relation{stroke:#13540c;stroke-width:1;fill:none}#compositionEnd,#compositionStart,.composition{fill:#13540c;stroke:#13540c;stroke-width:1}#aggregationEnd,#aggregationStart,.aggregation{fill:#cde498;stroke:#13540c;stroke-width:1}#dependencyEnd,#dependencyStart,#extensionEnd,#extensionStart{fill:#13540c;stroke:#13540c;stroke-width:1}.node text{font-size:14px}.node text,div.mermaidTooltip{font-family:trebuchet ms,verdana,arial}div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-size:12px;background:#cdffb2;border:1px solid #6eaa49;border-radius:2px;pointer-events:none;z-index:100}
 svg {
   color: rgb(0, 0, 0);
