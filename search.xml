@@ -159,14 +159,6 @@
       </tags>
   </entry>
   <entry>
-    <title>MMF</title>
-    <url>/2022/03/20/20220320-1/</url>
-    <content><![CDATA[]]></content>
-      <tags>
-        <tag>Memory-Map File</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>回顾大年初二 丢失手机事件总结</title>
     <url>/2021/02/17/20210217/</url>
     <content><![CDATA[<h2 id="背景"><a href="#背景" class="headerlink" title="背景"></a>背景</h2><p>大年初二世界之窗夜场游玩，逛到阿尔卑斯冰雪世界，买了游玩票，玩了陡长滑道，然后电话亭落雪场景拍照，接着到了儿童滑道，看到了很多小朋友，不要脸的和小朋友排滑道，接着不幸的事情发生了，滑下来后，走了几步，摸了下口袋，发现手机不见了。</p>
@@ -197,6 +189,22 @@
       </tags>
   </entry>
   <entry>
+    <title>MMF</title>
+    <url>/2022/03/20/20220320-1/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>Memory-Map File</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>scons(a software constructe tool)</title>
+    <url>/2022/03/20/20220320-2/</url>
+    <content><![CDATA[]]></content>
+      <tags>
+        <tag>compile scans</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>macOS+gtest+vscode环境搭建</title>
     <url>/2022/03/20/20220320/</url>
     <content><![CDATA[<p>cd 到某个目录，然后在command窗口git clone <a href="https://github.com/google/googletest.git">https://github.com/google/googletest.git</a> 下载gtest源码</p>
@@ -208,11 +216,63 @@
       </tags>
   </entry>
   <entry>
-    <title>scons(a software constructe tool)</title>
-    <url>/2022/03/20/20220320-2/</url>
-    <content><![CDATA[]]></content>
+    <title>AI基础概念及理论学习</title>
+    <url>/2026/02/08/AI-Learn/</url>
+    <content><![CDATA[<p>&emsp;&emsp; 目前AI已经进入了普通老百姓视角的主舞台，各大科技公司在这个台上你方唱罢我来舞，日新月异，占据了不少公众视野。对于科技大厂而言，搞AI是一件政治正确的事情，你不搞不主动去靠就是不行，要被打入冷宫。既然潮水已来，就顺流而下，去拥抱它。作为个人如何拥抱AI，要么侧重去参与迭代AI功能本身，要么侧重如何为我所用，不管怎么样都是要略懂一些AI基础知识。可以初步防止在二级市场被割韭菜或者就业市场被动失业。</p>
+<span id="more"></span>
+
+<p><strong>洋气的名字</strong></p>
+<ul>
+<li>LLM(Large Language Model) 大语言模型：区别于古老的智障语言模型，前面加了个大，模型参数变多了，具备了一定的智能</li>
+<li>Prompt 提示词：一问一答</li>
+<li>Context  上下文：背景信息 </li>
+<li>Memory 记忆：不仅仅一问一答，对上下文进行压缩，可以进行追问</li>
+<li>Agent 智能体：不仅仅是和大模型交互，还拥有上网功能、搜索本地文档&#x2F;数据库、文件读取、执行脚本、PDF转换等能力，减少和大模型的沟通次数，处理一些大模型无法操作的东西，获取模型以外的信息能力，整合多方的结果发送给用户。相对于后面要讲的Function Call和MCP, 中间的Agent就像一个传话筒，把大模型的话转化成调用工具的代码，把工具调用的结果在原封不动的传话给大模型，同时不忘了给用户传话，主打一个我不生产信息，我只做一个信息的搬运工。Agent和用户对话，虽然最底层还是文字，但是交互形式上可以丰富多彩，可以是CLI(Command Line Interface)，Claude Code（早期是一个编程Agent，现在已经走上了通用Agent道路，名字起的很失败），现在大火的开源桌面助手OpenClaw等</li>
+<li>RAG(Retrieval-Augmented Generation) 检索增强生成，用于本地数据库搜索，与传统数据库不同，使用了向量数据库</li>
+<li>Web Search 联网搜索，提高实时性及减少token的消耗</li>
+<li>Function Calling：Agent和大模型之间，关于工具调用所约定的对话格式，让大模型按照死板的格式回复给Agent去调用工具，就像前端和后端开发一样，约定接口格式，例如一个json模版</li>
+<li>MCP(Model Context Protocol)模型上下文协议：Agent和工具集之间交互的一套约定，大模型是一个只会说话不会做事的智者，而MCP能提供各种工具的程序集,  tools&#x2F;list.. tools&#x2F;call.. </li>
+<li>Langchain ：纯编程来实现流程走向，全是硬编码，稳定但是缺乏灵活性</li>
+<li>Workflow 工作流：低代码，可以功能模块块拖拽</li>
+<li>Skill 技能：SKILL.md提前写好了说明文档和直接可以运行的脚本，即agent的技能，相比Langchain和Workflow兼顾了灵活性和稳定性</li>
+<li>SubAgent ：拆分复杂的任务，独立的子任务可以在子agent中完成，本质上就是做上下文隔离，子agent产生的上下文不会保留在主agent中</li>
+<li>Token 令牌：人工智能模型处理信息的最小单位，可以把它的工作原理想象成我们人类阅读和组词语的过程，当我们看到一句话，我们不会逐字停顿，而是会按词组来理解。比如“我喜欢解bug”，我们的大脑会处理成 “我&#x2F;喜欢&#x2F;解&#x2F;bug” 这几个片段。在人工智能的世界里，模型看到的也不是完整的句子，而是被切分成的Token。这些Token可能是一个词、一个汉字、一个标点符号，甚至是半个字（当用两个Token ID来表示一个字的时候）。对于主流的的人工智能模型，通常一个汉字大约是1到2个Token。</li>
+<li>AGI(Artifical General Intelligence) 通用人工智能：LLM算一个专才，还不是像“人类一样的通才”，不具备完整的人类级推理能力。AGI是一种像人类一样可以在几乎所有认知领域自主思考和学习的人工智能</li>
+<li>GPT(Generative Pre-trained Transformer) 生成式预训练变换模型：它是一种深度学习算法，属于自然语言处理（NLP）领域的人工智能模型，旨在生成具有连贯性和逻辑性的自然语言。</li>
+</ul>
+<p><strong>人工智能</strong></p>
+<p>&emsp;&emsp; 智能本质上就是针对不同情境给出针对性的输出反应，不会乱来的黑箱，数学表达就是$f(x) &#x3D; y$，引用一位美国的数学教授Thomas A. Garrity上课的一句话：Functions describe the world, everything is described by functions, the sound of my voice on your eardrum, function! That’s kind of hitting your eye balls right now, function! The entries you put in your random matrices, function! It’s all function!</p>
+<p><em>人工智能</em>：人工搭建起一套智能（黑箱），根据不同的环境信息给出针对性的输出和回应的系统，这个输出可以是动作、语言，也可以是一种判断和预测。人如果无法区分是和AI聊天还是和人聊天，那就实现了人的智能。</p>
+<p><em>专家系统</em>：清晰的规则，例如：疾病诊断和金融咨询，静态，不能自我迭代，完全是复制人类经验，能力上限就是人类专家的水平，无法做到比人更好。</p>
+<p><em>神经网络(Neural Network)</em>：是模拟人脑神经元连接方式的模型结构，具有可自动学习特征，不需要人工设计，有时候很难提取其中的规律和感觉，就可以通过大量的数据来提取特征。目前从理论上来说，它的准确率不是100%的，始终存在对抗样本，在噪声的世界中做稳定近似的学问。</p>
+<ul>
+<li>多层结构（输入层&#x2F;隐藏层&#x2F;输出层）</li>
+<li>通过反向传播训练</li>
+<li>参数量大</li>
+<li>表达能力强</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">人工智能（AI）</span><br><span class="line">    └── 机器学习（ML）</span><br><span class="line">            └── 深度学习（DL）</span><br><span class="line">                    └── 神经网络（Neural Network）</span><br></pre></td></tr></table></figure>
+<p>当神经网络层数很多时，就叫深度学习Deep Learning。</p>
+<p>多层神经网络(Deep Neural Network)的真正价值在于它的结构弹性：<br>&emsp;&emsp; 理论上，逼近任何复杂函数<br>&emsp;&emsp; 实践中，可以通过层级结构逐步逼近真实世界</p>
+<p>每一层神经网络都在做两件事：<br>&emsp;&emsp; 1、抽取更高层的语义特征<br>&emsp;&emsp; 2、压缩与去冗余</p>
+<p>Transformer思想源头：从压缩到重构，Encode-Decode架构，是工程极致化实现</p>
+<ul>
+<li>Compressed(x)，将x压缩为抽象语义</li>
+<li>Function(Compressed(x)) &#x3D; Compressed(y)，在语义空间中进行变换</li>
+<li>y &#x3D; Decompressed(Compressed(y))，再将其解压为目标语言</li>
+</ul>
+<p><em>大语言模型LLM</em></p>
+<ul>
+<li>模型结构：哪来这种神奇的黑箱，超大的多层神经网络</li>
+<li>损失函数：怎么奖励一个机器，损失函数是用来衡量模型预测结果与真实值之间差距的函数。在训练过程中，我们通过最小化损失函数来优化模型参数。它本质上是一个可微的优化目标函数，比如回归常用均方误差MSE(Mean Squared Error)，分类常用交叉熵。通过计算损失对参数的梯度，并进行反向传播，模型可以不断更新参数，使用预测结果越来越准确。</li>
+<li>训练过程：机器怎么建立条件反射，利于梯度下降找到损失函数低的参数，每次向着局部损失函数下降最快的方向前进，得出一套参数。</li>
+</ul>
+<p><em>泛化能力（Generalization）</em>：即规律，推广，举一反三，神经网络具有很强的泛化能力</p>
+<p>&emsp;&emsp; 我本科期间参加了数学建模比赛，学校派了很多理学院的数学老师在暑假给我们培训，讲过下面的各种智能模型，看到下面的名词很有熟悉感，尤其是那个神经网络模型的梯度下降(Gradient Vector)和反向传播(Back Propagation)，当时不怎么明白，现在回过头来看，感觉会清晰很多。</p>
+<p>&emsp;&emsp; 2026年，个人感觉，AI基座大模型的入场券基本已经发放完毕，AI大脑几家主流公司在堆算力优化模型，美国主要有5家：Open AI，Google DeepMind, Anthropic, Meta, xAI；中国主要有：深度求索，字节跳动，阿里巴巴，腾讯，百度，华为，智谱AI，MiniMax，月之暗面，百川智能（感谢Meta Llam3的开源，让大家知道了黑箱里头更多的细节，缩短了中国与美国在大模型领域的差距）。在基座模型上进行发展更多的能力，例如，给他们配上手、眼、脚，可能是机器人公司和一些智能硬件，垂直领域的发力。软件层面可能会有越来越多的行业推出类似Manus、OpenClaw这样的智能体，在垂直应用领域，中国会遍地开花。</p>
+]]></content>
       <tags>
-        <tag>compile scans</tag>
+        <tag>Artificial Intelligencs</tag>
       </tags>
   </entry>
   <entry>
@@ -269,341 +329,114 @@
       </tags>
   </entry>
   <entry>
-    <title>RTOS</title>
-    <url>/2026/02/28/RTOS/</url>
-    <content><![CDATA[<h1 id="RTOS学习笔记"><a href="#RTOS学习笔记" class="headerlink" title="RTOS学习笔记"></a>RTOS学习笔记</h1><h2 id="一、什么是RTOS？"><a href="#一、什么是RTOS？" class="headerlink" title="一、什么是RTOS？"></a>一、什么是RTOS？</h2><p>RTOS(Real-Time Operating System，实时操作系统)是一种专门为“必须在规定时间内完成指定任务”而设计的操作系统。它像一个严格的时间管家，确保每个任务在截止时间前被执行，而不是“尽量快”地执行。</p>
+    <title>ffmpeg_use</title>
+    <url>/2021/01/10/ffmpeg-use/</url>
+    <content><![CDATA[<h1 id="1-视频格式转换"><a href="#1-视频格式转换" class="headerlink" title="1. 视频格式转换"></a>1. 视频格式转换</h1><h2 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1. 前言"></a>1.1. 前言</h2><p>有位同仁，最近在拓展副业，将自己的作品上传到某网站，简介部分需要swf格式的video，而本地只有mov格式的，需要转换，寻求我的帮助。</p>
+<p>由于本人是程序员兼个人电脑是mac，周末有时间还能稍微折腾一下，不希望直接去app store寻找购买现成的软件，也不想去下载盗版破解软件不安全。在网上搜索到了一个开源的音视频处理软件FFmpeg，很多音视频软件是基于该开源软件进行的二次开发。本文是基于其提供的静态库，采用敲命令行的方式进行视频格式的转换。</p>
 <span id="more"></span>
 
-<h3 id="1-1-RTOS-vs-普通操作系统"><a href="#1-1-RTOS-vs-普通操作系统" class="headerlink" title="1.1 RTOS vs 普通操作系统"></a>1.1 RTOS vs 普通操作系统</h3><table>
-<thead>
-<tr>
-<th>对比项</th>
-<th>普通操作系统（如Windows、Linux）</th>
-<th>RTOS（如FreeRTOS、VxWorks）</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>核心目标</td>
-<td>提高平均吞吐量，让多个程序公平使用CPU</td>
-<td>保证每个关键任务在截止时间前完成</td>
-</tr>
-<tr>
-<td>响应时间</td>
-<td>不确定，可能因为后台任务延迟几秒</td>
-<td>可预测，通常在微秒级响应中断</td>
-</tr>
-<tr>
-<td>调度策略</td>
-<td>时间片轮转、优先级（但可能被高负载影响）</td>
-<td>基于优先级抢占，高优先级任务立即执行</td>
-</tr>
-<tr>
-<td>典型应用</td>
-<td>办公软件、网页浏览、游戏</td>
-<td>汽车发动机控制、医疗设备、工业机器人</td>
-</tr>
-</tbody></table>
-<h3 id="1-2-实时系统分类"><a href="#1-2-实时系统分类" class="headerlink" title="1.2 实时系统分类"></a>1.2 实时系统分类</h3><table>
-<thead>
-<tr>
-<th>类型</th>
-<th>定义</th>
-<th>举例</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>硬实时</td>
-<td>错过截止时间会导致灾难性后果</td>
-<td>安全气囊弹开、火箭姿态控制</td>
-</tr>
-<tr>
-<td>软实时</td>
-<td>错过截止时间仅影响体验，无致命后果</td>
-<td>视频播放卡顿、鼠标移动延迟</td>
-</tr>
-</tbody></table>
-<h2 id="二、RTOS系统架构"><a href="#二、RTOS系统架构" class="headerlink" title="二、RTOS系统架构"></a>二、RTOS系统架构</h2><p>RTOS采用分层架构设计，从下至上依次为：</p>
-<ul>
-<li><strong>硬件层</strong>：微控制器（CPU、内存、外设）</li>
-<li><strong>硬件抽象层（HAL）</strong>：CPU&#x2F;外设接口封装</li>
-<li><strong>RTOS内核</strong>：任务调度器、任务间通信、内存管理、定时器</li>
-<li><strong>组件层&#x2F;中间件</strong>：文件系统（FATFS）、网络协议栈（LwIP）、设备驱动框架</li>
-<li><strong>应用层</strong>：用户任务（读取传感器、控制算法、发送数据等）</li>
-</ul>
-<h2 id="三、核心机制"><a href="#三、核心机制" class="headerlink" title="三、核心机制"></a>三、核心机制</h2><h3 id="3-1-任务状态迁移"><a href="#3-1-任务状态迁移" class="headerlink" title="3.1 任务状态迁移"></a>3.1 任务状态迁移</h3><p>任务在RTOS中有四种基本状态：</p>
-<ul>
-<li><strong>运行态</strong>：正在使用CPU</li>
-<li><strong>就绪态</strong>：准备就绪，等待CPU调度</li>
-<li><strong>阻塞态</strong>：等待事件（延时、信号量、队列）</li>
-<li><strong>挂起态</strong>：被人工暂停，需要手动恢复</li>
-</ul>
-<p>状态迁移关系：</p>
-<ul>
-<li>就绪态 → 运行态：调度器选择</li>
-<li>运行态 → 就绪态：被抢占&#x2F;时间片用完</li>
-<li>运行态 → 阻塞态：等待事件</li>
-<li>阻塞态 → 就绪态：事件到达</li>
-<li>运行态 → 挂起态：调用vTaskSuspend</li>
-<li>挂起态 → 就绪态：调用vTaskResume</li>
-</ul>
-<h3 id="3-2-调度策略对比"><a href="#3-2-调度策略对比" class="headerlink" title="3.2 调度策略对比"></a>3.2 调度策略对比</h3><table>
-<thead>
-<tr>
-<th>调度策略</th>
-<th>工作原理</th>
-<th>特点</th>
-<th>适用场景</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>优先级抢占式调度</td>
-<td>高优先级任务可打断低优先级任务</td>
-<td>实时性强，保证紧急任务优先</td>
-<td>大多数RTOS默认策略</td>
-</tr>
-<tr>
-<td>时间片轮转</td>
-<td>同优先级任务轮流运行固定时间片</td>
-<td>公平性好，防止任务饥饿</td>
-<td>同优先级任务较多的场景</td>
-</tr>
-<tr>
-<td>协作式调度</td>
-<td>任务主动让出CPU才切换</td>
-<td>简单，无抢占开销</td>
-<td>任务简单、可控性高的系统</td>
-</tr>
-</tbody></table>
-<h3 id="3-3-上下文切换流程"><a href="#3-3-上下文切换流程" class="headerlink" title="3.3 上下文切换流程"></a>3.3 上下文切换流程</h3><ol>
-<li>任务A正在运行</li>
-<li>触发PendSV异常（任务切换）</li>
-<li>硬件自动保存部分寄存器到A的堆栈</li>
-<li>软件手动保存剩余寄存器到A的堆栈</li>
-<li>更新堆栈指针，指向任务B的堆栈</li>
-<li>软件手动恢复任务B的寄存器</li>
-<li>硬件自动恢复任务B的剩余寄存器</li>
-<li>任务B开始运行</li>
-</ol>
-<h2 id="四、任务间通信（IPC）"><a href="#四、任务间通信（IPC）" class="headerlink" title="四、任务间通信（IPC）"></a>四、任务间通信（IPC）</h2><h3 id="4-1-IPC机制对比表"><a href="#4-1-IPC机制对比表" class="headerlink" title="4.1 IPC机制对比表"></a>4.1 IPC机制对比表</h3><table>
-<thead>
-<tr>
-<th>通信机制</th>
-<th>核心作用</th>
-<th>典型应用场景</th>
-<th>类比</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>队列</td>
-<td>任务间传递数据</td>
-<td>传感器数据采集与处理</td>
-<td>像一个管道，放消息和取消息</td>
-</tr>
-<tr>
-<td>信号量</td>
-<td>任务间传递信号</td>
-<td>ISR唤醒处理任务</td>
-<td>像一个旗帜，表示”某事发生了”</td>
-</tr>
-<tr>
-<td>互斥量</td>
-<td>保护共享资源</td>
-<td>防止全局变量同时访问</td>
-<td>像一个钥匙，拿钥匙才能进厕所</td>
-</tr>
-<tr>
-<td>事件标志组</td>
-<td>任务等待多个条件</td>
-<td>等待GPS和网络都就绪</td>
-<td>像一个任务清单</td>
-</tr>
-</tbody></table>
-<h3 id="4-2-优先级反转与继承"><a href="#4-2-优先级反转与继承" class="headerlink" title="4.2 优先级反转与继承"></a>4.2 优先级反转与继承</h3><p><strong>优先级反转场景</strong>：</p>
+<h2 id="1-2-安装方式"><a href="#1-2-安装方式" class="headerlink" title="1.2. 安装方式"></a>1.2. 安装方式</h2><p>FFmpeg官网提供了三种方式<a href="https://trac.ffmpeg.org/wiki/CompilationGuide/macOS">安装</a>其软件：</p>
 <ol>
-<li>低优先级任务A获得共享资源锁</li>
-<li>高优先级任务C就绪，请求同一资源被阻塞</li>
-<li>中优先级任务B就绪，抢占A运行</li>
-<li>结果：高优先级C被无关的中优先级B阻塞</li>
+<li><p>使用<a href="https://brew.sh/">Homebrew</a></p>
+<p><code>brew install ffmpeg</code></p>
+</li>
+<li><p>下载官网<a href="https://ffmpeg.org/download.html">static build for macOS</a></p>
+</li>
+<li><p>下载官网源代码自己编译</p>
+</li>
 </ol>
-<p><strong>解决方案：优先级继承</strong></p>
-<ul>
-<li>当C被A阻塞时，A临时继承C的高优先级</li>
-<li>A快速运行完并释放资源</li>
-<li>A恢复原优先级</li>
-<li>C获得资源继续运行</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">sequenceDiagram</span><br><span class="line">    participant H as 高优先级任务C</span><br><span class="line">    participant M as 中优先级任务B</span><br><span class="line">    participant L as 低优先级任务A</span><br><span class="line">    participant R as 共享资源</span><br><span class="line"></span><br><span class="line">    Note over L,R: 步骤1：A获得资源锁</span><br><span class="line">    L-&gt;&gt;R: 获取锁（正在使用资源）</span><br><span class="line">    </span><br><span class="line">    Note over H: 步骤2：C就绪，抢占A</span><br><span class="line">    H-&gt;&gt;H: 开始运行</span><br><span class="line">    H-&gt;&gt;R: 请求资源锁（被A持有）</span><br><span class="line">    R--&gt;&gt;H: 锁不可用，C进入阻塞</span><br><span class="line">    </span><br><span class="line">    Note over M: 步骤3：B就绪，抢占A</span><br><span class="line">    M-&gt;&gt;M: 开始运行（B优先级高于A）</span><br><span class="line">    Note over H: 此时C被B间接阻塞&lt;br&gt;优先级反转发生</span><br><span class="line">    </span><br><span class="line">    Note over L: 步骤4：优先级继承</span><br><span class="line">    L-&gt;&gt;L: 临时继承C的优先级&lt;br&gt;快速运行释放锁</span><br><span class="line">    L-&gt;&gt;R: 释放锁</span><br><span class="line">    </span><br><span class="line">    R--&gt;&gt;H: 锁可用，C就绪</span><br><span class="line">    H-&gt;&gt;H: 抢占B，获取锁运行</span><br></pre></td></tr></table></figure>
+<h2 id="1-3-static-build方式"><a href="#1-3-static-build方式" class="headerlink" title="1.3. static build方式"></a>1.3. static build方式</h2><p>由于博主升级了操作系统，Homebrew不能使用，使用brew install ffmpeg会自动updating homebrew，然后updating失败，可以使用<code>export HOMEBREW_NO_AUTO_UPDATE=true</code>取消自动升级，但是安装还是失败了，于是博主采用了第二种方式直接去ffmpeg官网下载<a href="https://ffmpeg.org/download.html">static build for macOS</a>。</p>
+<h3 id="1-3-1-安装与使用"><a href="#1-3-1-安装与使用" class="headerlink" title="1.3.1. 安装与使用"></a>1.3.1. 安装与使用</h3><ol>
+<li>将下载下来的压缩包解压</li>
+<li>将解压出来的文件放到&#x2F;usr&#x2F;local&#x2F;bin路径下（右键单击Finder–&gt;Go to Folder…—&gt;输入&#x2F;usr&#x2F;local&#x2F;bin—&gt;return键）</li>
+<li>打开terminal，cd到&#x2F;usr&#x2F;local&#x2F;bin&#x2F;，执行chmod 777 ffmpeg指令，修改该build的使用权限</li>
+<li>在你存放视频的目录打开terminal，执行ffmpeg -i xxx.mov -f swf xxx.swf指令</li>
+</ol>
+<h2 id="1-4-后继"><a href="#1-4-后继" class="headerlink" title="1.4. 后继"></a>1.4. 后继</h2><p>具体其他的使用指令可去其官网查看，会介绍其使用语法，或者ffmpeg -h也有简单的介绍。</p>
+<p>自己后续可能基于其库进行二次开发。</p>
+]]></content>
+      <tags>
+        <tag>video_formate_convert</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我在高通中国的五年</title>
+    <url>/2026/02/12/five-years-in-qcom/</url>
+    <content><![CDATA[<p>&emsp;&emsp; 我是在2020年12月份加入高通，那时候还是疫情期间，面试也是全程线上。苹果回到高通基带芯片的怀抱不久，iPhone和iPad大部分产线在深圳，需要人来做现场技术支持，所以我是以支持苹果的名义招进高通中国基带软件研发团队。因为苹果是高通的VIP客户（给的钱多），所以是研发团队作为主导来直接对接他们。</p>
+<span id="more"></span>
 
-<h3 id="4-3-死锁必要条件"><a href="#4-3-死锁必要条件" class="headerlink" title="4.3 死锁必要条件"></a>4.3 死锁必要条件</h3><p>死锁发生的四个必要条件：</p>
-<table>
-<thead>
-<tr>
-<th>条件</th>
-<th>说明</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>互斥条件</td>
-<td>资源一次只能被一个任务使用</td>
-</tr>
-<tr>
-<td>持有并等待</td>
-<td>任务持有资源同时等待其他资源</td>
-</tr>
-<tr>
-<td>不可剥夺</td>
-<td>资源只能由持有者主动释放</td>
-</tr>
-<tr>
-<td>循环等待</td>
-<td>存在任务-资源的环形链</td>
-</tr>
-</tbody></table>
-<p><strong>避免方法</strong>：</p>
+<p>&emsp;&emsp; 转眼间五年过去了，正好趁这次高通中国modem软件研发团队的调整，可以做一些回顾和总结。</p>
+<p>&emsp;&emsp; 在高通中国我觉得比较棒的点是，公司相对信任员工，没有严格的打卡制度，相对灵活的上班时间；做需求push感没有那么强，可以按自己的workload和节奏去排时间。自己所在的团队氛围还不错，大家相互比较尊重，同事间的关系也相对简单。代码产生了bug更多的是专注于去解决问题，而不是去追责。技术总监会有人文关怀。</p>
+<p>&emsp;&emsp; 我是在RFSCA(Radio Frequency Sysytem Calibration and Analysis)团队，主要负责射频前端模拟器件的校准。刚入职的前一年半，主要用C++做在Windows系统上运行的产线校准工具的开发，后面三年半侧重做嵌入端（RTOS）C&#x2F;C++的开发。具体对接的业务有以下几块：</p>
 <ul>
-<li>固定加锁顺序</li>
-<li>使用超时等待机制</li>
-<li>避免在持有锁时申请其他锁</li>
+<li>苹果：针对iPhone各个硬件阶段做校准Bring Up，每年都有去苹果工厂实验室做现场技术支持和搭建支持远程的硬件环境。客户产线用自己的校准工具，新平台嵌入端校准框架发生变化，我针对客户特殊的校准流程设计了新的API来支持客户自己的工具。他们的校准工具依赖我们内部的ESC Parser DLL，要维护这个解码流的工具，他们提了不少相关的问题过来。还有就是维护该客户用的较多的feature，例如RxTrigger，FBRx offset(后续也推给了其他客户)等。可惜苹果要开始大规模上他们自己的基带了，深圳三个实验室的设备都已经撤出来了。</li>
+<li>Customer Engineer Team: 国内OEMs的校准问题解决和定制化需求实现，当然也有韩国、日本的一些客户，刚进来的时候还有只能用4G的H厂的cases。</li>
+<li>新平台QRD的校准Bring Up，国内的硬件团队会参考Global的新硬件设计来做给国内客户参考的硬件，软件团队要和硬件团队一起在项目的各个阶段完成各个支持的Bands校准。</li>
+<li>bAPT：China研发来负责这种关键的校准feature情况比较少，我的tech leader争取过来了，交给了我，也是对我的认可。这个是算法团队提出来的需求，做了几个平台的迭代，后续的算法优化，也参与了和算法团队的讨论。这个feature做的也是很动荡，第一版做完之后，合作的算法、RFLM、LTE Tech、NV MGR、测试人员被lay off，China只剩我一个负责这个feature的后续迭代开发。这个feature几个平台的优化也是换了两个算法的人员，其中一个还主动离开了高通去了其他公司。春节之后China Modem研发团队受美国BIS法案的影响，基带嵌入端代码权限被锁死，成了对接China CE团队和研发团队的中间件team。我本地开发的关于bAPT重构的代码也提交不了，并且自己还有一个更省校准时间的idea，有点小遗憾。但是通过这个需求，自己有从执行者到思考者的一个转变，不仅仅是去根据要求去做实现，会思考有没有更好的解决方案，会去针对算法团队给出的解决方案提出质疑并给出我认为更合适的方案进行商讨。</li>
+<li>仪表厂商：射频前端的校准是需要依赖第三方的仪表，所以我们这个组的工具代码是需要支持仪表厂商，目前OEMs工厂主流仪表用的是德国的罗德与施瓦茨CMW100，公司给我的工作站配的仪表也是CMW100。遇到仪表的软件的问题需要和他们一起co-debug，或者适配他们的新feature修改我们的工具代码。</li>
 </ul>
-<h2 id="五、内存与中断管理"><a href="#五、内存与中断管理" class="headerlink" title="五、内存与中断管理"></a>五、内存与中断管理</h2><h3 id="5-1-FreeRTOS内存管理算法"><a href="#5-1-FreeRTOS内存管理算法" class="headerlink" title="5.1 FreeRTOS内存管理算法"></a>5.1 FreeRTOS内存管理算法</h3><table>
-<thead>
-<tr>
-<th>算法</th>
-<th>特点</th>
-<th>适用场景</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>heap_1</td>
-<td>只能申请不能释放</td>
-<td>系统启动后不再释放内存</td>
-</tr>
-<tr>
-<td>heap_2</td>
-<td>最佳匹配，可能产生碎片</td>
-<td>频繁申请释放但大小固定</td>
-</tr>
-<tr>
-<td>heap_4</td>
-<td>合并相邻空闲块，减少碎片</td>
-<td>最常用，通用场景</td>
-</tr>
-</tbody></table>
-<h3 id="5-2-ISR设计原则"><a href="#5-2-ISR设计原则" class="headerlink" title="5.2 ISR设计原则"></a>5.2 ISR设计原则</h3><table>
-<thead>
-<tr>
-<th>禁止行为</th>
-<th>原因</th>
-<th>正确做法</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>调用阻塞型API</td>
-<td>会导致系统响应延迟</td>
-<td>只释放信号量或发消息</td>
-</tr>
-<tr>
-<td>执行耗时操作</td>
-<td>阻塞其他中断和任务</td>
-<td>快进快出，唤醒任务处理</td>
-</tr>
-<tr>
-<td>使用不可重入函数</td>
-<td>可能导致数据错乱</td>
-<td>使用线程安全的函数</td>
-</tr>
-</tbody></table>
-<h2 id="六、主流RTOS选型"><a href="#六、主流RTOS选型" class="headerlink" title="六、主流RTOS选型"></a>六、主流RTOS选型</h2><table>
-<thead>
-<tr>
-<th>RTOS名称</th>
-<th>许可证</th>
-<th>典型应用领域</th>
-<th>核心优势</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>FreeRTOS</td>
-<td>MIT</td>
-<td>STM32、ESP32等MCU</td>
-<td>开源免费、社区活跃，行业标准</td>
-</tr>
-<tr>
-<td>RT-Thread</td>
-<td>Apache 2.0</td>
-<td>物联网、消费电子</td>
-<td>国产开源，组件丰富（GUI&#x2F;网络）</td>
-</tr>
-<tr>
-<td>Zephyr OS</td>
-<td>Apache 2.0</td>
-<td>新兴物联网</td>
-<td>Linux背书，模块化设计</td>
-</tr>
-<tr>
-<td>VxWorks</td>
-<td>商业</td>
-<td>航天航空、军工</td>
-<td>高可靠性，通过安全认证</td>
-</tr>
-<tr>
-<td>QNX</td>
-<td>商业</td>
-<td>汽车电子、医疗</td>
-<td>微内核架构，高度安全</td>
-</tr>
-</tbody></table>
-<h2 id="七、面试高频考点速查表"><a href="#七、面试高频考点速查表" class="headerlink" title="七、面试高频考点速查表"></a>七、面试高频考点速查表</h2><table>
-<thead>
-<tr>
-<th>考点</th>
-<th>核心问题</th>
-<th>关键回答要点</th>
-</tr>
-</thead>
-<tbody><tr>
-<td>RTOS vs 裸机</td>
-<td>有什么区别？</td>
-<td>裸机是顺序循环，RTOS是多任务抢占</td>
-</tr>
-<tr>
-<td>任务状态</td>
-<td>有哪几种？如何迁移？</td>
-<td>运行&#x2F;就绪&#x2F;阻塞&#x2F;挂起</td>
-</tr>
-<tr>
-<td>上下文切换</td>
-<td>切换时发生了什么？</td>
-<td>保存寄存器到堆栈，恢复新任务寄存器</td>
-</tr>
-<tr>
-<td>调度算法</td>
-<td>RTOS用什么调度？</td>
-<td>优先级抢占 + 时间片轮转</td>
-</tr>
-<tr>
-<td>优先级反转</td>
-<td>是什么？如何解决？</td>
-<td>中优先级阻塞高优先级，优先级继承解决</td>
-</tr>
-<tr>
-<td>死锁</td>
-<td>四个必要条件？</td>
-<td>互斥&#x2F;持有等待&#x2F;不可剥夺&#x2F;循环等待</td>
-</tr>
-<tr>
-<td>ISR注意事项</td>
-<td>ISR中不能做什么？</td>
-<td>不能阻塞、不能耗时操作</td>
-</tr>
-<tr>
-<td>任务饥饿</td>
-<td>系统卡死可能原因？</td>
-<td>高优先级任务一直运行不阻塞</td>
-</tr>
-</tbody></table>
-<h2 id="八、项目经验"><a href="#八、项目经验" class="headerlink" title="八、项目经验"></a>八、项目经验</h2><p>根据modem运行特点，我们内部做了一个专用的嵌入式RTOS，我们的业务逻辑都是在这个嵌入式操作系统上面运行（有些早期的产品有些是用Linux裁剪）。</p>
-<p>Radio Setup的segment设定的build和execute时间优化的过于严格，导致少部分板子出现稳定性问题，概率性的crash。加入时间戳表格信息在校准的xml log中，超过设定时间的报fail并且不继续执行后续的流程不crash在tech侧，通过给部分bands的corner case重新优化build和execute的时间分配解决了这种corner case。</p>
+<p>&emsp;&emsp; 个人感觉这个岗位还挺有意思，校准分很多硬件模块通路(XO、QET、SDR、PA、LNA、Tx、Rx、FBRx…)，需要打交道的人很多，也可以很深入的研究复杂的XPT算法。高通独有的QET硬件，配合独有IP的ET算法，这个ET算法挺复杂的，还用到了机器学习。如果是做射频前端的校准，相比其他厂商，高通的ET校准算法在能耗上面是有挺大优势。但是不知道和华为Mate 50上射频前端所用的Doherty PA的比较是怎么样的。还有很多高通独有硬件独有的VISPA features，很多是需要校准来配合的。</p>
+<p>&emsp;&emsp; 自己在这个岗位上幸福的时刻，是自己有过几次进入了心流体验，解bug解的很兴奋，忘记了时间，这种有些挑战，但是再给点时间，就能找到线索并fix它的bug很有意思。相比做需求，自己更加喜欢解bug，就像玩小游戏一样，不需要太多的时间，但是会有及时的反馈。所以我并不是很排斥上班这件事情。</p>
+]]></content>
+      <tags>
+        <tag>职场</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to fix your entire life in one day</title>
+    <url>/2026/02/24/how-to-fix-your-in-one-day/</url>
+    <content><![CDATA[<p>看到了一个博主DAN KOE分享了一篇文章：<a href="https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1">How to fix your entire life in 1 day</a>，感觉结合自己当前的状态还是所有感触，所以准备细细研读和做笔记。</p>
+<p>这篇文章的基石：阿德勒心理学（Adlerian Psychology）</p>
+<p>先抛一个问题：你对当前的生活是满意的、不满意的、还是假装满意的？</p>
+<span id="more"></span>
+
+<h2 id="1-改变身份"><a href="#1-改变身份" class="headerlink" title="1. 改变身份"></a>1. 改变身份</h2><h2 id="2-察觉自己"><a href="#2-察觉自己" class="headerlink" title="2. 察觉自己"></a>2. 察觉自己</h2><h2 id="3-付诸行动"><a href="#3-付诸行动" class="headerlink" title="3. 付诸行动"></a>3. 付诸行动</h2><p>工作就是玩</p>
+<p>健康的生活方式</p>
+<p>识人法则 看行动</p>
+<p>了解心智的运作方式，才可能编辑</p>
+<p>真的想改变并变更好，改变潜意识中的目标</p>
+<p>改变自己八步骤</p>
+<p>你的价值观来自父母</p>
+<p>自我发展9个阶段</p>
+<p>成功三要素 主动性 机会 智慧</p>
+<p>聪明不聪明的差别 迭代 坚持 洞察全局</p>
+<p>大部分人的一生</p>
+<p>提高认知6步骤来做出改变</p>
+<p>遇到人才 有智慧却没有勇气 不说服</p>
+<p>知难行易 察觉自己 是否改变 收获什么 付诸行动</p>
+<p>思考负能量激发正能量</p>
+<p>7步让自己变强</p>
+]]></content>
+      <tags>
+        <tag>心灵鸡汤</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硬盘文件在Mac上操作不了的问题</title>
+    <url>/2021/02/17/mac-finder-file/</url>
+    <content><![CDATA[<p>通过command指令修改在硬盘文件上的属性，移除只有finder可见属性。然后就可以操组，copy到mac上。</p>
+<p>1,先安装软件 Mounty for NTFS，这个软件可以让Mac系统支持NTFS硬盘读写操作。</p>
+<p>2,文件变灰色的原因是文件的名后面多了一个@，可以在终端中用命令行消除。</p>
+<pre><code>  在终端中输入xattr -d com.apple.FinderInfo ，然后在后面输入文件地址(直接把文件拖入终端中就行了)。回车该文件就变回可用状态了。
+</code></pre>
+]]></content>
+      <tags>
+        <tag>mac-finder-file</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>RTOS</title>
+    <url>/2026/02/28/RTOS/</url>
+    <content><![CDATA[<div class="mermaid">
+<svg id="mermaid-svg-43210b1b4461589e" width="100%" xmlns="http://www.w3.org/2000/svg" height="100%" style="max-width:875px;" viewBox="-75 -10 875 899"><style>
+  .mermaid .label{font-family:trebuchet ms,verdana,arial;color:#333}.node circle,.node ellipse,.node polygon,.node rect{fill:#cde498;stroke:#13540c;stroke-width:1px}.node.clickable{cursor:pointer}.arrowheadPath{fill:green}.edgePath .path{stroke:green;stroke-width:1.5px}.edgeLabel{background-color:#e8e8e8}.cluster rect{fill:#cdffb2!important;rx:4!important;stroke:#6eaa49!important;stroke-width:1px!important}.cluster text{fill:#333}.actor{stroke:#13540c;fill:#cde498}text.actor{fill:#000;stroke:none}.actor-line{stroke:grey}.messageLine0{marker-end:"url(#arrowhead)"}.messageLine0,.messageLine1{stroke-width:1.5;stroke-dasharray:"2 2";stroke:#333}#arrowhead{fill:#333}#crosshead path{fill:#333!important;stroke:#333!important}.messageText{fill:#333;stroke:none}.labelBox{stroke:#326932;fill:#cde498}.labelText,.loopText{fill:#000;stroke:none}.loopLine{stroke-width:2;stroke-dasharray:"2 2";marker-end:"url(#arrowhead)";stroke:#326932}.note{stroke:#6eaa49;fill:#fff5ad}.noteText{fill:#000;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:14px}.section{stroke:none;opacity:.2}.section0,.section2{fill:#6eaa49}.section1,.section3{fill:#fff;opacity:.2}.sectionTitle0,.sectionTitle1,.sectionTitle2,.sectionTitle3{fill:#333}.sectionTitle{text-anchor:start;font-size:11px;text-height:14px}.grid .tick{stroke:#d3d3d3;opacity:.3;shape-rendering:crispEdges}.grid path{stroke-width:0}.today{fill:none;stroke:red;stroke-width:2px}.task{stroke-width:2}.taskText{text-anchor:middle;font-size:11px}.taskTextOutsideRight{fill:#000;text-anchor:start;font-size:11px}.taskTextOutsideLeft{fill:#000;text-anchor:end;font-size:11px}.taskText0,.taskText1,.taskText2,.taskText3{fill:#fff}.task0,.task1,.task2,.task3{fill:#487e3a;stroke:#13540c}.taskTextOutside0,.taskTextOutside1,.taskTextOutside2,.taskTextOutside3{fill:#000}.active0,.active1,.active2,.active3{fill:#cde498;stroke:#13540c}.activeText0,.activeText1,.activeText2,.activeText3{fill:#000!important}.done0,.done1,.done2,.done3{stroke:grey;fill:#d3d3d3;stroke-width:2}.doneText0,.doneText1,.doneText2,.doneText3{fill:#000!important}.crit0,.crit1,.crit2,.crit3{stroke:#f88;fill:red;stroke-width:2}.activeCrit0,.activeCrit1,.activeCrit2,.activeCrit3{stroke:#f88;fill:#cde498;stroke-width:2}.doneCrit0,.doneCrit1,.doneCrit2,.doneCrit3{stroke:#f88;fill:#d3d3d3;stroke-width:2;cursor:pointer;shape-rendering:crispEdges}.activeCritText0,.activeCritText1,.activeCritText2,.activeCritText3,.doneCritText0,.doneCritText1,.doneCritText2,.doneCritText3{fill:#000!important}.titleText{text-anchor:middle;font-size:18px;fill:#000}g.classGroup text{fill:#13540c;stroke:none;font-family:trebuchet ms,verdana,arial;font-size:10px}g.classGroup rect{fill:#cde498;stroke:#13540c}g.classGroup line{stroke:#13540c;stroke-width:1}svg .classLabel .box{stroke:none;stroke-width:0;fill:#cde498;opacity:.5}svg .classLabel .label{fill:#13540c;font-size:10px}.relation{stroke:#13540c;stroke-width:1;fill:none}#compositionEnd,#compositionStart,.composition{fill:#13540c;stroke:#13540c;stroke-width:1}#aggregationEnd,#aggregationStart,.aggregation{fill:#cde498;stroke:#13540c;stroke-width:1}#dependencyEnd,#dependencyStart,#extensionEnd,#extensionStart{fill:#13540c;stroke:#13540c;stroke-width:1}.node text{font-size:14px}.node text,div.mermaidTooltip{font-family:trebuchet ms,verdana,arial}div.mermaidTooltip{position:absolute;text-align:center;max-width:200px;padding:2px;font-size:12px;background:#cdffb2;border:1px solid #6eaa49;border-radius:2px;pointer-events:none;z-index:100}
+svg {
+  color: rgb(0, 0, 0);
+  font: normal normal 400 normal 16px / normal "Times New Roman";
+}
+  </style><g></g><g><line id="actor0" x1="75" y1="5" x2="75" y2="888" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="0" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="75" dy="0">高优先级任务C</tspan></text></g><g><line id="actor1" x1="275" y1="5" x2="275" y2="888" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="200" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="275" dy="0">中优先级任务B</tspan></text></g><g><line id="actor2" x1="475" y1="5" x2="475" y2="888" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="400" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="475" dy="0">低优先级任务A</tspan></text></g><g><line id="actor3" x1="675" y1="5" x2="675" y2="888" class="actor-line" stroke-width="0.5px" stroke="#999"></line><rect x="600" y="0" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="675" y="32.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="675" dy="0">共享资源</tspan></text></g><defs><marker id="arrowhead" refX="5" refY="2" markerWidth="6" markerHeight="4" orient="auto"><path d="M 0,0 V 4 L6,2 Z"></path></marker></defs><defs><marker id="crosshead" markerWidth="15" markerHeight="8" orient="auto" refX="16" refY="4"><path fill="black" stroke="#000000" stroke-width="1px" d="M 9,2 V 6 L16,4 Z" style="stroke-dasharray: 0, 0;"></path><path fill="none" stroke="#000000" stroke-width="1px" d="M 0,1 L 6,7 M 6,1 L 0,7" style="stroke-dasharray: 0, 0;"></path></marker></defs><g><rect x="450" y="75" fill="#EDF2AE" stroke="#666" width="250" height="37" rx="0" ry="0" class="note"></rect><text x="466" y="99" fill="black" class="noteText"><tspan x="466" fill="black">步骤1：A获得资源锁</tspan></text></g><g><text x="575" y="140" class="messageText" style="text-anchor: middle;">获取锁（正在使用资源）</text><line x1="475" y1="147" x2="675" y2="147" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><rect x="0" y="157" fill="#EDF2AE" stroke="#666" width="150" height="54" rx="0" ry="0" class="note"></rect><text x="16" y="181" fill="black" class="noteText"><tspan x="16">步骤2：C</tspan><tspan dy="17" x="16">就绪，抢占A</tspan></text></g><g><text x="75" y="239" class="messageText" style="text-anchor: middle;">开始运行</text><path d="M 75,246 C 135,236 135,276 75,266" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></path></g><g><text x="375" y="304" class="messageText" style="text-anchor: middle;">请求资源锁（被A持有）</text><line x1="75" y1="311" x2="675" y2="311" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><text x="375" y="339" class="messageText" style="text-anchor: middle;">锁不可用，C进入阻塞</text><line x1="675" y1="346" x2="75" y2="346" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="stroke-dasharray: 3, 3; fill: none;"></line></g><g><rect x="200" y="356" fill="#EDF2AE" stroke="#666" width="150" height="54" rx="0" ry="0" class="note"></rect><text x="216" y="380" fill="black" class="noteText"><tspan x="216">步骤3：B</tspan><tspan dy="17" x="216">就绪，抢占A</tspan></text></g><g><text x="275" y="438" class="messageText" style="text-anchor: middle;">开始运行（B优先级高于A）</text><path d="M 275,445 C 335,435 335,475 275,465" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></path></g><g><rect x="0" y="485" fill="#EDF2AE" stroke="#666" width="150" height="54" rx="0" ry="0" class="note"></rect><text x="16" y="509" fill="black" class="noteText"><tspan x="16">此时C被B间接阻塞</tspan><tspan dy="17" x="16">优先级反转发生</tspan></text></g><g><rect x="400" y="549" fill="#EDF2AE" stroke="#666" width="150" height="54" rx="0" ry="0" class="note"></rect><text x="416" y="573" fill="black" class="noteText"><tspan x="416">步骤4：优先级继</tspan><tspan dy="17" x="416">承</tspan></text></g><g><text x="475" y="631" class="messageText" style="text-anchor: middle;">临时继承C的优先级&lt;br&gt;快速运行释放锁</text><path d="M 475,638 C 535,628 535,668 475,658" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></path></g><g><text x="575" y="696" class="messageText" style="text-anchor: middle;">释放锁</text><line x1="475" y1="703" x2="675" y2="703" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></line></g><g><text x="375" y="731" class="messageText" style="text-anchor: middle;">锁可用，C就绪</text><line x1="675" y1="738" x2="75" y2="738" class="messageLine1" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="stroke-dasharray: 3, 3; fill: none;"></line></g><g><text x="75" y="766" class="messageText" style="text-anchor: middle;">抢占B，获取锁运行</text><path d="M 75,773 C 135,763 135,803 75,793" class="messageLine0" stroke-width="2" stroke="black" marker-end="url(#arrowhead)" style="fill: none;"></path></g><g><rect x="0" y="823" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="75" y="855.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="75" dy="0">高优先级任务C</tspan></text></g><g><rect x="200" y="823" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="275" y="855.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="275" dy="0">中优先级任务B</tspan></text></g><g><rect x="400" y="823" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="475" y="855.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="475" dy="0">低优先级任务A</tspan></text></g><g><rect x="600" y="823" fill="#eaeaea" stroke="#666" width="150" height="65" rx="3" ry="3" class="actor"></rect><text x="675" y="855.5" dominant-baseline="central" alignment-baseline="central" class="actor" style="text-anchor: middle;"><tspan x="675" dy="0">共享资源</tspan></text></g></svg>
+</div>
+
 ]]></content>
       <tags>
         <tag>操作系统</tag>
@@ -852,162 +685,6 @@
 ]]></content>
       <tags>
         <tag>行业体感</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ffmpeg_use</title>
-    <url>/2021/01/10/ffmpeg-use/</url>
-    <content><![CDATA[<h1 id="1-视频格式转换"><a href="#1-视频格式转换" class="headerlink" title="1. 视频格式转换"></a>1. 视频格式转换</h1><h2 id="1-1-前言"><a href="#1-1-前言" class="headerlink" title="1.1. 前言"></a>1.1. 前言</h2><p>有位同仁，最近在拓展副业，将自己的作品上传到某网站，简介部分需要swf格式的video，而本地只有mov格式的，需要转换，寻求我的帮助。</p>
-<p>由于本人是程序员兼个人电脑是mac，周末有时间还能稍微折腾一下，不希望直接去app store寻找购买现成的软件，也不想去下载盗版破解软件不安全。在网上搜索到了一个开源的音视频处理软件FFmpeg，很多音视频软件是基于该开源软件进行的二次开发。本文是基于其提供的静态库，采用敲命令行的方式进行视频格式的转换。</p>
-<span id="more"></span>
-
-<h2 id="1-2-安装方式"><a href="#1-2-安装方式" class="headerlink" title="1.2. 安装方式"></a>1.2. 安装方式</h2><p>FFmpeg官网提供了三种方式<a href="https://trac.ffmpeg.org/wiki/CompilationGuide/macOS">安装</a>其软件：</p>
-<ol>
-<li><p>使用<a href="https://brew.sh/">Homebrew</a></p>
-<p><code>brew install ffmpeg</code></p>
-</li>
-<li><p>下载官网<a href="https://ffmpeg.org/download.html">static build for macOS</a></p>
-</li>
-<li><p>下载官网源代码自己编译</p>
-</li>
-</ol>
-<h2 id="1-3-static-build方式"><a href="#1-3-static-build方式" class="headerlink" title="1.3. static build方式"></a>1.3. static build方式</h2><p>由于博主升级了操作系统，Homebrew不能使用，使用brew install ffmpeg会自动updating homebrew，然后updating失败，可以使用<code>export HOMEBREW_NO_AUTO_UPDATE=true</code>取消自动升级，但是安装还是失败了，于是博主采用了第二种方式直接去ffmpeg官网下载<a href="https://ffmpeg.org/download.html">static build for macOS</a>。</p>
-<h3 id="1-3-1-安装与使用"><a href="#1-3-1-安装与使用" class="headerlink" title="1.3.1. 安装与使用"></a>1.3.1. 安装与使用</h3><ol>
-<li>将下载下来的压缩包解压</li>
-<li>将解压出来的文件放到&#x2F;usr&#x2F;local&#x2F;bin路径下（右键单击Finder–&gt;Go to Folder…—&gt;输入&#x2F;usr&#x2F;local&#x2F;bin—&gt;return键）</li>
-<li>打开terminal，cd到&#x2F;usr&#x2F;local&#x2F;bin&#x2F;，执行chmod 777 ffmpeg指令，修改该build的使用权限</li>
-<li>在你存放视频的目录打开terminal，执行ffmpeg -i xxx.mov -f swf xxx.swf指令</li>
-</ol>
-<h2 id="1-4-后继"><a href="#1-4-后继" class="headerlink" title="1.4. 后继"></a>1.4. 后继</h2><p>具体其他的使用指令可去其官网查看，会介绍其使用语法，或者ffmpeg -h也有简单的介绍。</p>
-<p>自己后续可能基于其库进行二次开发。</p>
-]]></content>
-      <tags>
-        <tag>video_formate_convert</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我在高通中国的五年</title>
-    <url>/2026/02/12/five-years-in-qcom/</url>
-    <content><![CDATA[<p>&emsp;&emsp; 我是在2020年12月份加入高通，那时候还是疫情期间，面试也是全程线上。苹果回到高通基带芯片的怀抱不久，iPhone和iPad大部分产线在深圳，需要人来做现场技术支持，所以我是以支持苹果的名义招进高通中国基带软件研发团队。因为苹果是高通的VIP客户（给的钱多），所以是研发团队作为主导来直接对接他们。</p>
-<span id="more"></span>
-
-<p>&emsp;&emsp; 转眼间五年过去了，正好趁这次高通中国modem软件研发团队的调整，可以做一些回顾和总结。</p>
-<p>&emsp;&emsp; 在高通中国我觉得比较棒的点是，公司相对信任员工，没有严格的打卡制度，相对灵活的上班时间；做需求push感没有那么强，可以按自己的workload和节奏去排时间。自己所在的团队氛围还不错，大家相互比较尊重，同事间的关系也相对简单。代码产生了bug更多的是专注于去解决问题，而不是去追责。技术总监会有人文关怀。</p>
-<p>&emsp;&emsp; 我是在RFSCA(Radio Frequency Sysytem Calibration and Analysis)团队，主要负责射频前端模拟器件的校准。刚入职的前一年半，主要用C++做在Windows系统上运行的产线校准工具的开发，后面三年半侧重做嵌入端（RTOS）C&#x2F;C++的开发。具体对接的业务有以下几块：</p>
-<ul>
-<li>苹果：针对iPhone各个硬件阶段做校准Bring Up，每年都有去苹果工厂实验室做现场技术支持和搭建支持远程的硬件环境。客户产线用自己的校准工具，新平台嵌入端校准框架发生变化，我针对客户特殊的校准流程设计了新的API来支持客户自己的工具。他们的校准工具依赖我们内部的ESC Parser DLL，要维护这个解码流的工具，他们提了不少相关的问题过来。还有就是维护该客户用的较多的feature，例如RxTrigger，FBRx offset(后续也推给了其他客户)等。可惜苹果要开始大规模上他们自己的基带了，深圳三个实验室的设备都已经撤出来了。</li>
-<li>Customer Engineer Team: 国内OEMs的校准问题解决和定制化需求实现，当然也有韩国、日本的一些客户，刚进来的时候还有只能用4G的H厂的cases。</li>
-<li>新平台QRD的校准Bring Up，国内的硬件团队会参考Global的新硬件设计来做给国内客户参考的硬件，软件团队要和硬件团队一起在项目的各个阶段完成各个支持的Bands校准。</li>
-<li>bAPT：China研发来负责这种关键的校准feature情况比较少，我的tech leader争取过来了，交给了我，也是对我的认可。这个是算法团队提出来的需求，做了几个平台的迭代，后续的算法优化，也参与了和算法团队的讨论。这个feature做的也是很动荡，第一版做完之后，合作的算法、RFLM、LTE Tech、NV MGR、测试人员被lay off，China只剩我一个负责这个feature的后续迭代开发。这个feature几个平台的优化也是换了两个算法的人员，其中一个还主动离开了高通去了其他公司。春节之后China Modem研发团队受美国BIS法案的影响，基带嵌入端代码权限被锁死，成了对接China CE团队和研发团队的中间件team。我本地开发的关于bAPT重构的代码也提交不了，并且自己还有一个更省校准时间的idea，有点小遗憾。但是通过这个需求，自己有从执行者到思考者的一个转变，不仅仅是去根据要求去做实现，会思考有没有更好的解决方案，会去针对算法团队给出的解决方案提出质疑并给出我认为更合适的方案进行商讨。</li>
-<li>仪表厂商：射频前端的校准是需要依赖第三方的仪表，所以我们这个组的工具代码是需要支持仪表厂商，目前OEMs工厂主流仪表用的是德国的罗德与施瓦茨CMW100，公司给我的工作站配的仪表也是CMW100。遇到仪表的软件的问题需要和他们一起co-debug，或者适配他们的新feature修改我们的工具代码。</li>
-</ul>
-<p>&emsp;&emsp; 个人感觉这个岗位还挺有意思，校准分很多硬件模块通路(XO、QET、SDR、PA、LNA、Tx、Rx、FBRx…)，需要打交道的人很多，也可以很深入的研究复杂的XPT算法。高通独有的QET硬件，配合独有IP的ET算法，这个ET算法挺复杂的，还用到了机器学习。如果是做射频前端的校准，相比其他厂商，高通的ET校准算法在能耗上面是有挺大优势。但是不知道和华为Mate 50上射频前端所用的Doherty PA的比较是怎么样的。还有很多高通独有硬件独有的VISPA features，很多是需要校准来配合的。</p>
-<p>&emsp;&emsp; 自己在这个岗位上幸福的时刻，是自己有过几次进入了心流体验，解bug解的很兴奋，忘记了时间，这种有些挑战，但是再给点时间，就能找到线索并fix它的bug很有意思。相比做需求，自己更加喜欢解bug，就像玩小游戏一样，不需要太多的时间，但是会有及时的反馈。所以我并不是很排斥上班这件事情。</p>
-]]></content>
-      <tags>
-        <tag>职场</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>How to fix your entire life in one day</title>
-    <url>/2026/02/24/how-to-fix-your-in-one-day/</url>
-    <content><![CDATA[<p>看到了一个博主DAN KOE分享了一篇文章：<a href="https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1">How to fix your entire life in 1 day</a>，感觉结合自己当前的状态还是所有感触，所以准备细细研读和做笔记。</p>
-<p>这篇文章的基石：阿德勒心理学（Adlerian Psychology）</p>
-<p>先抛一个问题：你对当前的生活是满意的、不满意的、还是假装满意的？</p>
-<span id="more"></span>
-
-<h2 id="1-改变身份"><a href="#1-改变身份" class="headerlink" title="1. 改变身份"></a>1. 改变身份</h2><h2 id="2-察觉自己"><a href="#2-察觉自己" class="headerlink" title="2. 察觉自己"></a>2. 察觉自己</h2><h2 id="3-付诸行动"><a href="#3-付诸行动" class="headerlink" title="3. 付诸行动"></a>3. 付诸行动</h2><p>工作就是玩</p>
-<p>健康的生活方式</p>
-<p>识人法则 看行动</p>
-<p>了解心智的运作方式，才可能编辑</p>
-<p>真的想改变并变更好，改变潜意识中的目标</p>
-<p>改变自己八步骤</p>
-<p>你的价值观来自父母</p>
-<p>自我发展9个阶段</p>
-<p>成功三要素 主动性 机会 智慧</p>
-<p>聪明不聪明的差别 迭代 坚持 洞察全局</p>
-<p>大部分人的一生</p>
-<p>提高认知6步骤来做出改变</p>
-<p>遇到人才 有智慧却没有勇气 不说服</p>
-<p>知难行易 察觉自己 是否改变 收获什么 付诸行动</p>
-<p>思考负能量激发正能量</p>
-<p>7步让自己变强</p>
-]]></content>
-      <tags>
-        <tag>心灵鸡汤</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>硬盘文件在Mac上操作不了的问题</title>
-    <url>/2021/02/17/mac-finder-file/</url>
-    <content><![CDATA[<p>通过command指令修改在硬盘文件上的属性，移除只有finder可见属性。然后就可以操组，copy到mac上。</p>
-<p>1,先安装软件 Mounty for NTFS，这个软件可以让Mac系统支持NTFS硬盘读写操作。</p>
-<p>2,文件变灰色的原因是文件的名后面多了一个@，可以在终端中用命令行消除。</p>
-<pre><code>  在终端中输入xattr -d com.apple.FinderInfo ，然后在后面输入文件地址(直接把文件拖入终端中就行了)。回车该文件就变回可用状态了。
-</code></pre>
-]]></content>
-      <tags>
-        <tag>mac-finder-file</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AI基础概念及理论学习</title>
-    <url>/2026/02/08/AI-Learn/</url>
-    <content><![CDATA[<p>&emsp;&emsp; 目前AI已经进入了普通老百姓视角的主舞台，各大科技公司在这个台上你方唱罢我来舞，日新月异，占据了不少公众视野。对于科技大厂而言，搞AI是一件政治正确的事情，你不搞不主动去靠就是不行，要被打入冷宫。既然潮水已来，就顺流而下，去拥抱它。作为个人如何拥抱AI，要么侧重去参与迭代AI功能本身，要么侧重如何为我所用，不管怎么样都是要略懂一些AI基础知识。可以初步防止在二级市场被割韭菜或者就业市场被动失业。</p>
-<span id="more"></span>
-
-<p><strong>洋气的名字</strong></p>
-<ul>
-<li>LLM(Large Language Model) 大语言模型：区别于古老的智障语言模型，前面加了个大，模型参数变多了，具备了一定的智能</li>
-<li>Prompt 提示词：一问一答</li>
-<li>Context  上下文：背景信息 </li>
-<li>Memory 记忆：不仅仅一问一答，对上下文进行压缩，可以进行追问</li>
-<li>Agent 智能体：不仅仅是和大模型交互，还拥有上网功能、搜索本地文档&#x2F;数据库、文件读取、执行脚本、PDF转换等能力，减少和大模型的沟通次数，处理一些大模型无法操作的东西，获取模型以外的信息能力，整合多方的结果发送给用户。相对于后面要讲的Function Call和MCP, 中间的Agent就像一个传话筒，把大模型的话转化成调用工具的代码，把工具调用的结果在原封不动的传话给大模型，同时不忘了给用户传话，主打一个我不生产信息，我只做一个信息的搬运工。Agent和用户对话，虽然最底层还是文字，但是交互形式上可以丰富多彩，可以是CLI(Command Line Interface)，Claude Code（早期是一个编程Agent，现在已经走上了通用Agent道路，名字起的很失败），现在大火的开源桌面助手OpenClaw等</li>
-<li>RAG(Retrieval-Augmented Generation) 检索增强生成，用于本地数据库搜索，与传统数据库不同，使用了向量数据库</li>
-<li>Web Search 联网搜索，提高实时性及减少token的消耗</li>
-<li>Function Calling：Agent和大模型之间，关于工具调用所约定的对话格式，让大模型按照死板的格式回复给Agent去调用工具，就像前端和后端开发一样，约定接口格式，例如一个json模版</li>
-<li>MCP(Model Context Protocol)模型上下文协议：Agent和工具集之间交互的一套约定，大模型是一个只会说话不会做事的智者，而MCP能提供各种工具的程序集,  tools&#x2F;list.. tools&#x2F;call.. </li>
-<li>Langchain ：纯编程来实现流程走向，全是硬编码，稳定但是缺乏灵活性</li>
-<li>Workflow 工作流：低代码，可以功能模块块拖拽</li>
-<li>Skill 技能：SKILL.md提前写好了说明文档和直接可以运行的脚本，即agent的技能，相比Langchain和Workflow兼顾了灵活性和稳定性</li>
-<li>SubAgent ：拆分复杂的任务，独立的子任务可以在子agent中完成，本质上就是做上下文隔离，子agent产生的上下文不会保留在主agent中</li>
-<li>Token 令牌：人工智能模型处理信息的最小单位，可以把它的工作原理想象成我们人类阅读和组词语的过程，当我们看到一句话，我们不会逐字停顿，而是会按词组来理解。比如“我喜欢解bug”，我们的大脑会处理成 “我&#x2F;喜欢&#x2F;解&#x2F;bug” 这几个片段。在人工智能的世界里，模型看到的也不是完整的句子，而是被切分成的Token。这些Token可能是一个词、一个汉字、一个标点符号，甚至是半个字（当用两个Token ID来表示一个字的时候）。对于主流的的人工智能模型，通常一个汉字大约是1到2个Token。</li>
-<li>AGI(Artifical General Intelligence) 通用人工智能：LLM算一个专才，还不是像“人类一样的通才”，不具备完整的人类级推理能力。AGI是一种像人类一样可以在几乎所有认知领域自主思考和学习的人工智能</li>
-<li>GPT(Generative Pre-trained Transformer) 生成式预训练变换模型：它是一种深度学习算法，属于自然语言处理（NLP）领域的人工智能模型，旨在生成具有连贯性和逻辑性的自然语言。</li>
-</ul>
-<p><strong>人工智能</strong></p>
-<p>&emsp;&emsp; 智能本质上就是针对不同情境给出针对性的输出反应，不会乱来的黑箱，数学表达就是$f(x) &#x3D; y$，引用一位美国的数学教授Thomas A. Garrity上课的一句话：Functions describe the world, everything is described by functions, the sound of my voice on your eardrum, function! That’s kind of hitting your eye balls right now, function! The entries you put in your random matrices, function! It’s all function!</p>
-<p><em>人工智能</em>：人工搭建起一套智能（黑箱），根据不同的环境信息给出针对性的输出和回应的系统，这个输出可以是动作、语言，也可以是一种判断和预测。人如果无法区分是和AI聊天还是和人聊天，那就实现了人的智能。</p>
-<p><em>专家系统</em>：清晰的规则，例如：疾病诊断和金融咨询，静态，不能自我迭代，完全是复制人类经验，能力上限就是人类专家的水平，无法做到比人更好。</p>
-<p><em>神经网络(Neural Network)</em>：是模拟人脑神经元连接方式的模型结构，具有可自动学习特征，不需要人工设计，有时候很难提取其中的规律和感觉，就可以通过大量的数据来提取特征。目前从理论上来说，它的准确率不是100%的，始终存在对抗样本，在噪声的世界中做稳定近似的学问。</p>
-<ul>
-<li>多层结构（输入层&#x2F;隐藏层&#x2F;输出层）</li>
-<li>通过反向传播训练</li>
-<li>参数量大</li>
-<li>表达能力强</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">人工智能（AI）</span><br><span class="line">    └── 机器学习（ML）</span><br><span class="line">            └── 深度学习（DL）</span><br><span class="line">                    └── 神经网络（Neural Network）</span><br></pre></td></tr></table></figure>
-<p>当神经网络层数很多时，就叫深度学习Deep Learning。</p>
-<p>多层神经网络(Deep Neural Network)的真正价值在于它的结构弹性：<br>&emsp;&emsp; 理论上，逼近任何复杂函数<br>&emsp;&emsp; 实践中，可以通过层级结构逐步逼近真实世界</p>
-<p>每一层神经网络都在做两件事：<br>&emsp;&emsp; 1、抽取更高层的语义特征<br>&emsp;&emsp; 2、压缩与去冗余</p>
-<p>Transformer思想源头：从压缩到重构，Encode-Decode架构，是工程极致化实现</p>
-<ul>
-<li>Compressed(x)，将x压缩为抽象语义</li>
-<li>Function(Compressed(x)) &#x3D; Compressed(y)，在语义空间中进行变换</li>
-<li>y &#x3D; Decompressed(Compressed(y))，再将其解压为目标语言</li>
-</ul>
-<p><em>大语言模型LLM</em></p>
-<ul>
-<li>模型结构：哪来这种神奇的黑箱，超大的多层神经网络</li>
-<li>损失函数：怎么奖励一个机器，损失函数是用来衡量模型预测结果与真实值之间差距的函数。在训练过程中，我们通过最小化损失函数来优化模型参数。它本质上是一个可微的优化目标函数，比如回归常用均方误差MSE(Mean Squared Error)，分类常用交叉熵。通过计算损失对参数的梯度，并进行反向传播，模型可以不断更新参数，使用预测结果越来越准确。</li>
-<li>训练过程：机器怎么建立条件反射，利于梯度下降找到损失函数低的参数，每次向着局部损失函数下降最快的方向前进，得出一套参数。</li>
-</ul>
-<p><em>泛化能力（Generalization）</em>：即规律，推广，举一反三，神经网络具有很强的泛化能力</p>
-<p>&emsp;&emsp; 我本科期间参加了数学建模比赛，学校派了很多理学院的数学老师在暑假给我们培训，讲过下面的各种智能模型，看到下面的名词很有熟悉感，尤其是那个神经网络模型的梯度下降(Gradient Vector)和反向传播(Back Propagation)，当时不怎么明白，现在回过头来看，感觉会清晰很多。</p>
-<p>&emsp;&emsp; 2026年，个人感觉，AI基座大模型的入场券基本已经发放完毕，AI大脑几家主流公司在堆算力优化模型，美国主要有5家：Open AI，Google DeepMind, Anthropic, Meta, xAI；中国主要有：深度求索，字节跳动，阿里巴巴，腾讯，百度，华为，智谱AI，MiniMax，月之暗面，百川智能（感谢Meta Llam3的开源，让大家知道了黑箱里头更多的细节，缩短了中国与美国在大模型领域的差距）。在基座模型上进行发展更多的能力，例如，给他们配上手、眼、脚，可能是机器人公司和一些智能硬件，垂直领域的发力。软件层面可能会有越来越多的行业推出类似Manus、OpenClaw这样的智能体，在垂直应用领域，中国会遍地开花。</p>
-]]></content>
-      <tags>
-        <tag>Artificial Intelligencs</tag>
       </tags>
   </entry>
 </search>
