@@ -1,0 +1,387 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="目前AI已经进入了普通老百姓视角的主舞台，各大科技公司在这个台上你方唱罢我来舞，日新月异，占据了不少公众视野。对于科技大厂而言，搞AI是一件政治正确的事情，你不搞不主动去靠就是不行，要被打入冷宫。既然潮水已来，就顺流而下，去拥抱它。作为个人如何拥抱AI，要么侧重去参与迭代AI功能本身，要么侧重如何为我所用，不管怎么样都是要略懂一些AI基础知识。可以初步防止在二级市场被割韭菜或者就业市场被动失">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AI基础概念及理论学习">
+<meta property="og:url" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/02/08/AI-Learn/index.html">
+<meta property="og:site_name" content="Nick Liu&#39;s Blog">
+<meta property="og:description" content="目前AI已经进入了普通老百姓视角的主舞台，各大科技公司在这个台上你方唱罢我来舞，日新月异，占据了不少公众视野。对于科技大厂而言，搞AI是一件政治正确的事情，你不搞不主动去靠就是不行，要被打入冷宫。既然潮水已来，就顺流而下，去拥抱它。作为个人如何拥抱AI，要么侧重去参与迭代AI功能本身，要么侧重如何为我所用，不管怎么样都是要略懂一些AI基础知识。可以初步防止在二级市场被割韭菜或者就业市场被动失">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-02-08T14:35:02.000Z">
+<meta property="article:modified_time" content="2026-03-01T08:37:28.041Z">
+<meta property="article:author" content="Nick Liu">
+<meta property="article:tag" content="Artificial Intelligencs">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/02/08/AI-Learn/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/02/08/AI-Learn/","path":"2026/02/08/AI-Learn/","title":"AI基础概念及理论学习"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AI基础概念及理论学习 | Nick Liu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"version":"10.2.3","theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com"}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nick Liu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be Better && Be Smarter</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-overview-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Nick Liu</p>
+  <div class="site-description" itemprop="description">My Blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/02/08/AI-Learn/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Nick Liu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nick Liu's Blog">
+      <meta itemprop="description" content="My Blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AI基础概念及理论学习 | Nick Liu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AI基础概念及理论学习
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-02-08 22:35:02" itemprop="dateCreated datePublished" datetime="2026-02-08T22:35:02+08:00">2026-02-08</time>
+    </span>
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+        <a href="/tags/Artificial-Intelligencs/" rel="tag"># Artificial Intelligencs</a>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><p>  
+目前AI已经进入了普通老百姓视角的主舞台，各大科技公司在这个台上你方唱罢我来舞，日新月异，占据了不少公众视野。对于科技大厂而言，搞AI是一件政治正确的事情，你不搞不主动去靠就是不行，要被打入冷宫。既然潮水已来，就顺流而下，去拥抱它。作为个人如何拥抱AI，要么侧重去参与迭代AI功能本身，要么侧重如何为我所用，不管怎么样都是要略懂一些AI基础知识。可以初步防止在二级市场被割韭菜或者就业市场被动失业。</p>
+<span id="more"></span>
+<p><strong>洋气的名字</strong></p>
+<ul>
+<li>LLM(Large Language Model)
+大语言模型：区别于古老的智障语言模型，前面加了个大，模型参数变多了，具备了一定的智能</li>
+<li>Prompt 提示词：一问一答</li>
+<li>Context 上下文：背景信息</li>
+<li>Memory 记忆：不仅仅一问一答，对上下文进行压缩，可以进行追问</li>
+<li>Agent
+智能体：不仅仅是和大模型交互，还拥有上网功能、搜索本地文档/数据库、文件读取、执行脚本、PDF转换等能力，减少和大模型的沟通次数，处理一些大模型无法操作的东西，获取模型以外的信息能力，整合多方的结果发送给用户。相对于后面要讲的Function
+Call和MCP,
+中间的Agent就像一个传话筒，把大模型的话转化成调用工具的代码，把工具调用的结果在原封不动的传话给大模型，同时不忘了给用户传话，主打一个我不生产信息，我只做一个信息的搬运工。Agent和用户对话，虽然最底层还是文字，但是交互形式上可以丰富多彩，可以是CLI(Command
+Line Interface)，Claude
+Code（早期是一个编程Agent，现在已经走上了通用Agent道路，名字起的很失败），现在大火的开源桌面助手OpenClaw等</li>
+<li>RAG(Retrieval-Augmented Generation)
+检索增强生成，用于本地数据库搜索，与传统数据库不同，使用了向量数据库</li>
+<li>Web Search 联网搜索，提高实时性及减少token的消耗</li>
+<li>Function
+Calling：Agent和大模型之间，关于工具调用所约定的对话格式，让大模型按照死板的格式回复给Agent去调用工具，就像前端和后端开发一样，约定接口格式，例如一个json模版</li>
+<li>MCP(Model Context
+Protocol)模型上下文协议：Agent和工具集之间交互的一套约定，大模型是一个只会说话不会做事的智者，而MCP能提供各种工具的程序集,
+tools/list.. tools/call..</li>
+<li>Langchain
+：纯编程来实现流程走向，全是硬编码，稳定但是缺乏灵活性</li>
+<li>Workflow 工作流：低代码，可以功能模块块拖拽</li>
+<li>Skill
+技能：SKILL.md提前写好了说明文档和直接可以运行的脚本，即agent的技能，相比Langchain和Workflow兼顾了灵活性和稳定性</li>
+<li>SubAgent
+：拆分复杂的任务，独立的子任务可以在子agent中完成，本质上就是做上下文隔离，子agent产生的上下文不会保留在主agent中</li>
+<li>Token
+令牌：人工智能模型处理信息的最小单位，可以把它的工作原理想象成我们人类阅读和组词语的过程，当我们看到一句话，我们不会逐字停顿，而是会按词组来理解。比如“我喜欢解bug”，我们的大脑会处理成
+“我/喜欢/解/bug”
+这几个片段。在人工智能的世界里，模型看到的也不是完整的句子，而是被切分成的Token。这些Token可能是一个词、一个汉字、一个标点符号，甚至是半个字（当用两个Token
+ID来表示一个字的时候）。对于主流的的人工智能模型，通常一个汉字大约是1到2个Token。</li>
+<li>AGI(Artifical General Intelligence)
+通用人工智能：LLM算一个专才，还不是像“人类一样的通才”，不具备完整的人类级推理能力。AGI是一种像人类一样可以在几乎所有认知领域自主思考和学习的人工智能</li>
+<li>GPT(Generative Pre-trained Transformer)
+生成式预训练变换模型：它是一种深度学习算法，属于自然语言处理（NLP）领域的人工智能模型，旨在生成具有连贯性和逻辑性的自然语言。</li>
+</ul>
+<p><strong>人工智能</strong></p>
+<p>  
+智能本质上就是针对不同情境给出针对性的输出反应，不会乱来的黑箱，数学表达就是<span
+class="math inline"><em>f</em>(<em>x</em>) = <em>y</em></span>，引用一位美国的数学教授Thomas
+A. Garrity上课的一句话：Functions describe the world, everything is
+described by functions, the sound of my voice on your eardrum, function!
+That’s kind of hitting your eye balls right now, function! The entries
+you put in your random matrices, function! It’s all function!</p>
+<p><em>人工智能</em>：人工搭建起一套智能（黑箱），根据不同的环境信息给出针对性的输出和回应的系统，这个输出可以是动作、语言，也可以是一种判断和预测。人如果无法区分是和AI聊天还是和人聊天，那就实现了人的智能。</p>
+<p><em>专家系统</em>：清晰的规则，例如：疾病诊断和金融咨询，静态，不能自我迭代，完全是复制人类经验，能力上限就是人类专家的水平，无法做到比人更好。</p>
+<p><em>神经网络(Neural
+Network)</em>：是模拟人脑神经元连接方式的模型结构，具有可自动学习特征，不需要人工设计，有时候很难提取其中的规律和感觉，就可以通过大量的数据来提取特征。目前从理论上来说，它的准确率不是100%的，始终存在对抗样本，在噪声的世界中做稳定近似的学问。</p>
+<ul>
+<li>多层结构（输入层/隐藏层/输出层）</li>
+<li>通过反向传播训练</li>
+<li>参数量大</li>
+<li>表达能力强</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">人工智能（AI）</span><br><span class="line">    └── 机器学习（ML）</span><br><span class="line">            └── 深度学习（DL）</span><br><span class="line">                    └── 神经网络（Neural Network）</span><br></pre></td></tr></table></figure>
+<p>当神经网络层数很多时，就叫深度学习Deep Learning。</p>
+<p>多层神经网络(Deep Neural Network)的真正价值在于它的结构弹性：   
+理论上，逼近任何复杂函数    实践中，可以通过层级结构逐步逼近真实世界</p>
+<p>每一层神经网络都在做两件事：    1、抽取更高层的语义特征   
+2、压缩与去冗余</p>
+<p>Transformer思想源头：从压缩到重构，Encode-Decode架构，是工程极致化实现</p>
+<ul>
+<li>Compressed(x)，将x压缩为抽象语义</li>
+<li>Function(Compressed(x)) = Compressed(y)，在语义空间中进行变换</li>
+<li>y = Decompressed(Compressed(y))，再将其解压为目标语言</li>
+</ul>
+<p><em>大语言模型LLM</em> -
+模型结构：哪来这种神奇的黑箱，超大的多层神经网络 -
+损失函数：怎么奖励一个机器，损失函数是用来衡量模型预测结果与真实值之间差距的函数。在训练过程中，我们通过最小化损失函数来优化模型参数。它本质上是一个可微的优化目标函数，比如回归常用均方误差MSE(Mean
+Squared
+Error)，分类常用交叉熵。通过计算损失对参数的梯度，并进行反向传播，模型可以不断更新参数，使用预测结果越来越准确。
+-
+训练过程：机器怎么建立条件反射，利于梯度下降找到损失函数低的参数，每次向着局部损失函数下降最快的方向前进，得出一套参数。</p>
+<p><em>泛化能力（Generalization）</em>：即规律，推广，举一反三，神经网络具有很强的泛化能力</p>
+<p>  
+我本科期间参加了数学建模比赛，学校派了很多理学院的数学老师在暑假给我们培训，讲过下面的各种智能模型，看到下面的名词很有熟悉感，尤其是那个神经网络模型的梯度下降(Gradient
+Vector)和反向传播(Back
+Propagation)，当时不怎么明白，现在回过头来看，感觉会清晰很多。</p>
+<p>  
+2026年，个人感觉，AI基座大模型的入场券基本已经发放完毕，AI大脑几家主流公司在堆算力优化模型，美国主要有5家：Open
+AI，Google DeepMind, Anthropic, Meta,
+xAI；中国主要有：深度求索，字节跳动，阿里巴巴，腾讯，百度，华为，智谱AI，MiniMax，月之暗面，百川智能（感谢Meta
+Llam3的开源，让大家知道了黑箱里头更多的细节，缩短了中国与美国在大模型领域的差距）。在基座模型上进行发展更多的能力，例如，给他们配上手、眼、脚，可能是机器人公司和一些智能硬件，垂直领域的发力。软件层面可能会有越来越多的行业推出类似Manus、OpenClaw这样的智能体，在垂直应用领域，中国会遍地开花。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/Artificial-Intelligencs/" rel="tag"># Artificial Intelligencs</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/02/04/C_C++_Interview/" rel="prev" title="C&#x2F;C++面试基础">
+                  <i class="fa fa-angle-left"></i> C/C++面试基础
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2026/02/12/five-years-in-qcom/" rel="next" title="我在高通中国的五年">
+                  我在高通中国的五年 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nick Liu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>

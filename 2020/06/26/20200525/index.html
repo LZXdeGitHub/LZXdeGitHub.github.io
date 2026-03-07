@@ -1,0 +1,453 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="前言 亚马逊云服务（AWS）免费薅羊毛一年，创建个人EC2（Elastic Compute Cloud）搭建VPN，可以比较方便的Google一些文献。这个配置主要分两部分进行配置，AWS云端和Client（我自己是在Mac Pro上进行配置）。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="AWS EC2配置个人VPN">
+<meta property="og:url" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/index.html">
+<meta property="og:site_name" content="Nick Liu&#39;s Blog">
+<meta property="og:description" content="前言 亚马逊云服务（AWS）免费薅羊毛一年，创建个人EC2（Elastic Compute Cloud）搭建VPN，可以比较方便的Google一些文献。这个配置主要分两部分进行配置，AWS云端和Client（我自己是在Mac Pro上进行配置）。">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/1.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/2.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/3.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/4.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/5.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/6.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/7.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/8.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/9.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/10.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/11.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/12.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/13.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/14.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/15.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/16.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/17.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/18.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/19.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/20.png">
+<meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/21.png">
+<meta property="article:published_time" content="2020-06-26T07:18:22.000Z">
+<meta property="article:modified_time" content="2026-03-04T14:23:19.544Z">
+<meta property="article:author" content="Nick Liu">
+<meta property="article:tag" content="配置">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/1.png">
+
+
+<link rel="canonical" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/","path":"2020/06/26/20200525/","title":"AWS EC2配置个人VPN"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>AWS EC2配置个人VPN | Nick Liu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"version":"10.2.3","theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com"}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nick Liu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be Better && Be Smarter</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+  </ul>
+</nav>
+
+
+
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.</span> <span class="nav-text">前言</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%87%86%E5%A4%87%E5%B7%A5%E4%BD%9C"><span class="nav-number">2.</span> <span class="nav-text">准备工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#aws%E4%BA%91%E7%AB%AF%E9%85%8D%E7%BD%AE"><span class="nav-number">3.</span> <span class="nav-text">AWS云端配置</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BAec2%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.1.</span> <span class="nav-text">创建EC2实例</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E5%85%A8%E7%BB%84%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.2.</span> <span class="nav-text">安全组设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%BC%B9%E6%80%A7ip%E8%AE%BE%E7%BD%AE"><span class="nav-number">3.3.</span> <span class="nav-text">弹性IP设置</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%89%E8%A3%85ipsec-vpn"><span class="nav-number">3.4.</span> <span class="nav-text">安装ipsec-vpn</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%9C%AC%E5%9C%B0%E5%AE%A2%E6%88%B7%E7%AB%AF%E8%AE%BE%E7%BD%AE"><span class="nav-number">4.</span> <span class="nav-text">本地客户端设置</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Nick Liu</p>
+  <div class="site-description" itemprop="description">My Blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">18</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">17</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2020/06/26/20200525/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Nick Liu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nick Liu's Blog">
+      <meta itemprop="description" content="My Blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="AWS EC2配置个人VPN | Nick Liu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          AWS EC2配置个人VPN
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2020-06-26 15:18:22" itemprop="dateCreated datePublished" datetime="2020-06-26T15:18:22+08:00">2020-06-26</time>
+    </span>
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+        <a href="/tags/%E9%85%8D%E7%BD%AE/" rel="tag"># 配置</a>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="前言">前言</h2>
+<p>亚马逊云服务（AWS）免费薅羊毛一年，创建个人EC2（Elastic Compute
+Cloud）搭建VPN，可以比较方便的Google一些文献。这个配置主要分两部分进行配置，AWS云端和Client（我自己是在Mac
+Pro上进行配置）。</p>
+<span id="more"></span>
+<h2 id="准备工作">准备工作</h2>
+<p>注册aws个人账号，绑定一张信用卡（推荐visa），具体注册流程看<a
+target="_blank" rel="noopener" href="https://aws.amazon.com">官网</a>。</p>
+<h2 id="aws云端配置">AWS云端配置</h2>
+<p>主要分四个步骤，创建EC2实例，设置安全组，给实例绑定弹性IP，然后安装<a
+href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a>。</p>
+<h3 id="创建ec2实例">创建EC2实例</h3>
+<p>1、如果在中国大陆，个人建议选择东京的服务器，这样访问Google的速度会快一些，自己可以ping一个网站测一下速度，示例选择的是Hong
+Kong。</p>
+<figure>
+<img src="1.png" alt="服务器选择" />
+<figcaption aria-hidden="true">服务器选择</figcaption>
+</figure>
+<p>2、点击All services，然后选择EC2。</p>
+<figure>
+<img src="2.png" alt="EC2" />
+<figcaption aria-hidden="true">EC2</figcaption>
+</figure>
+<p>3、启动一个实例。</p>
+<figure>
+<img src="3.png" alt="启动实例" />
+<figcaption aria-hidden="true">启动实例</figcaption>
+</figure>
+<p>4、过滤掉付费的AMI，勾选Free tier
+only，然后选择下图中的其中一个AMI进行Select。</p>
+<figure>
+<img src="4.png" alt="AMI选择" />
+<figcaption aria-hidden="true">AMI选择</figcaption>
+</figure>
+<p>5、选择一个实例类型，勾选☑️哪个Free tier eligible，接着Review and
+Launch。</p>
+<figure>
+<img src="5.png" alt="review and launch" />
+<figcaption aria-hidden="true">review and launch</figcaption>
+</figure>
+<p>6、有兴趣的可以Review实例类型的一些参数，然后直接点击Launch，运行实例。</p>
+<figure>
+<img src="6.png" alt="运行实例" />
+<figcaption aria-hidden="true">运行实例</figcaption>
+</figure>
+<p>7、为你的实例创建一个密钥对，你本地电脑远程和AMI通讯密钥，一定要Download下来并保存在一个合适的地方，后续还会用到。</p>
+<figure>
+<img src="7.png" alt="key pair" />
+<figcaption aria-hidden="true">key pair</figcaption>
+</figure>
+<p>8、点击查看你的实例。</p>
+<figure>
+<img src="8.png" alt="view instance" />
+<figcaption aria-hidden="true">view instance</figcaption>
+</figure>
+<p>9、接下来选中你的实例，为你的实例配置安全组(Security
+Groups)和弹性IP(Elastic IPs)。</p>
+<figure>
+<img src="9.png" alt="configure" />
+<figcaption aria-hidden="true">configure</figcaption>
+</figure>
+<h3 id="安全组设置">安全组设置</h3>
+<p>安全组主要是实例的入站和出站规则进行设置。</p>
+<figure>
+<img src="10.png" alt="security configure" />
+<figcaption aria-hidden="true">security configure</figcaption>
+</figure>
+<p>1、入站规则：三个端口，TCP类型的22port口和UDP类型的50和4500port口，见下图具体设置。</p>
+<figure>
+<img src="11.png" alt="inbound rules" />
+<figcaption aria-hidden="true">inbound rules</figcaption>
+</figure>
+<figure>
+<img src="12.png" alt="save rules" />
+<figcaption aria-hidden="true">save rules</figcaption>
+</figure>
+<p>2、出站规则：所有流量和任何位置</p>
+<figure>
+<img src="13.png" alt="outbound rules" />
+<figcaption aria-hidden="true">outbound rules</figcaption>
+</figure>
+<h3 id="弹性ip设置">弹性IP设置</h3>
+<p>这个设置主要是为了这个目的，这是aws官网的原话：I want to have a
+public IP address for my EC2 instance that will persist even if my
+instance is stopped and
+restarted，主要为了防止实例停止运行和重启是，没有对外的有效IP。</p>
+<p>1、Allocate一个弹性IP。</p>
+<figure>
+<img src="14.png" alt="elastic ip" />
+<figcaption aria-hidden="true">elastic ip</figcaption>
+</figure>
+<figure>
+<img src="15.png" alt="allocate" />
+<figcaption aria-hidden="true">allocate</figcaption>
+</figure>
+<p>2、关联实例。</p>
+<figure>
+<img src="16.png" alt="associate elastic ip" />
+<figcaption aria-hidden="true">associate elastic ip</figcaption>
+</figure>
+<figure>
+<img src="17.png" alt="associate" />
+<figcaption aria-hidden="true">associate</figcaption>
+</figure>
+<h3 id="安装ipsec-vpn">安装<a
+href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a></h3>
+<p>1、本地终端连接你创建的实例，在你创建实例保存密钥对的路径去开启终端，接着运行下图的1步骤，然后输入yes，按enter键，进行2步骤你就会连接到你创建的实例。（ps.
+一般你执行过1后，后续连接你直接输入2指令就行）</p>
+<figure>
+<img src="18.png" alt="connect to your instance" />
+<figcaption aria-hidden="true">connect to your instance</figcaption>
+</figure>
+<p>2、安装指令</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">wget https://git.io/vpnsetup -O vpnsetup.sh &amp;&amp; sudo sh vpnsetup.sh</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="19.png" alt="install vpnsetup" />
+<figcaption aria-hidden="true">install vpnsetup</figcaption>
+</figure>
+<p>3、安装完成之后，要记录下来你的vpn信息，本地客户端配置vpn的时候要用到。</p>
+<figure>
+<img src="20.png" alt="save vpn information" />
+<figcaption aria-hidden="true">save vpn information</figcaption>
+</figure>
+<h2 id="本地客户端设置">本地客户端设置</h2>
+<p>依据自己的本地机装的操作系统类型，进行相应的配置，请参考GitHub上的这个<a
+href="https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md">链接</a>🔗。</p>
+<p>如果是mac os注意下图的这两处，一定要设置对。</p>
+<figure>
+<img src="21.png" alt="local set" />
+<figcaption aria-hidden="true">local set</figcaption>
+</figure>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/%E9%85%8D%E7%BD%AE/" rel="tag"># 配置</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2020/06/26/20200626/" rel="prev" title="MAC OS修改自己电脑的环境变量">
+                  <i class="fa fa-angle-left"></i> MAC OS修改自己电脑的环境变量
+                </a>
+            </div>
+            <div class="post-nav-item">
+                <a href="/2020/09/13/20200913/" rel="next" title="APK缩减、混淆处理和优化">
+                  APK缩减、混淆处理和优化 <i class="fa fa-angle-right"></i>
+                </a>
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nick Liu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
