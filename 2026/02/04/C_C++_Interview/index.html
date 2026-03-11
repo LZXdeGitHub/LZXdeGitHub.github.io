@@ -27,7 +27,7 @@
 <meta property="og:description" content="面试和平时做项目还是不太一样，平时写代码debug更多面对电脑，而面试是要去和面试官交流，侧重于能表达出东西，在较短的时间内了解彼此的契合度，去尽可能的展现自己。面试还是要提前做针对性的准备，对岗位要求和自己的技术栈、项目经历重合度较高的地方，进行重点总结，复习编程语言理论概念。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-02-04T13:42:02.000Z">
-<meta property="article:modified_time" content="2026-03-11T14:58:39.288Z">
+<meta property="article:modified_time" content="2026-03-11T15:08:22.445Z">
 <meta property="article:author" content="Nick Liu">
 <meta property="article:tag" content="面试">
 <meta name="twitter:card" content="summary">
@@ -230,17 +230,21 @@
 面试和平时做项目还是不太一样，平时写代码debug更多面对电脑，而面试是要去和面试官交流，侧重于能表达出东西，在较短的时间内了解彼此的契合度，去尽可能的展现自己。面试还是要提前做针对性的准备，对岗位要求和自己的技术栈、项目经历重合度较高的地方，进行重点总结，复习编程语言理论概念。</p>
 <span id="more"></span>
 <ul>
-<li><p>C语言如何避免踩内存<br />
-三层防护去避免踩内存</p>
+<li><p>C语言如何避免踩内存</p>
+<p>三层防护去避免踩内存</p>
 <ul>
 <li>编码层面：所有指针初始化NULL，malloc使用sizeof推导大小，free后置为NULL，并且所有数组访问做边界检查</li>
 <li>设计层面：明确内存ownership，避免裸指针滥用</li>
 <li>工具层面：使用AddressSanitizer和Valgrind做运行时检测<br />
 这样基本可以避免90%的内存问题。</li>
 </ul></li>
-<li><p>什么是裸指针<br />
-裸指针是指只保存内存地址、没有任何生命周期、大小或所有权信息的普通指针。它不会自动管理内存，也没有边界保护，因此容易导致越界访问、use-after-free和double
-free。在工程中通常需要通过封装结构体或明确ownership语义来降低风险。</p></li>
+<li><p>什么是裸指针</p>
+<ul>
+<li>裸指针是指只保存内存地址、没有任何生命周期、大小或所有权信息的普通指针。</li>
+<li>它不会自动管理内存，也没有边界保护，因此容易导致越界访问、use-after-free和double
+free。</li>
+<li>在工程中通常需要通过封装结构体或明确ownership语义来降低风险。</li>
+</ul></li>
 <li><p>C++如何避免内存泄漏</p>
 <ul>
 <li>使用类封装数据，利用类的构造函数申请内存，析构函数释放内存</li>
