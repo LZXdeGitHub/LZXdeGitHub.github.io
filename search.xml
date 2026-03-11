@@ -140,117 +140,6 @@ href="https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md">链
       </tags>
   </entry>
   <entry>
-    <title>Telephony框架</title>
-    <url>/2020/09/20/20200920/</url>
-    <content><![CDATA[
-]]></content>
-      <tags>
-        <tag>android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>MAC OS修改自己电脑的环境变量</title>
-    <url>/2020/06/26/20200626/</url>
-    <content><![CDATA[<p>主要是如下两条bash命令完成如下的修改：</p>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span> //这条指令可以查看电脑已经添加的环境变量路径</span><br></pre></td></tr></table></figure>
-<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.profile //进行增删改环境变量</span><br></pre></td></tr></table></figure>
-<p>ps：环境变量一般分先后为这几个文件，系统按从上倒下优先级进行加载，etc目录下的是系统级的，～下的为用户级：</p>
-<ol type="1">
-<li>/etc/profile</li>
-<li>/etc/paths</li>
-<li>~/.bash_profile</li>
-<li>~/.bash_login</li>
-<li>~/.profile</li>
-<li>~/.bashrc</li>
-</ol>
-]]></content>
-      <tags>
-        <tag>配置</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python脚本搭建编译框架</title>
-    <url>/2020/10/05/20201005-1/</url>
-    <content><![CDATA[<h2 id="背景">背景</h2>
-<p>目前博主，接触到了一些资深开发工程师，分享了一套采用python语言搭建提高效率的编译框架，抽离公共部分，组建独立仓库，给手机负责通信的模块代码搭建编译框架，并且将很多关于各个团队的feature宏抽离出来，从第三方的源代码解耦出来，在一个单独的fd文件中进行管控，而各平台的差异在平台专有的json文件中描述，并且可以更快的模块化编译。勾起了博主比较想深入研究一下这套东西的欲望。</p>
-<span id="more"></span>
-<p>大多数Linux发行版本中，python是其标准系统组件，可以直接运行用python编写的代码。并且通常情况下，用python编写的脚本易于理解、扩展、维护和复用，性能也优于shell脚本，并且python本身更能让你专注于解决问题而不是去搞明白语言本身。有很多公司采用python搭建编译框架。</p>
-<p>例如，一些手机设备厂商，会购买高通很多芯片平台，这些芯片平台的软件代码购买过来后，手机设备厂商有很多客制化的代码，需要移植在各个平台，并且各个平台有自己的一套shell编译脚本，需要单独移植和适配。采用pthon编译框架后，单独的仓库和分支，可以方便很多feature和多平台的管理，并且可以快速适配新平台，提高了代码移植和适配的效率降低出错的可能性。</p>
-<p>查看高通给过来的源代码，使用的就是python来组织编译的脚本，一些终端设备厂商更多的是向高通看齐。</p>
-<h2 id="shell脚本运行python">shell脚本运行python</h2>
-<p>在模块编译的时候，大家都习惯了shell脚本编译，于是乎就有了在shell脚本中去运行pthon脚本。</p>
-<p>shell脚本中，指定python编译版本(which
-python指令查看应用安装路径)和传递给python脚本的参数：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &quot;传递的参数为：$*&quot;</span><br><span class="line">python_install_path=`where is python`</span><br><span class="line">path_name=&quot;/Volumes/MyHD/shell_python&quot;</span><br><span class="line">python_name=&quot;shell.py&quot;</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&#123;python_install_path&#125;2.7 <span class="variable">$path_name</span>/<span class="variable">$python_name</span> <span class="variable">$1</span></span></span><br></pre></td></tr></table></figure>
-<p>python脚本：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="keyword">for</span> x <span class="keyword">in</span> xrange(<span class="number">0</span>,<span class="built_in">int</span>(sys.argv[<span class="number">1</span>])):</span><br><span class="line">		<span class="built_in">print</span> <span class="string">&quot;Hello World&quot;</span> + <span class="built_in">str</span>(x)</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<figure>
-<img src="script.png" alt="python.sh" />
-<figcaption aria-hidden="true">python.sh</figcaption>
-</figure>
-<h2 id="make">make</h2>
-<p>终端设备的代码主要分为AP(application processor)侧和CP(communication
-processor)侧，CP侧主要是一些通信模块，例如，基带处理器(baseband
-processor)、rf器件等，对应的代码这块都是用C/C++语言编写，对于这些代码的编译就有很多值得学习的地方。</p>
-<p>对于C/C++语言的编译分为四个阶段：预处理、编译、汇编和链接</p>
-<p>未完待续…….</p>
-]]></content>
-      <tags>
-        <tag>编译</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>硬编码和软编码</title>
-    <url>/2020/10/05/20201005/</url>
-    <content><![CDATA[<p>在工作过程中，听到同事说起，硬编码和软编码，大脑大概明白其意思，具体一想，如何专业的表述这对孪生概念呢，需要展开来了解一下。</p>
-<span id="more"></span>
-<p>在网上查阅这两个概念，由于当前短视频较火，这两个概念在视频编解码方面有所指，硬编码是利用硬件芯片本身GPU、DSP等非CPU去给视频编码，而软编码则指是通过软件本身或者CPU对视频进行编码。</p>
-<p>而目前我在工作中接触的这两个概念主要是针对代码的灵活性和可扩展性角度来讲的，更多的是一种设计思想。</p>
-<h2 id="硬编码">硬编码</h2>
-<p>简单直白的说就是写死值，之前博主在一家公司写代码的时候，称这种在代码中是一种<strong>坏味道</strong>，例如，<code>if（a == 10）</code>，这个10一看不知道是什么意思，直接用的<strong>魔数</strong>。亦或解析某个路径下的文件，写代码时，直接将这个文件路径固定，不管以后是否挪到了其他路径，默认它就永远是在那个路径下，没有考虑变化。</p>
-<h2 id="软编码">软编码</h2>
-<p>一句话来说，定好地方，方便后续修改和扩展。在大型软件编码中，软编码很重要，会有很多地方用到相同的值，如果是在某个地方定义好值，在代码中用它的别称，如果后续这个值有变化，可以很方便的修改，只需在一处修改。软编码可以理解为以不变应万变，这个不变是指在代码中大部分逻辑不需要动，变是指后续市场需求的变化而需要软件做的一些适配，而这种适配只需要修改某些小角落。</p>
-]]></content>
-      <tags>
-        <tag>概念</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>回顾大年初二 丢失手机事件总结</title>
-    <url>/2021/02/17/20210217/</url>
-    <content><![CDATA[<h2 id="背景">背景</h2>
-<p>大年初二世界之窗夜场游玩，逛到阿尔卑斯冰雪世界，买了游玩票，玩了陡长滑道，然后电话亭落雪场景拍照，接着到了儿童滑道，看到了很多小朋友，不要脸的和小朋友排滑道，接着不幸的事情发生了，滑下来后，走了几步，摸了下口袋，发现手机不见了。</p>
-<span id="more"></span>
-<h2 id="经过">经过</h2>
-<p>发现手机不见，第一反应是落在了滑圈里头。转过头发现，不知道自己用过的圈，是在哪个小朋友手里，然后就开始绷紧神经，快速在离自己附近的圈进行排查，在圈内花了不到三秒用手做圆弧的轨迹搜索（ps.因为圈在别人手里不好意思花太长时间占用别人游玩的时间，后面从监控视频里头看到，自己过于着急，并没有花较多的时间在每个圈找，其实自己在手机存在的那个圈里有找），没有找到。</p>
-<p>然后就开始用女友的电话打我的电话，我手表还能感受到电话，然后找圈，发现还是没有找到。接着第四个电话，手表感应不到了，说明有人捡走了，但是手机能打通。</p>
-<p>接着去前台寻求广播帮助和登记手机丢失。继续拨打手机号发现，已经被关机了，说明拾取手机的人不想交还。</p>
-<p>女友的手机find我的手机，需要登陆我的apple账号，但是我已经忘了，只能回去用我的Mac电脑或者我的另外一部iPhone手机用Find功能。</p>
-<p>自己借助女友的手机边走出世界之窗边紧急冻结微信，支付宝等关键账号。过程中急于冻结关键账号，没怎么看路，小转了一个弯。不能冻结的账号，只能回去用电脑去冻结。</p>
-<p>出来世界之窗门口，寻求站岗民警的帮助，其要我先拨打110。于是个人决定先回家冻结关键账号，再报警。由于期待能联系上拾取我手机的人，没有去挂失自己的手机号，想先等两天，再挂失。</p>
-<p>由于我住的离世界之窗只有10分钟左右的单车时间，走路大概18分钟左右，于是借助女友的手机扫开了美团单车，先行一步回家，冻结关键账号，然后将手机mark
-as
-lost，标记为丢失，只要我的手机开机就会被定位和锁定位置。接着我在住的地方进行了110报警，说明了手机丢失情况，寻求民警帮助。</p>
-<p>不到三分钟，接到了所在街道的民警电话，并来到了我所住的地方核实身份以及情况，并做好了录影。其建议我去查看监控，然后他说是想现在去看还是等到明天早上，因为是晚上10点多了，并且冰雪大世界工作人员已经下班，应该是无法查看监控了，于是我选择了明天去查看监控。</p>
-<p>于是上午10点，我带上了我的另外一部手机，去到了世界之窗门口，和世界之窗的站岗民警联系上，要求看监控，然后反馈是在冰雪世界丢的，就带我去对应的点查看监控，然后冰雪世界的监控负责人要11点才上班，然后就等到了11点，相关工作人员就带领我们去对应的监控室查看，反馈了是在儿童滑道并且是昨天下午7点20到7点30之间，监控的位置很好，确定了我出现在镜头，然后确定我坐的那个圈，过了两分钟发现了拾取手机的人。</p>
-<p>拾取手机的人是一个中年男人，他是看到了前一个小朋友的圈中一个亮屏幕的手机，因为那时候我正在用我女友的手机打，那个中年男人发现手机之后，立马拾取捡到兜里，然后在雪道上头要起孩子和老婆遮挡一下视线，然后将我的手机关机。接着他们一家先后开始离开滑雪场准备回家。</p>
-<p>和民警一起查看完监控，截取多个摄像头的视频，并下载好截取的关键视频。民警开始联系所里的人做相关的人脸识别，因为他们是一大家子，两个小孩两个大人，拾取手机的中年男子还手提两个明显的白色包，只要识别出任何一个就可以确认拾取手机的男子。并且民警也告诉我他这种行为是拾取，并不是偷，不能立案，只能协助你，尽量和那个人取得联系，要求其归还。</p>
-<p>接着中午在益田假日广场吃完饭，在女友的帮助下，扫码骑车去在新年营业的联通营业厅办理丢失补办新卡。</p>
-<p>上午和民警一起确认完监控，民警要我和女友该干嘛干嘛去，接下来他会去处理，下午就收到了民警联系电话，已经联系到拾取手机的人，其愿意归还，由于其住的较远，就采取了邮件方式。</p>
-<p>我和拾取我手机的人通过民警作为中间人，取得了微信联系。通过合适的文字表达，表示感谢，接着我向其发了2个200元感谢红包，告知其我的相对不是那么具体的地址和电话，要其通过顺丰到付邮寄过来。其下午通过顺丰给我邮寄了过来，我第二天上午收到我的手机。</p>
-<h2 id="总结">总结</h2>
-<p>首先要称赞深圳民警的办事效率，花了不到一天的时间很幸运的找到了我的手机拾取人，并作为中间人要拾取人归还。</p>
-<p>手机作为现代人的必需品，和空气一样重要的东西，要妥善保管好，尤其在游玩的时候，要建立好足够的防丢意识。</p>
-<p>苹果手机内置不错的find防丢软件，即使电话卡注销，也是会通过GPS实时反馈所丢失的手机位置。</p>
-<p>遇事不慌张，镇定处理，控制好自己的大脑神经，要暗示自己，尽己所能的处理好自己所能做的就行，同时做好最坏的打算，不需要过分的焦虑。</p>
-<p>尽人事听天命。</p>
-]]></content>
-      <tags>
-        <tag>生活</tag>
-      </tags>
-  </entry>
-  <entry>
     <title>APK缩减、混淆处理和优化</title>
     <url>/2020/09/13/20200913/</url>
     <content><![CDATA[<h2 id="问题背景">问题背景</h2>
@@ -295,12 +184,94 @@ href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#optimizati
       </tags>
   </entry>
   <entry>
-    <title>scons(a software constructe tool)</title>
-    <url>/2022/03/20/20220320-2/</url>
+    <title>Telephony框架</title>
+    <url>/2020/09/20/20200920/</url>
     <content><![CDATA[
 ]]></content>
       <tags>
-        <tag>compile scans</tag>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python脚本搭建编译框架</title>
+    <url>/2020/10/05/20201005-1/</url>
+    <content><![CDATA[<h2 id="背景">背景</h2>
+<p>目前博主，接触到了一些资深开发工程师，分享了一套采用python语言搭建提高效率的编译框架，抽离公共部分，组建独立仓库，给手机负责通信的模块代码搭建编译框架，并且将很多关于各个团队的feature宏抽离出来，从第三方的源代码解耦出来，在一个单独的fd文件中进行管控，而各平台的差异在平台专有的json文件中描述，并且可以更快的模块化编译。勾起了博主比较想深入研究一下这套东西的欲望。</p>
+<span id="more"></span>
+<p>大多数Linux发行版本中，python是其标准系统组件，可以直接运行用python编写的代码。并且通常情况下，用python编写的脚本易于理解、扩展、维护和复用，性能也优于shell脚本，并且python本身更能让你专注于解决问题而不是去搞明白语言本身。有很多公司采用python搭建编译框架。</p>
+<p>例如，一些手机设备厂商，会购买高通很多芯片平台，这些芯片平台的软件代码购买过来后，手机设备厂商有很多客制化的代码，需要移植在各个平台，并且各个平台有自己的一套shell编译脚本，需要单独移植和适配。采用pthon编译框架后，单独的仓库和分支，可以方便很多feature和多平台的管理，并且可以快速适配新平台，提高了代码移植和适配的效率降低出错的可能性。</p>
+<p>查看高通给过来的源代码，使用的就是python来组织编译的脚本，一些终端设备厂商更多的是向高通看齐。</p>
+<h2 id="shell脚本运行python">shell脚本运行python</h2>
+<p>在模块编译的时候，大家都习惯了shell脚本编译，于是乎就有了在shell脚本中去运行pthon脚本。</p>
+<p>shell脚本中，指定python编译版本(which
+python指令查看应用安装路径)和传递给python脚本的参数：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &quot;传递的参数为：$*&quot;</span><br><span class="line">python_install_path=`where is python`</span><br><span class="line">path_name=&quot;/Volumes/MyHD/shell_python&quot;</span><br><span class="line">python_name=&quot;shell.py&quot;</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&#123;python_install_path&#125;2.7 <span class="variable">$path_name</span>/<span class="variable">$python_name</span> <span class="variable">$1</span></span></span><br></pre></td></tr></table></figure>
+<p>python脚本：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="keyword">for</span> x <span class="keyword">in</span> xrange(<span class="number">0</span>,<span class="built_in">int</span>(sys.argv[<span class="number">1</span>])):</span><br><span class="line">		<span class="built_in">print</span> <span class="string">&quot;Hello World&quot;</span> + <span class="built_in">str</span>(x)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure>
+<img src="script.png" alt="python.sh" />
+<figcaption aria-hidden="true">python.sh</figcaption>
+</figure>
+<h2 id="make">make</h2>
+<p>终端设备的代码主要分为AP(application processor)侧和CP(communication
+processor)侧，CP侧主要是一些通信模块，例如，基带处理器(baseband
+processor)、rf器件等，对应的代码这块都是用C/C++语言编写，对于这些代码的编译就有很多值得学习的地方。</p>
+<p>对于C/C++语言的编译分为四个阶段：预处理、编译、汇编和链接</p>
+<p>未完待续…….</p>
+]]></content>
+      <tags>
+        <tag>编译</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>回顾大年初二 丢失手机事件总结</title>
+    <url>/2021/02/17/20210217/</url>
+    <content><![CDATA[<h2 id="背景">背景</h2>
+<p>大年初二世界之窗夜场游玩，逛到阿尔卑斯冰雪世界，买了游玩票，玩了陡长滑道，然后电话亭落雪场景拍照，接着到了儿童滑道，看到了很多小朋友，不要脸的和小朋友排滑道，接着不幸的事情发生了，滑下来后，走了几步，摸了下口袋，发现手机不见了。</p>
+<span id="more"></span>
+<h2 id="经过">经过</h2>
+<p>发现手机不见，第一反应是落在了滑圈里头。转过头发现，不知道自己用过的圈，是在哪个小朋友手里，然后就开始绷紧神经，快速在离自己附近的圈进行排查，在圈内花了不到三秒用手做圆弧的轨迹搜索（ps.因为圈在别人手里不好意思花太长时间占用别人游玩的时间，后面从监控视频里头看到，自己过于着急，并没有花较多的时间在每个圈找，其实自己在手机存在的那个圈里有找），没有找到。</p>
+<p>然后就开始用女友的电话打我的电话，我手表还能感受到电话，然后找圈，发现还是没有找到。接着第四个电话，手表感应不到了，说明有人捡走了，但是手机能打通。</p>
+<p>接着去前台寻求广播帮助和登记手机丢失。继续拨打手机号发现，已经被关机了，说明拾取手机的人不想交还。</p>
+<p>女友的手机find我的手机，需要登陆我的apple账号，但是我已经忘了，只能回去用我的Mac电脑或者我的另外一部iPhone手机用Find功能。</p>
+<p>自己借助女友的手机边走出世界之窗边紧急冻结微信，支付宝等关键账号。过程中急于冻结关键账号，没怎么看路，小转了一个弯。不能冻结的账号，只能回去用电脑去冻结。</p>
+<p>出来世界之窗门口，寻求站岗民警的帮助，其要我先拨打110。于是个人决定先回家冻结关键账号，再报警。由于期待能联系上拾取我手机的人，没有去挂失自己的手机号，想先等两天，再挂失。</p>
+<p>由于我住的离世界之窗只有10分钟左右的单车时间，走路大概18分钟左右，于是借助女友的手机扫开了美团单车，先行一步回家，冻结关键账号，然后将手机mark
+as
+lost，标记为丢失，只要我的手机开机就会被定位和锁定位置。接着我在住的地方进行了110报警，说明了手机丢失情况，寻求民警帮助。</p>
+<p>不到三分钟，接到了所在街道的民警电话，并来到了我所住的地方核实身份以及情况，并做好了录影。其建议我去查看监控，然后他说是想现在去看还是等到明天早上，因为是晚上10点多了，并且冰雪大世界工作人员已经下班，应该是无法查看监控了，于是我选择了明天去查看监控。</p>
+<p>于是上午10点，我带上了我的另外一部手机，去到了世界之窗门口，和世界之窗的站岗民警联系上，要求看监控，然后反馈是在冰雪世界丢的，就带我去对应的点查看监控，然后冰雪世界的监控负责人要11点才上班，然后就等到了11点，相关工作人员就带领我们去对应的监控室查看，反馈了是在儿童滑道并且是昨天下午7点20到7点30之间，监控的位置很好，确定了我出现在镜头，然后确定我坐的那个圈，过了两分钟发现了拾取手机的人。</p>
+<p>拾取手机的人是一个中年男人，他是看到了前一个小朋友的圈中一个亮屏幕的手机，因为那时候我正在用我女友的手机打，那个中年男人发现手机之后，立马拾取捡到兜里，然后在雪道上头要起孩子和老婆遮挡一下视线，然后将我的手机关机。接着他们一家先后开始离开滑雪场准备回家。</p>
+<p>和民警一起查看完监控，截取多个摄像头的视频，并下载好截取的关键视频。民警开始联系所里的人做相关的人脸识别，因为他们是一大家子，两个小孩两个大人，拾取手机的中年男子还手提两个明显的白色包，只要识别出任何一个就可以确认拾取手机的男子。并且民警也告诉我他这种行为是拾取，并不是偷，不能立案，只能协助你，尽量和那个人取得联系，要求其归还。</p>
+<p>接着中午在益田假日广场吃完饭，在女友的帮助下，扫码骑车去在新年营业的联通营业厅办理丢失补办新卡。</p>
+<p>上午和民警一起确认完监控，民警要我和女友该干嘛干嘛去，接下来他会去处理，下午就收到了民警联系电话，已经联系到拾取手机的人，其愿意归还，由于其住的较远，就采取了邮件方式。</p>
+<p>我和拾取我手机的人通过民警作为中间人，取得了微信联系。通过合适的文字表达，表示感谢，接着我向其发了2个200元感谢红包，告知其我的相对不是那么具体的地址和电话，要其通过顺丰到付邮寄过来。其下午通过顺丰给我邮寄了过来，我第二天上午收到我的手机。</p>
+<h2 id="总结">总结</h2>
+<p>首先要称赞深圳民警的办事效率，花了不到一天的时间很幸运的找到了我的手机拾取人，并作为中间人要拾取人归还。</p>
+<p>手机作为现代人的必需品，和空气一样重要的东西，要妥善保管好，尤其在游玩的时候，要建立好足够的防丢意识。</p>
+<p>苹果手机内置不错的find防丢软件，即使电话卡注销，也是会通过GPS实时反馈所丢失的手机位置。</p>
+<p>遇事不慌张，镇定处理，控制好自己的大脑神经，要暗示自己，尽己所能的处理好自己所能做的就行，同时做好最坏的打算，不需要过分的焦虑。</p>
+<p>尽人事听天命。</p>
+]]></content>
+      <tags>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硬编码和软编码</title>
+    <url>/2020/10/05/20201005/</url>
+    <content><![CDATA[<p>在工作过程中，听到同事说起，硬编码和软编码，大脑大概明白其意思，具体一想，如何专业的表述这对孪生概念呢，需要展开来了解一下。</p>
+<span id="more"></span>
+<p>在网上查阅这两个概念，由于当前短视频较火，这两个概念在视频编解码方面有所指，硬编码是利用硬件芯片本身GPU、DSP等非CPU去给视频编码，而软编码则指是通过软件本身或者CPU对视频进行编码。</p>
+<p>而目前我在工作中接触的这两个概念主要是针对代码的灵活性和可扩展性角度来讲的，更多的是一种设计思想。</p>
+<h2 id="硬编码">硬编码</h2>
+<p>简单直白的说就是写死值，之前博主在一家公司写代码的时候，称这种在代码中是一种<strong>坏味道</strong>，例如，<code>if（a == 10）</code>，这个10一看不知道是什么意思，直接用的<strong>魔数</strong>。亦或解析某个路径下的文件，写代码时，直接将这个文件路径固定，不管以后是否挪到了其他路径，默认它就永远是在那个路径下，没有考虑变化。</p>
+<h2 id="软编码">软编码</h2>
+<p>一句话来说，定好地方，方便后续修改和扩展。在大型软件编码中，软编码很重要，会有很多地方用到相同的值，如果是在某个地方定义好值，在代码中用它的别称，如果后续这个值有变化，可以很方便的修改，只需在一处修改。软编码可以理解为以不变应万变，这个不变是指在代码中大部分逻辑不需要动，变是指后续市场需求的变化而需要软件做的一些适配，而这种适配只需要修改某些小角落。</p>
+]]></content>
+      <tags>
+        <tag>概念</tag>
       </tags>
   </entry>
   <entry>
@@ -310,6 +281,15 @@ href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#optimizati
 ]]></content>
       <tags>
         <tag>Memory-Map File</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>scons(a software constructe tool)</title>
+    <url>/2022/03/20/20220320-2/</url>
+    <content><![CDATA[
+]]></content>
+      <tags>
+        <tag>compile scans</tag>
       </tags>
   </entry>
   <entry>
@@ -323,6 +303,102 @@ https://www.bilibili.com/video/BV1L7411L7aZ?spm_id_from=333.337.search-card.all.
 ]]></content>
       <tags>
         <tag>gtest vscode</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AI基础概念及理论学习</title>
+    <url>/2026/02/08/AI-Learn/</url>
+    <content><![CDATA[<p>  
+目前AI已经进入了普通老百姓视角的主舞台，各大科技公司在这个台上你方唱罢我来舞，日新月异，占据了不少公众视野。对于科技大厂而言，搞AI是一件政治正确的事情，你不搞不主动去靠就是不行，要被打入冷宫。既然潮水已来，就顺流而下，去拥抱它。作为个人如何拥抱AI，要么侧重去参与迭代AI功能本身，要么侧重如何为我所用，不管怎么样都是要略懂一些AI基础知识。可以初步防止在二级市场被割韭菜或者就业市场被动失业。</p>
+<span id="more"></span>
+<p><strong>洋气的名字</strong></p>
+<ul>
+<li>LLM(Large Language Model)
+大语言模型：区别于古老的智障语言模型，前面加了个大，模型参数变多了，具备了一定的智能</li>
+<li>Prompt 提示词：一问一答</li>
+<li>Context 上下文：背景信息</li>
+<li>Memory 记忆：不仅仅一问一答，对上下文进行压缩，可以进行追问</li>
+<li>Agent
+智能体：不仅仅是和大模型交互，还拥有上网功能、搜索本地文档/数据库、文件读取、执行脚本、PDF转换等能力，减少和大模型的沟通次数，处理一些大模型无法操作的东西，获取模型以外的信息能力，整合多方的结果发送给用户。相对于后面要讲的Function
+Call和MCP,
+中间的Agent就像一个传话筒，把大模型的话转化成调用工具的代码，把工具调用的结果再原封不动的传话给大模型，同时不忘了给用户传话，主打一个我不生产信息，我只做一个信息的搬运工。Agent和用户对话，虽然最底层还是文字，但是交互形式上可以丰富多彩，可以是CLI(Command
+Line Interface)，Claude
+Code（早期是一个编程Agent，现在已经走上了通用Agent道路，名字起的很失败），现在大火的开源桌面助手OpenClaw等</li>
+<li>RAG(Retrieval-Augmented Generation)
+检索增强生成，用于本地数据库搜索，与传统数据库不同，使用了向量数据库</li>
+<li>Web Search 联网搜索，提高实时性及减少token的消耗</li>
+<li>Function
+Calling：Agent和大模型之间，关于工具调用所约定的对话格式，让大模型按照死板的格式回复给Agent去调用工具，就像前端和后端开发一样，约定接口格式，例如一个json模版</li>
+<li>MCP(Model Context
+Protocol)模型上下文协议：Agent和工具集之间交互的一套约定，大模型是一个只会说话不会做事的智者，而MCP能提供各种工具的程序集,
+tools/list.. tools/call..</li>
+<li>Langchain
+：纯编程来实现流程走向，全是硬编码，稳定但是缺乏灵活性</li>
+<li>Workflow 工作流：低代码，可以功能模块块拖拽</li>
+<li>Skill
+技能：SKILL.md提前写好了说明文档和直接可以运行的脚本，即agent的技能，相比Langchain和Workflow兼顾了灵活性和稳定性</li>
+<li>SubAgent
+：拆分复杂的任务，独立的子任务可以在子agent中完成，本质上就是做上下文隔离，子agent产生的上下文不会保留在主agent中</li>
+<li>Token
+令牌：人工智能模型处理信息的最小单位，可以把它的工作原理想象成我们人类阅读和组词语的过程，当我们看到一句话，我们不会逐字停顿，而是会按词组来理解。比如“我喜欢解bug”，我们的大脑会处理成
+“我/喜欢/解/bug”
+这几个片段。在人工智能的世界里，模型看到的也不是完整的句子，而是被切分成的Token。这些Token可能是一个词、一个汉字、一个标点符号，甚至是半个字（当用两个Token
+ID来表示一个字的时候）。对于主流的的人工智能模型，通常一个汉字大约是1到2个Token。</li>
+<li>AGI(Artifical General Intelligence)
+通用人工智能：LLM算一个专才，还不是像“人类一样的通才”，不具备完整的人类级推理能力。AGI是一种像人类一样可以在几乎所有认知领域自主思考和学习的人工智能</li>
+<li>GPT(Generative Pre-trained Transformer)
+生成式预训练变换模型：它是一种深度学习算法，属于自然语言处理（NLP）领域的人工智能模型，旨在生成具有连贯性和逻辑性的自然语言。</li>
+</ul>
+<p><strong>人工智能</strong></p>
+<p>  
+智能本质上就是针对不同情境给出针对性的输出反应，不会乱来的黑箱，数学表达就是<span
+class="math inline"><em>f</em>(<em>x</em>) = <em>y</em></span>，引用一位美国的数学教授Thomas
+A. Garrity上课的一句话：Functions describe the world, everything is
+described by functions, the sound of my voice on your eardrum, function!
+That’s kind of hitting your eye balls right now, function! The entries
+you put in your random matrices, function! It’s all function!</p>
+<p><em>人工智能</em>：人工搭建起一套智能（黑箱），根据不同的环境信息给出针对性的输出和回应的系统，这个输出可以是动作、语言，也可以是一种判断和预测。人如果无法区分是和AI聊天还是和人聊天，那就实现了人的智能。</p>
+<p><em>专家系统</em>：清晰的规则，例如：疾病诊断和金融咨询，静态，不能自我迭代，完全是复制人类经验，能力上限就是人类专家的水平，无法做到比人更好。</p>
+<p><em>神经网络(Neural
+Network)</em>：是模拟人脑神经元连接方式的模型结构，具有可自动学习特征，不需要人工设计，有时候很难提取其中的规律和感觉，就可以通过大量的数据来提取特征。目前从理论上来说，它的准确率不是100%的，始终存在对抗样本，在噪声的世界中做稳定近似的学问。</p>
+<ul>
+<li>多层结构（输入层/隐藏层/输出层）</li>
+<li>通过反向传播训练</li>
+<li>参数量大</li>
+<li>表达能力强</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">人工智能（AI）</span><br><span class="line">    └── 机器学习（ML）</span><br><span class="line">            └── 深度学习（DL）</span><br><span class="line">                    └── 神经网络（Neural Network）</span><br></pre></td></tr></table></figure>
+<p>当神经网络层数很多时，就叫深度学习Deep Learning。</p>
+<p>多层神经网络(Deep Neural Network)的真正价值在于它的结构弹性：   
+理论上，逼近任何复杂函数    实践中，可以通过层级结构逐步逼近真实世界</p>
+<p>每一层神经网络都在做两件事：    1、抽取更高层的语义特征   
+2、压缩与去冗余</p>
+<p>Transformer思想源头：从压缩到重构，Encode-Decode架构，是工程极致化实现</p>
+<ul>
+<li>Compressed(x)，将x压缩为抽象语义</li>
+<li>Function(Compressed(x)) = Compressed(y)，在语义空间中进行变换</li>
+<li>y = Decompressed(Compressed(y))，再将其解压为目标语言</li>
+</ul>
+<p><em>大语言模型LLM</em><br />
+- 模型结构：哪来这种神奇的黑箱，超大的多层神经网络 -
+损失函数：怎么奖励一个机器，损失函数是用来衡量模型预测结果与真实值之间差距的函数。在训练过程中，我们通过最小化损失函数来优化模型参数。它本质上是一个可微的优化目标函数，比如回归常用均方误差MSE(Mean
+Squared
+Error)，分类常用交叉熵。通过计算损失对参数的梯度，并进行反向传播，模型可以不断更新参数，使用预测结果越来越准确。
+-
+训练过程：机器怎么建立条件反射，利于梯度下降找到损失函数低的参数，每次向着局部损失函数下降最快的方向前进，得出一套参数。</p>
+<p><em>泛化能力（Generalization）</em>：即规律，推广，举一反三，神经网络具有很强的泛化能力</p>
+<p>  
+我本科期间参加了数学建模比赛，学校派了很多理学院的数学老师在暑假给我们培训，讲过下面的各种智能模型，看到下面的名词很有熟悉感，尤其是那个神经网络模型的梯度下降(Gradient
+Vector)和反向传播(Back
+Propagation)，当时不怎么明白，现在回过头来看，感觉会清晰很多。</p>
+<p>  
+2026年，个人感觉，AI基座大模型的入场券基本已经发放完毕，AI大脑几家主流公司在堆算力优化模型，美国主要有5家：Open
+AI，Google DeepMind, Anthropic, Meta,
+xAI；中国主要有：深度求索，字节跳动，阿里巴巴，腾讯，百度，华为，智谱AI，MiniMax，月之暗面，百川智能（感谢Meta
+Llam3的开源，让大家知道了黑箱里头更多的细节，缩短了中国与美国在大模型领域的差距）。在基座模型上进行发展更多的能力，例如，给他们配上手、眼、脚，可能是机器人公司和一些智能硬件，垂直领域的发力。软件层面可能会有越来越多的行业推出类似Manus、OpenClaw这样的智能体，在垂直应用领域，中国会遍地开花。</p>
+]]></content>
+      <tags>
+        <tag>Artificial Intelligencs</tag>
       </tags>
   </entry>
   <entry>
@@ -1273,99 +1349,23 @@ NTFS，这个软件可以让Mac系统支持NTFS硬盘读写操作。</p>
       </tags>
   </entry>
   <entry>
-    <title>AI基础概念及理论学习</title>
-    <url>/2026/02/08/AI-Learn/</url>
-    <content><![CDATA[<p>  
-目前AI已经进入了普通老百姓视角的主舞台，各大科技公司在这个台上你方唱罢我来舞，日新月异，占据了不少公众视野。对于科技大厂而言，搞AI是一件政治正确的事情，你不搞不主动去靠就是不行，要被打入冷宫。既然潮水已来，就顺流而下，去拥抱它。作为个人如何拥抱AI，要么侧重去参与迭代AI功能本身，要么侧重如何为我所用，不管怎么样都是要略懂一些AI基础知识。可以初步防止在二级市场被割韭菜或者就业市场被动失业。</p>
-<span id="more"></span>
-<p><strong>洋气的名字</strong></p>
-<ul>
-<li>LLM(Large Language Model)
-大语言模型：区别于古老的智障语言模型，前面加了个大，模型参数变多了，具备了一定的智能</li>
-<li>Prompt 提示词：一问一答</li>
-<li>Context 上下文：背景信息</li>
-<li>Memory 记忆：不仅仅一问一答，对上下文进行压缩，可以进行追问</li>
-<li>Agent
-智能体：不仅仅是和大模型交互，还拥有上网功能、搜索本地文档/数据库、文件读取、执行脚本、PDF转换等能力，减少和大模型的沟通次数，处理一些大模型无法操作的东西，获取模型以外的信息能力，整合多方的结果发送给用户。相对于后面要讲的Function
-Call和MCP,
-中间的Agent就像一个传话筒，把大模型的话转化成调用工具的代码，把工具调用的结果在原封不动的传话给大模型，同时不忘了给用户传话，主打一个我不生产信息，我只做一个信息的搬运工。Agent和用户对话，虽然最底层还是文字，但是交互形式上可以丰富多彩，可以是CLI(Command
-Line Interface)，Claude
-Code（早期是一个编程Agent，现在已经走上了通用Agent道路，名字起的很失败），现在大火的开源桌面助手OpenClaw等</li>
-<li>RAG(Retrieval-Augmented Generation)
-检索增强生成，用于本地数据库搜索，与传统数据库不同，使用了向量数据库</li>
-<li>Web Search 联网搜索，提高实时性及减少token的消耗</li>
-<li>Function
-Calling：Agent和大模型之间，关于工具调用所约定的对话格式，让大模型按照死板的格式回复给Agent去调用工具，就像前端和后端开发一样，约定接口格式，例如一个json模版</li>
-<li>MCP(Model Context
-Protocol)模型上下文协议：Agent和工具集之间交互的一套约定，大模型是一个只会说话不会做事的智者，而MCP能提供各种工具的程序集,
-tools/list.. tools/call..</li>
-<li>Langchain
-：纯编程来实现流程走向，全是硬编码，稳定但是缺乏灵活性</li>
-<li>Workflow 工作流：低代码，可以功能模块块拖拽</li>
-<li>Skill
-技能：SKILL.md提前写好了说明文档和直接可以运行的脚本，即agent的技能，相比Langchain和Workflow兼顾了灵活性和稳定性</li>
-<li>SubAgent
-：拆分复杂的任务，独立的子任务可以在子agent中完成，本质上就是做上下文隔离，子agent产生的上下文不会保留在主agent中</li>
-<li>Token
-令牌：人工智能模型处理信息的最小单位，可以把它的工作原理想象成我们人类阅读和组词语的过程，当我们看到一句话，我们不会逐字停顿，而是会按词组来理解。比如“我喜欢解bug”，我们的大脑会处理成
-“我/喜欢/解/bug”
-这几个片段。在人工智能的世界里，模型看到的也不是完整的句子，而是被切分成的Token。这些Token可能是一个词、一个汉字、一个标点符号，甚至是半个字（当用两个Token
-ID来表示一个字的时候）。对于主流的的人工智能模型，通常一个汉字大约是1到2个Token。</li>
-<li>AGI(Artifical General Intelligence)
-通用人工智能：LLM算一个专才，还不是像“人类一样的通才”，不具备完整的人类级推理能力。AGI是一种像人类一样可以在几乎所有认知领域自主思考和学习的人工智能</li>
-<li>GPT(Generative Pre-trained Transformer)
-生成式预训练变换模型：它是一种深度学习算法，属于自然语言处理（NLP）领域的人工智能模型，旨在生成具有连贯性和逻辑性的自然语言。</li>
-</ul>
-<p><strong>人工智能</strong></p>
-<p>  
-智能本质上就是针对不同情境给出针对性的输出反应，不会乱来的黑箱，数学表达就是<span
-class="math inline"><em>f</em>(<em>x</em>) = <em>y</em></span>，引用一位美国的数学教授Thomas
-A. Garrity上课的一句话：Functions describe the world, everything is
-described by functions, the sound of my voice on your eardrum, function!
-That’s kind of hitting your eye balls right now, function! The entries
-you put in your random matrices, function! It’s all function!</p>
-<p><em>人工智能</em>：人工搭建起一套智能（黑箱），根据不同的环境信息给出针对性的输出和回应的系统，这个输出可以是动作、语言，也可以是一种判断和预测。人如果无法区分是和AI聊天还是和人聊天，那就实现了人的智能。</p>
-<p><em>专家系统</em>：清晰的规则，例如：疾病诊断和金融咨询，静态，不能自我迭代，完全是复制人类经验，能力上限就是人类专家的水平，无法做到比人更好。</p>
-<p><em>神经网络(Neural
-Network)</em>：是模拟人脑神经元连接方式的模型结构，具有可自动学习特征，不需要人工设计，有时候很难提取其中的规律和感觉，就可以通过大量的数据来提取特征。目前从理论上来说，它的准确率不是100%的，始终存在对抗样本，在噪声的世界中做稳定近似的学问。</p>
-<ul>
-<li>多层结构（输入层/隐藏层/输出层）</li>
-<li>通过反向传播训练</li>
-<li>参数量大</li>
-<li>表达能力强</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">人工智能（AI）</span><br><span class="line">    └── 机器学习（ML）</span><br><span class="line">            └── 深度学习（DL）</span><br><span class="line">                    └── 神经网络（Neural Network）</span><br></pre></td></tr></table></figure>
-<p>当神经网络层数很多时，就叫深度学习Deep Learning。</p>
-<p>多层神经网络(Deep Neural Network)的真正价值在于它的结构弹性：   
-理论上，逼近任何复杂函数    实践中，可以通过层级结构逐步逼近真实世界</p>
-<p>每一层神经网络都在做两件事：    1、抽取更高层的语义特征   
-2、压缩与去冗余</p>
-<p>Transformer思想源头：从压缩到重构，Encode-Decode架构，是工程极致化实现</p>
-<ul>
-<li>Compressed(x)，将x压缩为抽象语义</li>
-<li>Function(Compressed(x)) = Compressed(y)，在语义空间中进行变换</li>
-<li>y = Decompressed(Compressed(y))，再将其解压为目标语言</li>
-</ul>
-<p><em>大语言模型LLM</em> -
-模型结构：哪来这种神奇的黑箱，超大的多层神经网络 -
-损失函数：怎么奖励一个机器，损失函数是用来衡量模型预测结果与真实值之间差距的函数。在训练过程中，我们通过最小化损失函数来优化模型参数。它本质上是一个可微的优化目标函数，比如回归常用均方误差MSE(Mean
-Squared
-Error)，分类常用交叉熵。通过计算损失对参数的梯度，并进行反向传播，模型可以不断更新参数，使用预测结果越来越准确。
--
-训练过程：机器怎么建立条件反射，利于梯度下降找到损失函数低的参数，每次向着局部损失函数下降最快的方向前进，得出一套参数。</p>
-<p><em>泛化能力（Generalization）</em>：即规律，推广，举一反三，神经网络具有很强的泛化能力</p>
-<p>  
-我本科期间参加了数学建模比赛，学校派了很多理学院的数学老师在暑假给我们培训，讲过下面的各种智能模型，看到下面的名词很有熟悉感，尤其是那个神经网络模型的梯度下降(Gradient
-Vector)和反向传播(Back
-Propagation)，当时不怎么明白，现在回过头来看，感觉会清晰很多。</p>
-<p>  
-2026年，个人感觉，AI基座大模型的入场券基本已经发放完毕，AI大脑几家主流公司在堆算力优化模型，美国主要有5家：Open
-AI，Google DeepMind, Anthropic, Meta,
-xAI；中国主要有：深度求索，字节跳动，阿里巴巴，腾讯，百度，华为，智谱AI，MiniMax，月之暗面，百川智能（感谢Meta
-Llam3的开源，让大家知道了黑箱里头更多的细节，缩短了中国与美国在大模型领域的差距）。在基座模型上进行发展更多的能力，例如，给他们配上手、眼、脚，可能是机器人公司和一些智能硬件，垂直领域的发力。软件层面可能会有越来越多的行业推出类似Manus、OpenClaw这样的智能体，在垂直应用领域，中国会遍地开花。</p>
+    <title>MAC OS修改自己电脑的环境变量</title>
+    <url>/2020/06/26/20200626/</url>
+    <content><![CDATA[<p>主要是如下两条bash命令完成如下的修改：</p>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$PATH</span> //这条指令可以查看电脑已经添加的环境变量路径</span><br></pre></td></tr></table></figure>
+<figure class="highlight bash"><table><tr><td class="code"><pre><span class="line">vi ~/.profile //进行增删改环境变量</span><br></pre></td></tr></table></figure>
+<p>ps：环境变量一般分先后为这几个文件，系统按从上倒下优先级进行加载，etc目录下的是系统级的，～下的为用户级：</p>
+<ol type="1">
+<li>/etc/profile</li>
+<li>/etc/paths</li>
+<li>~/.bash_profile</li>
+<li>~/.bash_login</li>
+<li>~/.profile</li>
+<li>~/.bashrc</li>
+</ol>
 ]]></content>
       <tags>
-        <tag>Artificial Intelligencs</tag>
+        <tag>配置</tag>
       </tags>
   </entry>
 </search>
