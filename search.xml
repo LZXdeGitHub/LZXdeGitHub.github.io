@@ -1,6 +1,145 @@
 <?xml version="1.0" encoding="utf-8"?>
 <search>
   <entry>
+    <title>AWS EC2配置个人VPN</title>
+    <url>/2020/06/26/20200525/</url>
+    <content><![CDATA[<h2 id="前言">前言</h2>
+<p>亚马逊云服务（AWS）免费薅羊毛一年，创建个人EC2（Elastic Compute
+Cloud）搭建VPN，可以比较方便的Google一些文献。这个配置主要分两部分进行配置，AWS云端和Client（我自己是在Mac
+Pro上进行配置）。</p>
+<span id="more"></span>
+<h2 id="准备工作">准备工作</h2>
+<p>注册aws个人账号，绑定一张信用卡（推荐visa），具体注册流程看<a
+href="https://aws.amazon.com">官网</a>。</p>
+<h2 id="aws云端配置">AWS云端配置</h2>
+<p>主要分四个步骤，创建EC2实例，设置安全组，给实例绑定弹性IP，然后安装<a
+href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a>。</p>
+<h3 id="创建ec2实例">创建EC2实例</h3>
+<p>1、如果在中国大陆，个人建议选择东京的服务器，这样访问Google的速度会快一些，自己可以ping一个网站测一下速度，示例选择的是Hong
+Kong。</p>
+<figure>
+<img src="1.png" alt="服务器选择" />
+<figcaption aria-hidden="true">服务器选择</figcaption>
+</figure>
+<p>2、点击All services，然后选择EC2。</p>
+<figure>
+<img src="2.png" alt="EC2" />
+<figcaption aria-hidden="true">EC2</figcaption>
+</figure>
+<p>3、启动一个实例。</p>
+<figure>
+<img src="3.png" alt="启动实例" />
+<figcaption aria-hidden="true">启动实例</figcaption>
+</figure>
+<p>4、过滤掉付费的AMI，勾选Free tier
+only，然后选择下图中的其中一个AMI进行Select。</p>
+<figure>
+<img src="4.png" alt="AMI选择" />
+<figcaption aria-hidden="true">AMI选择</figcaption>
+</figure>
+<p>5、选择一个实例类型，勾选☑️哪个Free tier eligible，接着Review and
+Launch。</p>
+<figure>
+<img src="5.png" alt="review and launch" />
+<figcaption aria-hidden="true">review and launch</figcaption>
+</figure>
+<p>6、有兴趣的可以Review实例类型的一些参数，然后直接点击Launch，运行实例。</p>
+<figure>
+<img src="6.png" alt="运行实例" />
+<figcaption aria-hidden="true">运行实例</figcaption>
+</figure>
+<p>7、为你的实例创建一个密钥对，你本地电脑远程和AMI通讯密钥，一定要Download下来并保存在一个合适的地方，后续还会用到。</p>
+<figure>
+<img src="7.png" alt="key pair" />
+<figcaption aria-hidden="true">key pair</figcaption>
+</figure>
+<p>8、点击查看你的实例。</p>
+<figure>
+<img src="8.png" alt="view instance" />
+<figcaption aria-hidden="true">view instance</figcaption>
+</figure>
+<p>9、接下来选中你的实例，为你的实例配置安全组(Security
+Groups)和弹性IP(Elastic IPs)。</p>
+<figure>
+<img src="9.png" alt="configure" />
+<figcaption aria-hidden="true">configure</figcaption>
+</figure>
+<h3 id="安全组设置">安全组设置</h3>
+<p>安全组主要是实例的入站和出站规则进行设置。</p>
+<figure>
+<img src="10.png" alt="security configure" />
+<figcaption aria-hidden="true">security configure</figcaption>
+</figure>
+<p>1、入站规则：三个端口，TCP类型的22port口和UDP类型的50和4500port口，见下图具体设置。</p>
+<figure>
+<img src="11.png" alt="inbound rules" />
+<figcaption aria-hidden="true">inbound rules</figcaption>
+</figure>
+<figure>
+<img src="12.png" alt="save rules" />
+<figcaption aria-hidden="true">save rules</figcaption>
+</figure>
+<p>2、出站规则：所有流量和任何位置</p>
+<figure>
+<img src="13.png" alt="outbound rules" />
+<figcaption aria-hidden="true">outbound rules</figcaption>
+</figure>
+<h3 id="弹性ip设置">弹性IP设置</h3>
+<p>这个设置主要是为了这个目的，这是aws官网的原话：I want to have a
+public IP address for my EC2 instance that will persist even if my
+instance is stopped and
+restarted，主要为了防止实例停止运行和重启是，没有对外的有效IP。</p>
+<p>1、Allocate一个弹性IP。</p>
+<figure>
+<img src="14.png" alt="elastic ip" />
+<figcaption aria-hidden="true">elastic ip</figcaption>
+</figure>
+<figure>
+<img src="15.png" alt="allocate" />
+<figcaption aria-hidden="true">allocate</figcaption>
+</figure>
+<p>2、关联实例。</p>
+<figure>
+<img src="16.png" alt="associate elastic ip" />
+<figcaption aria-hidden="true">associate elastic ip</figcaption>
+</figure>
+<figure>
+<img src="17.png" alt="associate" />
+<figcaption aria-hidden="true">associate</figcaption>
+</figure>
+<h3 id="安装ipsec-vpn">安装<a
+href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a></h3>
+<p>1、本地终端连接你创建的实例，在你创建实例保存密钥对的路径去开启终端，接着运行下图的1步骤，然后输入yes，按enter键，进行2步骤你就会连接到你创建的实例。（ps.
+一般你执行过1后，后续连接你直接输入2指令就行）</p>
+<figure>
+<img src="18.png" alt="connect to your instance" />
+<figcaption aria-hidden="true">connect to your instance</figcaption>
+</figure>
+<p>2、安装指令</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://git.io/vpnsetup -O vpnsetup.sh &amp;&amp; sudo sh vpnsetup.sh</span><br></pre></td></tr></table></figure>
+<figure>
+<img src="19.png" alt="install vpnsetup" />
+<figcaption aria-hidden="true">install vpnsetup</figcaption>
+</figure>
+<p>3、安装完成之后，要记录下来你的vpn信息，本地客户端配置vpn的时候要用到。</p>
+<figure>
+<img src="20.png" alt="save vpn information" />
+<figcaption aria-hidden="true">save vpn information</figcaption>
+</figure>
+<h2 id="本地客户端设置">本地客户端设置</h2>
+<p>依据自己的本地机装的操作系统类型，进行相应的配置，请参考GitHub上的这个<a
+href="https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md">链接</a>🔗。</p>
+<p>如果是mac os注意下图的这两处，一定要设置对。</p>
+<figure>
+<img src="21.png" alt="local set" />
+<figcaption aria-hidden="true">local set</figcaption>
+</figure>
+]]></content>
+      <tags>
+        <tag>配置</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>MAC OS修改自己电脑的环境变量</title>
     <url>/2020/06/26/20200626/</url>
     <content><![CDATA[<p>主要是如下两条bash命令完成如下的修改：</p>
@@ -18,15 +157,6 @@
 ]]></content>
       <tags>
         <tag>配置</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>Telephony框架</title>
-    <url>/2020/09/20/20200920/</url>
-    <content><![CDATA[
-]]></content>
-      <tags>
-        <tag>android</tag>
       </tags>
   </entry>
   <entry>
@@ -74,19 +204,12 @@ href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#optimizati
       </tags>
   </entry>
   <entry>
-    <title>硬编码和软编码</title>
-    <url>/2020/10/05/20201005/</url>
-    <content><![CDATA[<p>在工作过程中，听到同事说起，硬编码和软编码，大脑大概明白其意思，具体一想，如何专业的表述这对孪生概念呢，需要展开来了解一下。</p>
-<span id="more"></span>
-<p>在网上查阅这两个概念，由于当前短视频较火，这两个概念在视频编解码方面有所指，硬编码是利用硬件芯片本身GPU、DSP等非CPU去给视频编码，而软编码则指是通过软件本身或者CPU对视频进行编码。</p>
-<p>而目前我在工作中接触的这两个概念主要是针对代码的灵活性和可扩展性角度来讲的，更多的是一种设计思想。</p>
-<h2 id="硬编码">硬编码</h2>
-<p>简单直白的说就是写死值，之前博主在一家公司写代码的时候，称这种在代码中是一种<strong>坏味道</strong>，例如，<code>if（a == 10）</code>，这个10一看不知道是什么意思，直接用的<strong>魔数</strong>。亦或解析某个路径下的文件，写代码时，直接将这个文件路径固定，不管以后是否挪到了其他路径，默认它就永远是在那个路径下，没有考虑变化。</p>
-<h2 id="软编码">软编码</h2>
-<p>一句话来说，定好地方，方便后续修改和扩展。在大型软件编码中，软编码很重要，会有很多地方用到相同的值，如果是在某个地方定义好值，在代码中用它的别称，如果后续这个值有变化，可以很方便的修改，只需在一处修改。软编码可以理解为以不变应万变，这个不变是指在代码中大部分逻辑不需要动，变是指后续市场需求的变化而需要软件做的一些适配，而这种适配只需要修改某些小角落。</p>
+    <title>Telephony框架</title>
+    <url>/2020/09/20/20200920/</url>
+    <content><![CDATA[
 ]]></content>
       <tags>
-        <tag>概念</tag>
+        <tag>android</tag>
       </tags>
   </entry>
   <entry>
@@ -119,6 +242,22 @@ processor)、rf器件等，对应的代码这块都是用C/C++语言编写，对
 ]]></content>
       <tags>
         <tag>编译</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硬编码和软编码</title>
+    <url>/2020/10/05/20201005/</url>
+    <content><![CDATA[<p>在工作过程中，听到同事说起，硬编码和软编码，大脑大概明白其意思，具体一想，如何专业的表述这对孪生概念呢，需要展开来了解一下。</p>
+<span id="more"></span>
+<p>在网上查阅这两个概念，由于当前短视频较火，这两个概念在视频编解码方面有所指，硬编码是利用硬件芯片本身GPU、DSP等非CPU去给视频编码，而软编码则指是通过软件本身或者CPU对视频进行编码。</p>
+<p>而目前我在工作中接触的这两个概念主要是针对代码的灵活性和可扩展性角度来讲的，更多的是一种设计思想。</p>
+<h2 id="硬编码">硬编码</h2>
+<p>简单直白的说就是写死值，之前博主在一家公司写代码的时候，称这种在代码中是一种<strong>坏味道</strong>，例如，<code>if（a == 10）</code>，这个10一看不知道是什么意思，直接用的<strong>魔数</strong>。亦或解析某个路径下的文件，写代码时，直接将这个文件路径固定，不管以后是否挪到了其他路径，默认它就永远是在那个路径下，没有考虑变化。</p>
+<h2 id="软编码">软编码</h2>
+<p>一句话来说，定好地方，方便后续修改和扩展。在大型软件编码中，软编码很重要，会有很多地方用到相同的值，如果是在某个地方定义好值，在代码中用它的别称，如果后续这个值有变化，可以很方便的修改，只需在一处修改。软编码可以理解为以不变应万变，这个不变是指在代码中大部分逻辑不需要动，变是指后续市场需求的变化而需要软件做的一些适配，而这种适配只需要修改某些小角落。</p>
+]]></content>
+      <tags>
+        <tag>概念</tag>
       </tags>
   </entry>
   <entry>
@@ -179,13 +318,13 @@ peak，但运行时间增加）</li>
 在Windows系统中，我们可以进行内存映射文件操作来实现，通常需要直接调用操作系统的底层API，因为C++标准库目前（截至C++23）还没有提供统一的内存映射文件接口。</p>
 <h4 id="memory-map-file">3.1. Memory-Map File</h4>
 <p>内存映射文件不是一种具体的文件格式，而是操作系统提供的一种高效文件读写机制。它能把磁盘上的整个文件或部分区域直接映射到应用程序的内存地址空间中。
-这意味着在程序里，可以像操作普通内存数组一样（通过指针）来访问文件内容，完全不用手动调用read()或read()接口。
-#### 3.2. 核心原理：为什么它很快？ -
-按需加载：映射时操作系统并不会真的把文件全部读入内存。只有当代码访问到某个地址时，才会触发“缺页中断”去加载相应的数据块，因此能处理远大于物理内存的文件。
--
-零拷贝访问：传统读写需要在内核和应用程序之间复制两次数据，而mmp直接在应用程序的虚拟地址空间操作，实现了“零拷贝”，大幅提升了性能。
--
-自动会写：修改内存中的数据，操作系统会在合适的时机自动同步到磁盘（或可手动调用msync/flush）。</p>
+这意味着在程序里，可以像操作普通内存数组一样（通过指针）来访问文件内容，完全不用手动调用read()或read()接口。</p>
+<h4 id="核心原理为什么它很快">3.2. 核心原理：为什么它很快？</h4>
+<ul>
+<li>按需加载：映射时操作系统并不会真的把文件全部读入内存。只有当代码访问到某个地址时，才会触发“缺页中断”去加载相应的数据块，因此能处理远大于物理内存的文件。</li>
+<li>零拷贝访问：传统读写需要在内核和应用程序之间复制两次数据，而mmp直接在应用程序的虚拟地址空间操作，实现了“零拷贝”，大幅提升了性能。</li>
+<li>自动会写：修改内存中的数据，操作系统会在合适的时机自动同步到磁盘（或可手动调用msync/flush）。</li>
+</ul>
 <h4 id="如何操作内存映射文件">3.3. 如何操作内存映射文件？</h4>
 <p>在不同环境下，核心操作都是“创建映射-&gt;访问数据-&gt;解除映射”。</p>
 <p>C/C++通过系统调用直接操作，用于高性能系统编程。</p>
@@ -227,69 +366,6 @@ peak，但运行时间增加）</li>
 ]]></content>
       <tags>
         <tag>内存</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>scons(a software constructe tool)</title>
-    <url>/2022/03/20/20220320-2/</url>
-    <content><![CDATA[<p>SCons是一个软件构建工具（build system），主要用于
-<strong>自动编译和构建程序</strong>，功能和 Make/CMake
-类似，但它有一个很大的特点：用Python写构建脚本。</p>
-<span id="more"></span>
-<p>跨平台支持：Linux、Windows、macOS</p>
-<p>一句话理解：SCons = 用 Python 写的Make工具。它通过 Python
-脚本来描述：源代码依赖关系、编译方式、输出文件，然后自动完成编译。</p>
-<table>
-<thead>
-<tr>
-<th>工具</th>
-<th>构建文件</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Make</td>
-<td>Makefile</td>
-</tr>
-<tr>
-<td>CMake</td>
-<td>CMakeLists.txt</td>
-</tr>
-<tr>
-<td>Scons</td>
-<td>SConstruct</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Environment()</td>
-<td>构建环境</td>
-</tr>
-<tr>
-<td>Program()</td>
-<td>生成可执行程序</td>
-</tr>
-<tr>
-<td>Library()</td>
-<td>生成库</td>
-</tr>
-<tr>
-<td>Object()</td>
-<td>生成目标文件</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-      <tags>
-        <tag>compile scans</tag>
       </tags>
   </entry>
   <entry>
@@ -400,6 +476,69 @@ Llam3的开源，让大家知道了黑箱里头更多的细节，缩短了中国
 ]]></content>
       <tags>
         <tag>Artificial Intelligencs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>scons(a software constructe tool)</title>
+    <url>/2022/03/20/20220320-2/</url>
+    <content><![CDATA[<p>SCons是一个软件构建工具（build system），主要用于
+<strong>自动编译和构建程序</strong>，功能和 Make/CMake
+类似，但它有一个很大的特点：用Python写构建脚本。</p>
+<span id="more"></span>
+<p>跨平台支持：Linux、Windows、macOS</p>
+<p>一句话理解：SCons = 用 Python 写的Make工具。它通过 Python
+脚本来描述：源代码依赖关系、编译方式、输出文件，然后自动完成编译。</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>构建文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Make</td>
+<td>Makefile</td>
+</tr>
+<tr>
+<td>CMake</td>
+<td>CMakeLists.txt</td>
+</tr>
+<tr>
+<td>Scons</td>
+<td>SConstruct</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Environment()</td>
+<td>构建环境</td>
+</tr>
+<tr>
+<td>Program()</td>
+<td>生成可执行程序</td>
+</tr>
+<tr>
+<td>Library()</td>
+<td>生成库</td>
+</tr>
+<tr>
+<td>Object()</td>
+<td>生成目标文件</td>
+</tr>
+</tbody>
+</table>
+]]></content>
+      <tags>
+        <tag>compile scans</tag>
       </tags>
   </entry>
   <entry>
@@ -918,6 +1057,138 @@ case重新优化build和execute的时间分配解决了这种corner case。</p>
       </tags>
   </entry>
   <entry>
+    <title>ffmpeg_use</title>
+    <url>/2021/01/10/ffmpeg-use/</url>
+    <content><![CDATA[<h1 id="视频格式转换">1. 视频格式转换</h1>
+<h2 id="前言">1.1. 前言</h2>
+<p>有位同仁，最近在拓展副业，将自己的作品上传到某网站，简介部分需要swf格式的video，而本地只有mov格式的，需要转换，寻求我的帮助。</p>
+<p>由于本人是程序员兼个人电脑是mac，周末有时间还能稍微折腾一下，不希望直接去app
+store寻找购买现成的软件，也不想去下载盗版破解软件不安全。在网上搜索到了一个开源的音视频处理软件FFmpeg，很多音视频软件是基于该开源软件进行的二次开发。本文是基于其提供的静态库，采用敲命令行的方式进行视频格式的转换。</p>
+<span id="more"></span>
+<h2 id="安装方式">1.2. 安装方式</h2>
+<p>FFmpeg官网提供了三种方式<a
+href="https://trac.ffmpeg.org/wiki/CompilationGuide/macOS">安装</a>其软件：</p>
+<ol type="1">
+<li><p>使用<a href="https://brew.sh/">Homebrew</a></p>
+<p><code>brew install ffmpeg</code></p></li>
+<li><p>下载官网<a href="https://ffmpeg.org/download.html">static build
+for macOS</a></p></li>
+<li><p>下载官网源代码自己编译</p></li>
+</ol>
+<h2 id="static-build方式">1.3. static build方式</h2>
+<p>由于博主升级了操作系统，Homebrew不能使用，使用brew install
+ffmpeg会自动updating
+homebrew，然后updating失败，可以使用<code>export HOMEBREW_NO_AUTO_UPDATE=true</code>取消自动升级，但是安装还是失败了，于是博主采用了第二种方式直接去ffmpeg官网下载<a
+href="https://ffmpeg.org/download.html">static build for macOS</a>。</p>
+<p>### 1.3.1. 安装与使用</p>
+<ol type="1">
+<li>将下载下来的压缩包解压</li>
+<li>将解压出来的文件放到/usr/local/bin路径下（右键单击Finder–&gt;Go to
+Folder…—&gt;输入/usr/local/bin—&gt;return键）</li>
+<li>打开terminal，cd到/usr/local/bin/，执行chmod 777
+ffmpeg指令，修改该build的使用权限</li>
+<li>在你存放视频的目录打开terminal，执行ffmpeg -i xxx.mov -f swf
+xxx.swf指令</li>
+</ol>
+<h2 id="后继">1.4. 后继</h2>
+<p>具体其他的使用指令可去其官网查看，会介绍其使用语法，或者ffmpeg
+-h也有简单的介绍。</p>
+<p>自己后续可能基于其库进行二次开发。</p>
+]]></content>
+      <tags>
+        <tag>video_formate_convert</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我在高通中国的五年</title>
+    <url>/2026/02/12/five-years-in-qcom/</url>
+    <content><![CDATA[<p>  
+我是在2020年12月份加入高通，那时候还是疫情期间，面试也是全程线上。苹果回到高通基带芯片的怀抱不久，iPhone和iPad大部分产线在深圳，需要人来做现场技术支持，所以我是以支持苹果的名义招进高通中国基带软件研发团队。因为苹果是高通的VIP客户（给的钱多），所以是研发团队作为主导来直接对接他们。</p>
+<span id="more"></span>
+<p>  
+转眼间五年过去了，正好趁这次高通中国modem软件研发团队的调整，可以做一些回顾和总结。</p>
+<p>  
+在高通中国我觉得比较棒的点是，公司相对信任员工，没有严格的打卡制度，相对灵活的上班时间；做需求push感没有那么强，可以按自己的workload和节奏去排时间。自己所在的团队氛围还不错，大家相互比较尊重，同事间的关系也相对简单。代码产生了bug更多的是专注于去解决问题，而不是去追责。技术总监会有人文关怀。</p>
+<p>   我是在RFSCA(Radio Frequency Sysytem Calibration and
+Analysis)团队，主要负责射频前端模拟器件的校准。刚入职的前一年半，主要用C++做在Windows系统上运行的产线校准工具的开发，后面三年半侧重做嵌入端（RTOS）C/C++的开发。具体对接的业务有以下几块：</p>
+<ul>
+<li>苹果：针对iPhone各个硬件阶段做校准Bring
+Up，每年都有去苹果工厂实验室做现场技术支持和搭建支持远程的硬件环境。客户产线用自己的校准工具，新平台嵌入端校准框架发生变化，我针对客户特殊的校准流程设计了新的API来支持客户自己的工具。他们的校准工具依赖我们内部的ESC
+Parser
+DLL，要维护这个解码流的工具，他们提了不少相关的问题过来。还有就是维护该客户用的较多的feature，例如RxTrigger，FBRx
+offset(后续也推给了其他客户)等。可惜苹果要开始大规模上他们自己的基带了，深圳三个实验室的设备都已经撤出来了。</li>
+<li>Customer Engineer Team:
+国内OEMs的校准问题解决和定制化需求实现，当然也有韩国、日本的一些客户，刚进来的时候还有只能用4G的H厂的cases。</li>
+<li>新平台QRD的校准Bring
+Up，国内的硬件团队会参考Global的新硬件设计来做给国内客户参考的硬件，软件团队要和硬件团队一起在项目的各个阶段完成各个支持的Bands校准。</li>
+<li>bAPT：China研发来负责这种关键的校准feature情况比较少，我的tech
+leader争取过来了，交给了我，也是对我的认可。这个是算法团队提出来的需求，做了几个平台的迭代，后续的算法优化，也参与了和算法团队的讨论。这个feature做的也是很动荡，第一版做完之后，合作的算法、RFLM、LTE
+Tech、NV MGR、测试人员被lay
+off，China只剩我一个负责这个feature的后续迭代开发。这个feature几个平台的优化也是换了两个算法的人员，其中一个还主动离开了高通去了其他公司。春节之后China
+Modem研发团队受美国BIS法案的影响，基带嵌入端代码权限被锁死，成了对接China
+CE团队和研发团队的中间件team。我本地开发的关于bAPT重构的代码也提交不了，并且自己还有一个更省校准时间的idea，有点小遗憾。但是通过这个需求，自己有从执行者到思考者的一个转变，不仅仅是去根据要求去做实现，会思考有没有更好的解决方案，会去针对算法团队给出的解决方案提出质疑并给出我认为更合适的方案进行商讨。</li>
+<li>仪表厂商：射频前端的校准是需要依赖第三方的仪表，所以我们这个组的工具代码是需要支持仪表厂商，目前OEMs工厂主流仪表用的是德国的罗德与施瓦茨CMW100，公司给我的工作站配的仪表也是CMW100。遇到仪表的软件的问题需要和他们一起co-debug，或者适配他们的新feature修改我们的工具代码。</li>
+</ul>
+<p>  
+个人感觉这个岗位还挺有意思，校准分很多硬件模块通路(XO、QET、SDR、PA、LNA、Tx、Rx、FBRx…)，需要打交道的人很多，也可以很深入的研究复杂的XPT算法。高通独有的QET硬件，配合独有IP的ET算法，这个ET算法挺复杂的，还用到了机器学习。如果是做射频前端的校准，相比其他厂商，高通的ET校准算法在能耗上面是有挺大优势。但是不知道和华为Mate
+50上射频前端所用的Doherty
+PA的比较是怎么样的。还有很多高通独有硬件独有的VISPA
+features，很多是需要校准来配合的。</p>
+<p>  
+自己在这个岗位上幸福的时刻，是自己有过几次进入了心流体验，解bug解的很兴奋，忘记了时间，这种有些挑战，但是再给点时间，就能找到线索并fix它的bug很有意思。相比做需求，自己更加喜欢解bug，就像玩小游戏一样，不需要太多的时间，但是会有及时的反馈。所以我并不是很排斥上班这件事情。</p>
+]]></content>
+      <tags>
+        <tag>职场</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to fix your entire life in one day</title>
+    <url>/2026/02/24/how-to-fix-your-in-one-day/</url>
+    <content><![CDATA[<p>看到了一个博主DAN KOE分享了一篇文章：<a
+href="https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1">How
+to fix your entire life in 1
+day</a>，感觉结合自己当前的状态还是所有感触，所以准备细细研读和做笔记。</p>
+<p>这篇文章的基石：阿德勒心理学（Adlerian Psychology）</p>
+<p>先抛一个问题：你对当前的生活是满意的、不满意的、还是假装满意的？</p>
+<span id="more"></span>
+<h2 id="改变身份">1. 改变身份</h2>
+<h2 id="察觉自己">2. 察觉自己</h2>
+<h2 id="付诸行动">3. 付诸行动</h2>
+<p>工作就是玩</p>
+<p>健康的生活方式</p>
+<p>识人法则 看行动</p>
+<p>了解心智的运作方式，才可能编辑</p>
+<p>真的想改变并变更好，改变潜意识中的目标</p>
+<p>改变自己八步骤</p>
+<p>你的价值观来自父母</p>
+<p>自我发展9个阶段</p>
+<p>成功三要素 主动性 机会 智慧</p>
+<p>聪明不聪明的差别 迭代 坚持 洞察全局</p>
+<p>大部分人的一生</p>
+<p>提高认知6步骤来做出改变</p>
+<p>遇到人才 有智慧却没有勇气 不说服</p>
+<p>知难行易 察觉自己 是否改变 收获什么 付诸行动</p>
+<p>思考负能量激发正能量</p>
+<p>7步让自己变强</p>
+]]></content>
+      <tags>
+        <tag>心灵鸡汤</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硬盘文件在Mac上操作不了的问题</title>
+    <url>/2021/02/17/mac-finder-file/</url>
+    <content><![CDATA[<p>通过command指令修改在硬盘文件上的属性，移除只有finder可见属性。然后就可以操组，copy到mac上。</p>
+<p>1,先安装软件 Mounty for
+NTFS，这个软件可以让Mac系统支持NTFS硬盘读写操作。</p>
+<p>2,文件变灰色的原因是文件的名后面多了一个@，可以在终端中用命令行消除。</p>
+<pre><code>  在终端中输入xattr -d com.apple.FinderInfo ，然后在后面输入文件地址(直接把文件拖入终端中就行了)。回车该文件就变回可用状态了。</code></pre>
+]]></content>
+      <tags>
+        <tag>mac-finder-file</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SSD固态硬盘</title>
     <url>/2026/02/27/SSD-DDR/</url>
     <content><![CDATA[<p>在车上，想要弄一个存储空间大一些的SSD固态硬盘来存行车记录仪和哨兵模式下产生的视频，这样记录的视频被覆盖重写的周期会长一些。在小红书上查了一下，点赞评论数较多的是买的SSD固态盘加硬盘盒，图方便省事可以直接上移动固态硬盘盒或者三星迷你U盘fit
@@ -1219,277 +1490,6 @@ style="text-align: left;">文件大小：<strong>16EB</strong>；分区大小：
 ]]></content>
       <tags>
         <tag>行业体感</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ffmpeg_use</title>
-    <url>/2021/01/10/ffmpeg-use/</url>
-    <content><![CDATA[<h1 id="视频格式转换">1. 视频格式转换</h1>
-<h2 id="前言">1.1. 前言</h2>
-<p>有位同仁，最近在拓展副业，将自己的作品上传到某网站，简介部分需要swf格式的video，而本地只有mov格式的，需要转换，寻求我的帮助。</p>
-<p>由于本人是程序员兼个人电脑是mac，周末有时间还能稍微折腾一下，不希望直接去app
-store寻找购买现成的软件，也不想去下载盗版破解软件不安全。在网上搜索到了一个开源的音视频处理软件FFmpeg，很多音视频软件是基于该开源软件进行的二次开发。本文是基于其提供的静态库，采用敲命令行的方式进行视频格式的转换。</p>
-<span id="more"></span>
-<h2 id="安装方式">1.2. 安装方式</h2>
-<p>FFmpeg官网提供了三种方式<a
-href="https://trac.ffmpeg.org/wiki/CompilationGuide/macOS">安装</a>其软件：</p>
-<ol type="1">
-<li><p>使用<a href="https://brew.sh/">Homebrew</a></p>
-<p><code>brew install ffmpeg</code></p></li>
-<li><p>下载官网<a href="https://ffmpeg.org/download.html">static build
-for macOS</a></p></li>
-<li><p>下载官网源代码自己编译</p></li>
-</ol>
-<h2 id="static-build方式">1.3. static build方式</h2>
-<p>由于博主升级了操作系统，Homebrew不能使用，使用brew install
-ffmpeg会自动updating
-homebrew，然后updating失败，可以使用<code>export HOMEBREW_NO_AUTO_UPDATE=true</code>取消自动升级，但是安装还是失败了，于是博主采用了第二种方式直接去ffmpeg官网下载<a
-href="https://ffmpeg.org/download.html">static build for macOS</a>。</p>
-<p>### 1.3.1. 安装与使用</p>
-<ol type="1">
-<li>将下载下来的压缩包解压</li>
-<li>将解压出来的文件放到/usr/local/bin路径下（右键单击Finder–&gt;Go to
-Folder…—&gt;输入/usr/local/bin—&gt;return键）</li>
-<li>打开terminal，cd到/usr/local/bin/，执行chmod 777
-ffmpeg指令，修改该build的使用权限</li>
-<li>在你存放视频的目录打开terminal，执行ffmpeg -i xxx.mov -f swf
-xxx.swf指令</li>
-</ol>
-<h2 id="后继">1.4. 后继</h2>
-<p>具体其他的使用指令可去其官网查看，会介绍其使用语法，或者ffmpeg
--h也有简单的介绍。</p>
-<p>自己后续可能基于其库进行二次开发。</p>
-]]></content>
-      <tags>
-        <tag>video_formate_convert</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我在高通中国的五年</title>
-    <url>/2026/02/12/five-years-in-qcom/</url>
-    <content><![CDATA[<p>  
-我是在2020年12月份加入高通，那时候还是疫情期间，面试也是全程线上。苹果回到高通基带芯片的怀抱不久，iPhone和iPad大部分产线在深圳，需要人来做现场技术支持，所以我是以支持苹果的名义招进高通中国基带软件研发团队。因为苹果是高通的VIP客户（给的钱多），所以是研发团队作为主导来直接对接他们。</p>
-<span id="more"></span>
-<p>  
-转眼间五年过去了，正好趁这次高通中国modem软件研发团队的调整，可以做一些回顾和总结。</p>
-<p>  
-在高通中国我觉得比较棒的点是，公司相对信任员工，没有严格的打卡制度，相对灵活的上班时间；做需求push感没有那么强，可以按自己的workload和节奏去排时间。自己所在的团队氛围还不错，大家相互比较尊重，同事间的关系也相对简单。代码产生了bug更多的是专注于去解决问题，而不是去追责。技术总监会有人文关怀。</p>
-<p>   我是在RFSCA(Radio Frequency Sysytem Calibration and
-Analysis)团队，主要负责射频前端模拟器件的校准。刚入职的前一年半，主要用C++做在Windows系统上运行的产线校准工具的开发，后面三年半侧重做嵌入端（RTOS）C/C++的开发。具体对接的业务有以下几块：</p>
-<ul>
-<li>苹果：针对iPhone各个硬件阶段做校准Bring
-Up，每年都有去苹果工厂实验室做现场技术支持和搭建支持远程的硬件环境。客户产线用自己的校准工具，新平台嵌入端校准框架发生变化，我针对客户特殊的校准流程设计了新的API来支持客户自己的工具。他们的校准工具依赖我们内部的ESC
-Parser
-DLL，要维护这个解码流的工具，他们提了不少相关的问题过来。还有就是维护该客户用的较多的feature，例如RxTrigger，FBRx
-offset(后续也推给了其他客户)等。可惜苹果要开始大规模上他们自己的基带了，深圳三个实验室的设备都已经撤出来了。</li>
-<li>Customer Engineer Team:
-国内OEMs的校准问题解决和定制化需求实现，当然也有韩国、日本的一些客户，刚进来的时候还有只能用4G的H厂的cases。</li>
-<li>新平台QRD的校准Bring
-Up，国内的硬件团队会参考Global的新硬件设计来做给国内客户参考的硬件，软件团队要和硬件团队一起在项目的各个阶段完成各个支持的Bands校准。</li>
-<li>bAPT：China研发来负责这种关键的校准feature情况比较少，我的tech
-leader争取过来了，交给了我，也是对我的认可。这个是算法团队提出来的需求，做了几个平台的迭代，后续的算法优化，也参与了和算法团队的讨论。这个feature做的也是很动荡，第一版做完之后，合作的算法、RFLM、LTE
-Tech、NV MGR、测试人员被lay
-off，China只剩我一个负责这个feature的后续迭代开发。这个feature几个平台的优化也是换了两个算法的人员，其中一个还主动离开了高通去了其他公司。春节之后China
-Modem研发团队受美国BIS法案的影响，基带嵌入端代码权限被锁死，成了对接China
-CE团队和研发团队的中间件team。我本地开发的关于bAPT重构的代码也提交不了，并且自己还有一个更省校准时间的idea，有点小遗憾。但是通过这个需求，自己有从执行者到思考者的一个转变，不仅仅是去根据要求去做实现，会思考有没有更好的解决方案，会去针对算法团队给出的解决方案提出质疑并给出我认为更合适的方案进行商讨。</li>
-<li>仪表厂商：射频前端的校准是需要依赖第三方的仪表，所以我们这个组的工具代码是需要支持仪表厂商，目前OEMs工厂主流仪表用的是德国的罗德与施瓦茨CMW100，公司给我的工作站配的仪表也是CMW100。遇到仪表的软件的问题需要和他们一起co-debug，或者适配他们的新feature修改我们的工具代码。</li>
-</ul>
-<p>  
-个人感觉这个岗位还挺有意思，校准分很多硬件模块通路(XO、QET、SDR、PA、LNA、Tx、Rx、FBRx…)，需要打交道的人很多，也可以很深入的研究复杂的XPT算法。高通独有的QET硬件，配合独有IP的ET算法，这个ET算法挺复杂的，还用到了机器学习。如果是做射频前端的校准，相比其他厂商，高通的ET校准算法在能耗上面是有挺大优势。但是不知道和华为Mate
-50上射频前端所用的Doherty
-PA的比较是怎么样的。还有很多高通独有硬件独有的VISPA
-features，很多是需要校准来配合的。</p>
-<p>  
-自己在这个岗位上幸福的时刻，是自己有过几次进入了心流体验，解bug解的很兴奋，忘记了时间，这种有些挑战，但是再给点时间，就能找到线索并fix它的bug很有意思。相比做需求，自己更加喜欢解bug，就像玩小游戏一样，不需要太多的时间，但是会有及时的反馈。所以我并不是很排斥上班这件事情。</p>
-]]></content>
-      <tags>
-        <tag>职场</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>How to fix your entire life in one day</title>
-    <url>/2026/02/24/how-to-fix-your-in-one-day/</url>
-    <content><![CDATA[<p>看到了一个博主DAN KOE分享了一篇文章：<a
-href="https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1">How
-to fix your entire life in 1
-day</a>，感觉结合自己当前的状态还是所有感触，所以准备细细研读和做笔记。</p>
-<p>这篇文章的基石：阿德勒心理学（Adlerian Psychology）</p>
-<p>先抛一个问题：你对当前的生活是满意的、不满意的、还是假装满意的？</p>
-<span id="more"></span>
-<h2 id="改变身份">1. 改变身份</h2>
-<h2 id="察觉自己">2. 察觉自己</h2>
-<h2 id="付诸行动">3. 付诸行动</h2>
-<p>工作就是玩</p>
-<p>健康的生活方式</p>
-<p>识人法则 看行动</p>
-<p>了解心智的运作方式，才可能编辑</p>
-<p>真的想改变并变更好，改变潜意识中的目标</p>
-<p>改变自己八步骤</p>
-<p>你的价值观来自父母</p>
-<p>自我发展9个阶段</p>
-<p>成功三要素 主动性 机会 智慧</p>
-<p>聪明不聪明的差别 迭代 坚持 洞察全局</p>
-<p>大部分人的一生</p>
-<p>提高认知6步骤来做出改变</p>
-<p>遇到人才 有智慧却没有勇气 不说服</p>
-<p>知难行易 察觉自己 是否改变 收获什么 付诸行动</p>
-<p>思考负能量激发正能量</p>
-<p>7步让自己变强</p>
-]]></content>
-      <tags>
-        <tag>心灵鸡汤</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>硬盘文件在Mac上操作不了的问题</title>
-    <url>/2021/02/17/mac-finder-file/</url>
-    <content><![CDATA[<p>通过command指令修改在硬盘文件上的属性，移除只有finder可见属性。然后就可以操组，copy到mac上。</p>
-<p>1,先安装软件 Mounty for
-NTFS，这个软件可以让Mac系统支持NTFS硬盘读写操作。</p>
-<p>2,文件变灰色的原因是文件的名后面多了一个@，可以在终端中用命令行消除。</p>
-<pre><code>  在终端中输入xattr -d com.apple.FinderInfo ，然后在后面输入文件地址(直接把文件拖入终端中就行了)。回车该文件就变回可用状态了。</code></pre>
-]]></content>
-      <tags>
-        <tag>mac-finder-file</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AWS EC2配置个人VPN</title>
-    <url>/2020/06/26/20200525/</url>
-    <content><![CDATA[<h2 id="前言">前言</h2>
-<p>亚马逊云服务（AWS）免费薅羊毛一年，创建个人EC2（Elastic Compute
-Cloud）搭建VPN，可以比较方便的Google一些文献。这个配置主要分两部分进行配置，AWS云端和Client（我自己是在Mac
-Pro上进行配置）。</p>
-<span id="more"></span>
-<h2 id="准备工作">准备工作</h2>
-<p>注册aws个人账号，绑定一张信用卡（推荐visa），具体注册流程看<a
-href="https://aws.amazon.com">官网</a>。</p>
-<h2 id="aws云端配置">AWS云端配置</h2>
-<p>主要分四个步骤，创建EC2实例，设置安全组，给实例绑定弹性IP，然后安装<a
-href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a>。</p>
-<h3 id="创建ec2实例">创建EC2实例</h3>
-<p>1、如果在中国大陆，个人建议选择东京的服务器，这样访问Google的速度会快一些，自己可以ping一个网站测一下速度，示例选择的是Hong
-Kong。</p>
-<figure>
-<img src="1.png" alt="服务器选择" />
-<figcaption aria-hidden="true">服务器选择</figcaption>
-</figure>
-<p>2、点击All services，然后选择EC2。</p>
-<figure>
-<img src="2.png" alt="EC2" />
-<figcaption aria-hidden="true">EC2</figcaption>
-</figure>
-<p>3、启动一个实例。</p>
-<figure>
-<img src="3.png" alt="启动实例" />
-<figcaption aria-hidden="true">启动实例</figcaption>
-</figure>
-<p>4、过滤掉付费的AMI，勾选Free tier
-only，然后选择下图中的其中一个AMI进行Select。</p>
-<figure>
-<img src="4.png" alt="AMI选择" />
-<figcaption aria-hidden="true">AMI选择</figcaption>
-</figure>
-<p>5、选择一个实例类型，勾选☑️哪个Free tier eligible，接着Review and
-Launch。</p>
-<figure>
-<img src="5.png" alt="review and launch" />
-<figcaption aria-hidden="true">review and launch</figcaption>
-</figure>
-<p>6、有兴趣的可以Review实例类型的一些参数，然后直接点击Launch，运行实例。</p>
-<figure>
-<img src="6.png" alt="运行实例" />
-<figcaption aria-hidden="true">运行实例</figcaption>
-</figure>
-<p>7、为你的实例创建一个密钥对，你本地电脑远程和AMI通讯密钥，一定要Download下来并保存在一个合适的地方，后续还会用到。</p>
-<figure>
-<img src="7.png" alt="key pair" />
-<figcaption aria-hidden="true">key pair</figcaption>
-</figure>
-<p>8、点击查看你的实例。</p>
-<figure>
-<img src="8.png" alt="view instance" />
-<figcaption aria-hidden="true">view instance</figcaption>
-</figure>
-<p>9、接下来选中你的实例，为你的实例配置安全组(Security
-Groups)和弹性IP(Elastic IPs)。</p>
-<figure>
-<img src="9.png" alt="configure" />
-<figcaption aria-hidden="true">configure</figcaption>
-</figure>
-<h3 id="安全组设置">安全组设置</h3>
-<p>安全组主要是实例的入站和出站规则进行设置。</p>
-<figure>
-<img src="10.png" alt="security configure" />
-<figcaption aria-hidden="true">security configure</figcaption>
-</figure>
-<p>1、入站规则：三个端口，TCP类型的22port口和UDP类型的50和4500port口，见下图具体设置。</p>
-<figure>
-<img src="11.png" alt="inbound rules" />
-<figcaption aria-hidden="true">inbound rules</figcaption>
-</figure>
-<figure>
-<img src="12.png" alt="save rules" />
-<figcaption aria-hidden="true">save rules</figcaption>
-</figure>
-<p>2、出站规则：所有流量和任何位置</p>
-<figure>
-<img src="13.png" alt="outbound rules" />
-<figcaption aria-hidden="true">outbound rules</figcaption>
-</figure>
-<h3 id="弹性ip设置">弹性IP设置</h3>
-<p>这个设置主要是为了这个目的，这是aws官网的原话：I want to have a
-public IP address for my EC2 instance that will persist even if my
-instance is stopped and
-restarted，主要为了防止实例停止运行和重启是，没有对外的有效IP。</p>
-<p>1、Allocate一个弹性IP。</p>
-<figure>
-<img src="14.png" alt="elastic ip" />
-<figcaption aria-hidden="true">elastic ip</figcaption>
-</figure>
-<figure>
-<img src="15.png" alt="allocate" />
-<figcaption aria-hidden="true">allocate</figcaption>
-</figure>
-<p>2、关联实例。</p>
-<figure>
-<img src="16.png" alt="associate elastic ip" />
-<figcaption aria-hidden="true">associate elastic ip</figcaption>
-</figure>
-<figure>
-<img src="17.png" alt="associate" />
-<figcaption aria-hidden="true">associate</figcaption>
-</figure>
-<h3 id="安装ipsec-vpn">安装<a
-href="https://github.com/hwdsl2/setup-ipsec-vpn">ipsec-vpn</a></h3>
-<p>1、本地终端连接你创建的实例，在你创建实例保存密钥对的路径去开启终端，接着运行下图的1步骤，然后输入yes，按enter键，进行2步骤你就会连接到你创建的实例。（ps.
-一般你执行过1后，后续连接你直接输入2指令就行）</p>
-<figure>
-<img src="18.png" alt="connect to your instance" />
-<figcaption aria-hidden="true">connect to your instance</figcaption>
-</figure>
-<p>2、安装指令</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">wget https://git.io/vpnsetup -O vpnsetup.sh &amp;&amp; sudo sh vpnsetup.sh</span><br></pre></td></tr></table></figure>
-<figure>
-<img src="19.png" alt="install vpnsetup" />
-<figcaption aria-hidden="true">install vpnsetup</figcaption>
-</figure>
-<p>3、安装完成之后，要记录下来你的vpn信息，本地客户端配置vpn的时候要用到。</p>
-<figure>
-<img src="20.png" alt="save vpn information" />
-<figcaption aria-hidden="true">save vpn information</figcaption>
-</figure>
-<h2 id="本地客户端设置">本地客户端设置</h2>
-<p>依据自己的本地机装的操作系统类型，进行相应的配置，请参考GitHub上的这个<a
-href="https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md">链接</a>🔗。</p>
-<p>如果是mac os注意下图的这两处，一定要设置对。</p>
-<figure>
-<img src="21.png" alt="local set" />
-<figcaption aria-hidden="true">local set</figcaption>
-</figure>
-]]></content>
-      <tags>
-        <tag>配置</tag>
       </tags>
   </entry>
 </search>

@@ -27,7 +27,7 @@
 <meta property="og:description" content="1. 背景 优化工具程序的peak memory，使其在产线能稳定运行较长时间，尤其是多线程场景，不需要在某个时间点产线暂停，然后重启程序。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2022-03-20T10:38:55.000Z">
-<meta property="article:modified_time" content="2026-03-14T08:30:32.245Z">
+<meta property="article:modified_time" content="2026-03-14T08:54:06.638Z">
 <meta property="article:author" content="Nick Liu">
 <meta property="article:tag" content="内存">
 <meta name="twitter:card" content="summary">
@@ -131,7 +131,7 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">1. 背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">2. 优化手段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">3. 实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#memory-map-file"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. Memory-Map File</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%93%8D%E4%BD%9C%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6"><span class="nav-number">3.2.</span> <span class="nav-text">3.3. 如何操作内存映射文件？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%A8%E5%B9%B3%E5%8F%B0api%E6%A6%82%E8%A7%88"><span class="nav-number">3.3.</span> <span class="nav-text">3.4. 跨平台API概览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#posixlinuxmacos%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.4.</span> <span class="nav-text">3.5. POSIX(Linux&#x2F;MacOS)示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8E%B0%E4%BB%A3c-raii%E5%B0%81%E8%A3%85"><span class="nav-number">3.5.</span> <span class="nav-text">3.6. 现代C++ RAII封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#windows%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.6.</span> <span class="nav-text">3.7. Windows示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8boost.interprocess"><span class="nav-number">3.7.</span> <span class="nav-text">3.8. 使用Boost.Interprocess</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">4. 总结</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%83%8C%E6%99%AF"><span class="nav-number">1.</span> <span class="nav-text">1. 背景</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%8C%96%E6%89%8B%E6%AE%B5"><span class="nav-number">2.</span> <span class="nav-text">2. 优化手段</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%AE%9E%E4%BE%8B"><span class="nav-number">3.</span> <span class="nav-text">3. 实例</span></a><ol class="nav-child"><li class="nav-item nav-level-4"><a class="nav-link" href="#memory-map-file"><span class="nav-number">3.1.</span> <span class="nav-text">3.1. Memory-Map File</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E6%A0%B8%E5%BF%83%E5%8E%9F%E7%90%86%E4%B8%BA%E4%BB%80%E4%B9%88%E5%AE%83%E5%BE%88%E5%BF%AB"><span class="nav-number">3.2.</span> <span class="nav-text">3.2. 核心原理：为什么它很快？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E5%A6%82%E4%BD%95%E6%93%8D%E4%BD%9C%E5%86%85%E5%AD%98%E6%98%A0%E5%B0%84%E6%96%87%E4%BB%B6"><span class="nav-number">3.3.</span> <span class="nav-text">3.3. 如何操作内存映射文件？</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E8%B7%A8%E5%B9%B3%E5%8F%B0api%E6%A6%82%E8%A7%88"><span class="nav-number">3.4.</span> <span class="nav-text">3.4. 跨平台API概览</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#posixlinuxmacos%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.5.</span> <span class="nav-text">3.5. POSIX(Linux&#x2F;MacOS)示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E7%8E%B0%E4%BB%A3c-raii%E5%B0%81%E8%A3%85"><span class="nav-number">3.6.</span> <span class="nav-text">3.6. 现代C++ RAII封装</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#windows%E7%A4%BA%E4%BE%8B"><span class="nav-number">3.7.</span> <span class="nav-text">3.7. Windows示例</span></a></li><li class="nav-item nav-level-4"><a class="nav-link" href="#%E4%BD%BF%E7%94%A8boost.interprocess"><span class="nav-number">3.8.</span> <span class="nav-text">3.8. 使用Boost.Interprocess</span></a></li></ol></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">4. 总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -248,13 +248,13 @@ peak，但运行时间增加）</li>
 在Windows系统中，我们可以进行内存映射文件操作来实现，通常需要直接调用操作系统的底层API，因为C++标准库目前（截至C++23）还没有提供统一的内存映射文件接口。</p>
 <h4 id="memory-map-file">3.1. Memory-Map File</h4>
 <p>内存映射文件不是一种具体的文件格式，而是操作系统提供的一种高效文件读写机制。它能把磁盘上的整个文件或部分区域直接映射到应用程序的内存地址空间中。
-这意味着在程序里，可以像操作普通内存数组一样（通过指针）来访问文件内容，完全不用手动调用read()或read()接口。
-#### 3.2. 核心原理：为什么它很快？ -
-按需加载：映射时操作系统并不会真的把文件全部读入内存。只有当代码访问到某个地址时，才会触发“缺页中断”去加载相应的数据块，因此能处理远大于物理内存的文件。
--
-零拷贝访问：传统读写需要在内核和应用程序之间复制两次数据，而mmp直接在应用程序的虚拟地址空间操作，实现了“零拷贝”，大幅提升了性能。
--
-自动会写：修改内存中的数据，操作系统会在合适的时机自动同步到磁盘（或可手动调用msync/flush）。</p>
+这意味着在程序里，可以像操作普通内存数组一样（通过指针）来访问文件内容，完全不用手动调用read()或read()接口。</p>
+<h4 id="核心原理为什么它很快">3.2. 核心原理：为什么它很快？</h4>
+<ul>
+<li>按需加载：映射时操作系统并不会真的把文件全部读入内存。只有当代码访问到某个地址时，才会触发“缺页中断”去加载相应的数据块，因此能处理远大于物理内存的文件。</li>
+<li>零拷贝访问：传统读写需要在内核和应用程序之间复制两次数据，而mmp直接在应用程序的虚拟地址空间操作，实现了“零拷贝”，大幅提升了性能。</li>
+<li>自动会写：修改内存中的数据，操作系统会在合适的时机自动同步到磁盘（或可手动调用msync/flush）。</li>
+</ul>
 <h4 id="如何操作内存映射文件">3.3. 如何操作内存映射文件？</h4>
 <p>在不同环境下，核心操作都是“创建映射-&gt;访问数据-&gt;解除映射”。</p>
 <p>C/C++通过系统调用直接操作，用于高性能系统编程。</p>
