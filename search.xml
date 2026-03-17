@@ -21,6 +21,141 @@
       </tags>
   </entry>
   <entry>
+    <title>APK缩减、混淆处理和优化</title>
+    <url>/2020/09/13/20200913/</url>
+    <content><![CDATA[<h2 id="问题背景">问题背景</h2>
+<p>手机射频前端、天线会有很多MIPI器件，而这些MIPI器件前期需要调试，为了方便硬件工程师调参数，会在调试的软件版本内置一些工模APK让其使用。而这些工模APK需要软件相关人员根据需求进行代码编写，在实现新的需求时，楼主就遇到了一个上层APK调用JNI接口的问题，JNI层的接口调试OK，APK的代码开发了主要功能，还有一些功能没开发完，先将接口层的代码合入了库中。</p>
+<p>CI流水线日构建的次日大版本刷测试机，使用需要调用JNI接口层代码的工模功能全部丧失，测试手机红屏报错。</p>
+<span id="more"></span>
+<h2 id="问题分析">问题分析</h2>
+<p>通过adb指令抓起android侧的log。</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb logcat &gt; temp.txt</span><br></pre></td></tr></table></figure>
+<p>搜索了报错log打印的关键字，发现是新加的JNI层接口注册失败。提交接口代码前，还特意在APK层写了测试用例压测这个接口。</p>
+<p>将之前开发的APK代码加入再进行测试，发现注册成功。初步怀疑是APK层没有调用这个接口导致。</p>
+<p>开始在google上搜索是不是有想过的APK开发人员遇到过类似的问题，没有搜索到类似的案例。但是某个瞬间，想起自己在安卓官网有看到APK开发指南的一篇说明<a
+href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#keep-code">《缩减、混淆处理和优化您的应用》</a>（其实楼主作为这方面开发的新人，问过一些工作七、八年开发较长时间的同事，是不太清楚这点的），猜测是上层没有调用JNI层的那个接口，导致java侧声明的JNI层的接口代码，在编译过程中删除了，通过<strong>APK反编译工具</strong>apktool（网上搜索下载），反编译已经编译出来的apk，发现在java代码中声明的那个接口代码被删除掉了。</p>
+<p>也在项目级 <code>build.gradle</code>
+文件中看到了这个开发打开了minifyEnabled这个开关：</p>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Enables code shrinking, obfuscation, and optimization for only</span><br><span class="line">                // your project&#x27;s release build type.</span><br><span class="line">                minifyEnabled true</span><br></pre></td></tr></table></figure>
+<h2 id="问题解决">问题解决</h2>
+<p>将已经开发的APK调用这个接口的模块代码合入仓库，一起编译版本。</p>
+<h2 id="问题总结">问题总结</h2>
+<p>下面安卓官网的文字，关于APK代码缩减的关键介绍，至于编译过程中实现代码缩减这项功能的源码具体实现，需要更多的APK编译想过的资料和代码查看，后续楼主会抽空多研究一些。</p>
+<ul>
+<li><strong>代码缩减（即摇树优化）</strong>：从应用及其库依赖项中检测并安全地移除未使用的类、字段、方法和属性（这使其成为了一个对于规避
+<a
+href="https://developer.android.com/studio/build/multidex?hl=zh-cn">64k
+引用限制</a>非常有用的工具）。例如，如果您仅使用某个库依赖项的少数几个
+API，缩减功能可以识别应用“未”使用的库代码并仅从应用中移除这部分代码。如需了解详情，请转到介绍如何<a
+href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#shrink-code">缩减代码</a>的部分。</li>
+<li><strong>资源缩减</strong>：从封装应用中移除不使用的资源，包括应用库依赖项中的不使用的资源。此功能可与代码缩减功能结合使用，这样一来，移除不使用的代码后，也可以安全地移除不再引用的所有资源。如需了解详情，请转到介绍如何<a
+href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#shrink-resources">缩减资源</a>的部分。</li>
+<li><strong>混淆处理</strong>：缩短类和成员的名称，从而减小 DEX
+文件的大小。如需了解详情，请转到介绍如何<a
+href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#obfuscate">对代码进行混淆处理</a>的部分。</li>
+<li><strong>优化</strong>：检查并重写代码，以进一步减小应用的 DEX
+文件的大小。例如，如果 R8 检测到从未采用过给定 <code>if/else</code>
+语句的 <code>else {}</code> 分支，则会移除 <code>else {}</code>
+分支的代码。如需了解详情，请转到介绍<a
+href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#optimization">代码优化</a>的部分。</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>APK</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>Telephony框架</title>
+    <url>/2020/09/20/20200920/</url>
+    <content><![CDATA[
+]]></content>
+      <tags>
+        <tag>android</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>python脚本搭建编译框架</title>
+    <url>/2020/10/05/20201005-1/</url>
+    <content><![CDATA[<h2 id="背景">背景</h2>
+<p>目前博主，接触到了一些资深开发工程师，分享了一套采用python语言搭建提高效率的编译框架，抽离公共部分，组建独立仓库，给手机负责通信的模块代码搭建编译框架，并且将很多关于各个团队的feature宏抽离出来，从第三方的源代码解耦出来，在一个单独的fd文件中进行管控，而各平台的差异在平台专有的json文件中描述，并且可以更快的模块化编译。勾起了博主比较想深入研究一下这套东西的欲望。</p>
+<span id="more"></span>
+<p>大多数Linux发行版本中，python是其标准系统组件，可以直接运行用python编写的代码。并且通常情况下，用python编写的脚本易于理解、扩展、维护和复用，性能也优于shell脚本，并且python本身更能让你专注于解决问题而不是去搞明白语言本身。有很多公司采用python搭建编译框架。</p>
+<p>例如，一些手机设备厂商，会购买高通很多芯片平台，这些芯片平台的软件代码购买过来后，手机设备厂商有很多客制化的代码，需要移植在各个平台，并且各个平台有自己的一套shell编译脚本，需要单独移植和适配。采用pthon编译框架后，单独的仓库和分支，可以方便很多feature和多平台的管理，并且可以快速适配新平台，提高了代码移植和适配的效率降低出错的可能性。</p>
+<p>查看高通给过来的源代码，使用的就是python来组织编译的脚本，一些终端设备厂商更多的是向高通看齐。</p>
+<h2 id="shell脚本运行python">shell脚本运行python</h2>
+<p>在模块编译的时候，大家都习惯了shell脚本编译，于是乎就有了在shell脚本中去运行pthon脚本。</p>
+<p>shell脚本中，指定python编译版本(which
+python指令查看应用安装路径)和传递给python脚本的参数：</p>
+<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &quot;传递的参数为：$*&quot;</span><br><span class="line">python_install_path=`where is python`</span><br><span class="line">path_name=&quot;/Volumes/MyHD/shell_python&quot;</span><br><span class="line">python_name=&quot;shell.py&quot;</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&#123;python_install_path&#125;2.7 <span class="variable">$path_name</span>/<span class="variable">$python_name</span> <span class="variable">$1</span></span></span><br></pre></td></tr></table></figure>
+<p>python脚本：</p>
+<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="keyword">for</span> x <span class="keyword">in</span> xrange(<span class="number">0</span>,<span class="built_in">int</span>(sys.argv[<span class="number">1</span>])):</span><br><span class="line">		<span class="built_in">print</span> <span class="string">&quot;Hello World&quot;</span> + <span class="built_in">str</span>(x)</span><br></pre></td></tr></table></figure>
+<p>运行结果：</p>
+<figure>
+<img src="script.png" alt="python.sh" />
+<figcaption aria-hidden="true">python.sh</figcaption>
+</figure>
+<h2 id="make">make</h2>
+<p>终端设备的代码主要分为AP(application processor)侧和CP(communication
+processor)侧，CP侧主要是一些通信模块，例如，基带处理器(baseband
+processor)、rf器件等，对应的代码这块都是用C/C++语言编写，对于这些代码的编译就有很多值得学习的地方。</p>
+<p>对于C/C++语言的编译分为四个阶段：预处理、编译、汇编和链接</p>
+<p>未完待续…….</p>
+]]></content>
+      <tags>
+        <tag>编译</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硬编码和软编码</title>
+    <url>/2020/10/05/20201005/</url>
+    <content><![CDATA[<p>在工作过程中，听到同事说起，硬编码和软编码，大脑大概明白其意思，具体一想，如何专业的表述这对孪生概念呢，需要展开来了解一下。</p>
+<span id="more"></span>
+<p>在网上查阅这两个概念，由于当前短视频较火，这两个概念在视频编解码方面有所指，硬编码是利用硬件芯片本身GPU、DSP等非CPU去给视频编码，而软编码则指是通过软件本身或者CPU对视频进行编码。</p>
+<p>而目前我在工作中接触的这两个概念主要是针对代码的灵活性和可扩展性角度来讲的，更多的是一种设计思想。</p>
+<h2 id="硬编码">硬编码</h2>
+<p>简单直白的说就是写死值，之前博主在一家公司写代码的时候，称这种在代码中是一种<strong>坏味道</strong>，例如，<code>if（a == 10）</code>，这个10一看不知道是什么意思，直接用的<strong>魔数</strong>。亦或解析某个路径下的文件，写代码时，直接将这个文件路径固定，不管以后是否挪到了其他路径，默认它就永远是在那个路径下，没有考虑变化。</p>
+<h2 id="软编码">软编码</h2>
+<p>一句话来说，定好地方，方便后续修改和扩展。在大型软件编码中，软编码很重要，会有很多地方用到相同的值，如果是在某个地方定义好值，在代码中用它的别称，如果后续这个值有变化，可以很方便的修改，只需在一处修改。软编码可以理解为以不变应万变，这个不变是指在代码中大部分逻辑不需要动，变是指后续市场需求的变化而需要软件做的一些适配，而这种适配只需要修改某些小角落。</p>
+]]></content>
+      <tags>
+        <tag>概念</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>回顾大年初二 丢失手机事件总结</title>
+    <url>/2021/02/17/20210217/</url>
+    <content><![CDATA[<h2 id="背景">背景</h2>
+<p>大年初二世界之窗夜场游玩，逛到阿尔卑斯冰雪世界，买了游玩票，玩了陡长滑道，然后电话亭落雪场景拍照，接着到了儿童滑道，看到了很多小朋友，不要脸的和小朋友排滑道，接着不幸的事情发生了，滑下来后，走了几步，摸了下口袋，发现手机不见了。</p>
+<span id="more"></span>
+<h2 id="经过">经过</h2>
+<p>发现手机不见，第一反应是落在了滑圈里头。转过头发现，不知道自己用过的圈，是在哪个小朋友手里，然后就开始绷紧神经，快速在离自己附近的圈进行排查，在圈内花了不到三秒用手做圆弧的轨迹搜索（ps.因为圈在别人手里不好意思花太长时间占用别人游玩的时间，后面从监控视频里头看到，自己过于着急，并没有花较多的时间在每个圈找，其实自己在手机存在的那个圈里有找），没有找到。</p>
+<p>然后就开始用女友的电话打我的电话，我手表还能感受到电话，然后找圈，发现还是没有找到。接着第四个电话，手表感应不到了，说明有人捡走了，但是手机能打通。</p>
+<p>接着去前台寻求广播帮助和登记手机丢失。继续拨打手机号发现，已经被关机了，说明拾取手机的人不想交还。</p>
+<p>女友的手机find我的手机，需要登陆我的apple账号，但是我已经忘了，只能回去用我的Mac电脑或者我的另外一部iPhone手机用Find功能。</p>
+<p>自己借助女友的手机边走出世界之窗边紧急冻结微信，支付宝等关键账号。过程中急于冻结关键账号，没怎么看路，小转了一个弯。不能冻结的账号，只能回去用电脑去冻结。</p>
+<p>出来世界之窗门口，寻求站岗民警的帮助，其要我先拨打110。于是个人决定先回家冻结关键账号，再报警。由于期待能联系上拾取我手机的人，没有去挂失自己的手机号，想先等两天，再挂失。</p>
+<p>由于我住的离世界之窗只有10分钟左右的单车时间，走路大概18分钟左右，于是借助女友的手机扫开了美团单车，先行一步回家，冻结关键账号，然后将手机mark
+as
+lost，标记为丢失，只要我的手机开机就会被定位和锁定位置。接着我在住的地方进行了110报警，说明了手机丢失情况，寻求民警帮助。</p>
+<p>不到三分钟，接到了所在街道的民警电话，并来到了我所住的地方核实身份以及情况，并做好了录影。其建议我去查看监控，然后他说是想现在去看还是等到明天早上，因为是晚上10点多了，并且冰雪大世界工作人员已经下班，应该是无法查看监控了，于是我选择了明天去查看监控。</p>
+<p>于是上午10点，我带上了我的另外一部手机，去到了世界之窗门口，和世界之窗的站岗民警联系上，要求看监控，然后反馈是在冰雪世界丢的，就带我去对应的点查看监控，然后冰雪世界的监控负责人要11点才上班，然后就等到了11点，相关工作人员就带领我们去对应的监控室查看，反馈了是在儿童滑道并且是昨天下午7点20到7点30之间，监控的位置很好，确定了我出现在镜头，然后确定我坐的那个圈，过了两分钟发现了拾取手机的人。</p>
+<p>拾取手机的人是一个中年男人，他是看到了前一个小朋友的圈中一个亮屏幕的手机，因为那时候我正在用我女友的手机打，那个中年男人发现手机之后，立马拾取捡到兜里，然后在雪道上头要起孩子和老婆遮挡一下视线，然后将我的手机关机。接着他们一家先后开始离开滑雪场准备回家。</p>
+<p>和民警一起查看完监控，截取多个摄像头的视频，并下载好截取的关键视频。民警开始联系所里的人做相关的人脸识别，因为他们是一大家子，两个小孩两个大人，拾取手机的中年男子还手提两个明显的白色包，只要识别出任何一个就可以确认拾取手机的男子。并且民警也告诉我他这种行为是拾取，并不是偷，不能立案，只能协助你，尽量和那个人取得联系，要求其归还。</p>
+<p>接着中午在益田假日广场吃完饭，在女友的帮助下，扫码骑车去在新年营业的联通营业厅办理丢失补办新卡。</p>
+<p>上午和民警一起确认完监控，民警要我和女友该干嘛干嘛去，接下来他会去处理，下午就收到了民警联系电话，已经联系到拾取手机的人，其愿意归还，由于其住的较远，就采取了邮件方式。</p>
+<p>我和拾取我手机的人通过民警作为中间人，取得了微信联系。通过合适的文字表达，表示感谢，接着我向其发了2个200元感谢红包，告知其我的相对不是那么具体的地址和电话，要其通过顺丰到付邮寄过来。其下午通过顺丰给我邮寄了过来，我第二天上午收到我的手机。</p>
+<h2 id="总结">总结</h2>
+<p>首先要称赞深圳民警的办事效率，花了不到一天的时间很幸运的找到了我的手机拾取人，并作为中间人要拾取人归还。</p>
+<p>手机作为现代人的必需品，和空气一样重要的东西，要妥善保管好，尤其在游玩的时候，要建立好足够的防丢意识。</p>
+<p>苹果手机内置不错的find防丢软件，即使电话卡注销，也是会通过GPS实时反馈所丢失的手机位置。</p>
+<p>遇事不慌张，镇定处理，控制好自己的大脑神经，要暗示自己，尽己所能的处理好自己所能做的就行，同时做好最坏的打算，不需要过分的焦虑。</p>
+<p>尽人事听天命。</p>
+]]></content>
+      <tags>
+        <tag>生活</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>AWS EC2配置个人VPN</title>
     <url>/2020/06/26/20200525/</url>
     <content><![CDATA[<h2 id="前言">前言</h2>
@@ -160,138 +295,79 @@ href="https://github.com/hwdsl2/setup-ipsec-vpn/blob/master/docs/clients.md">链
       </tags>
   </entry>
   <entry>
-    <title>APK缩减、混淆处理和优化</title>
-    <url>/2020/09/13/20200913/</url>
-    <content><![CDATA[<h2 id="问题背景">问题背景</h2>
-<p>手机射频前端、天线会有很多MIPI器件，而这些MIPI器件前期需要调试，为了方便硬件工程师调参数，会在调试的软件版本内置一些工模APK让其使用。而这些工模APK需要软件相关人员根据需求进行代码编写，在实现新的需求时，楼主就遇到了一个上层APK调用JNI接口的问题，JNI层的接口调试OK，APK的代码开发了主要功能，还有一些功能没开发完，先将接口层的代码合入了库中。</p>
-<p>CI流水线日构建的次日大版本刷测试机，使用需要调用JNI接口层代码的工模功能全部丧失，测试手机红屏报错。</p>
-<span id="more"></span>
-<h2 id="问题分析">问题分析</h2>
-<p>通过adb指令抓起android侧的log。</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">adb logcat &gt; temp.txt</span><br></pre></td></tr></table></figure>
-<p>搜索了报错log打印的关键字，发现是新加的JNI层接口注册失败。提交接口代码前，还特意在APK层写了测试用例压测这个接口。</p>
-<p>将之前开发的APK代码加入再进行测试，发现注册成功。初步怀疑是APK层没有调用这个接口导致。</p>
-<p>开始在google上搜索是不是有想过的APK开发人员遇到过类似的问题，没有搜索到类似的案例。但是某个瞬间，想起自己在安卓官网有看到APK开发指南的一篇说明<a
-href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#keep-code">《缩减、混淆处理和优化您的应用》</a>（其实楼主作为这方面开发的新人，问过一些工作七、八年开发较长时间的同事，是不太清楚这点的），猜测是上层没有调用JNI层的那个接口，导致java侧声明的JNI层的接口代码，在编译过程中删除了，通过<strong>APK反编译工具</strong>apktool（网上搜索下载），反编译已经编译出来的apk，发现在java代码中声明的那个接口代码被删除掉了。</p>
-<p>也在项目级 <code>build.gradle</code>
-文件中看到了这个开发打开了minifyEnabled这个开关：</p>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">// Enables code shrinking, obfuscation, and optimization for only</span><br><span class="line">                // your project&#x27;s release build type.</span><br><span class="line">                minifyEnabled true</span><br></pre></td></tr></table></figure>
-<h2 id="问题解决">问题解决</h2>
-<p>将已经开发的APK调用这个接口的模块代码合入仓库，一起编译版本。</p>
-<h2 id="问题总结">问题总结</h2>
-<p>下面安卓官网的文字，关于APK代码缩减的关键介绍，至于编译过程中实现代码缩减这项功能的源码具体实现，需要更多的APK编译想过的资料和代码查看，后续楼主会抽空多研究一些。</p>
-<ul>
-<li><strong>代码缩减（即摇树优化）</strong>：从应用及其库依赖项中检测并安全地移除未使用的类、字段、方法和属性（这使其成为了一个对于规避
-<a
-href="https://developer.android.com/studio/build/multidex?hl=zh-cn">64k
-引用限制</a>非常有用的工具）。例如，如果您仅使用某个库依赖项的少数几个
-API，缩减功能可以识别应用“未”使用的库代码并仅从应用中移除这部分代码。如需了解详情，请转到介绍如何<a
-href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#shrink-code">缩减代码</a>的部分。</li>
-<li><strong>资源缩减</strong>：从封装应用中移除不使用的资源，包括应用库依赖项中的不使用的资源。此功能可与代码缩减功能结合使用，这样一来，移除不使用的代码后，也可以安全地移除不再引用的所有资源。如需了解详情，请转到介绍如何<a
-href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#shrink-resources">缩减资源</a>的部分。</li>
-<li><strong>混淆处理</strong>：缩短类和成员的名称，从而减小 DEX
-文件的大小。如需了解详情，请转到介绍如何<a
-href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#obfuscate">对代码进行混淆处理</a>的部分。</li>
-<li><strong>优化</strong>：检查并重写代码，以进一步减小应用的 DEX
-文件的大小。例如，如果 R8 检测到从未采用过给定 <code>if/else</code>
-语句的 <code>else {}</code> 分支，则会移除 <code>else {}</code>
-分支的代码。如需了解详情，请转到介绍<a
-href="https://developer.android.com/studio/build/shrink-code?hl=zh-cn#optimization">代码优化</a>的部分。</li>
-</ul>
+    <title>macOS+gtest+vscode环境搭建</title>
+    <url>/2022/03/20/20220320/</url>
+    <content><![CDATA[<p>cd 到某个目录，然后在command窗口git clone
+https://github.com/google/googletest.git 下载gtest源码</p>
+<p>Reference</p>
+<p>​
+https://www.bilibili.com/video/BV1L7411L7aZ?spm_id_from=333.337.search-card.all.click</p>
 ]]></content>
       <tags>
-        <tag>APK</tag>
+        <tag>gtest vscode</tag>
       </tags>
   </entry>
   <entry>
-    <title>Telephony框架</title>
-    <url>/2020/09/20/20200920/</url>
-    <content><![CDATA[
-]]></content>
-      <tags>
-        <tag>android</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>python脚本搭建编译框架</title>
-    <url>/2020/10/05/20201005-1/</url>
-    <content><![CDATA[<h2 id="背景">背景</h2>
-<p>目前博主，接触到了一些资深开发工程师，分享了一套采用python语言搭建提高效率的编译框架，抽离公共部分，组建独立仓库，给手机负责通信的模块代码搭建编译框架，并且将很多关于各个团队的feature宏抽离出来，从第三方的源代码解耦出来，在一个单独的fd文件中进行管控，而各平台的差异在平台专有的json文件中描述，并且可以更快的模块化编译。勾起了博主比较想深入研究一下这套东西的欲望。</p>
+    <title>scons(a software constructe tool)</title>
+    <url>/2022/03/20/20220320-2/</url>
+    <content><![CDATA[<p>SCons是一个软件构建工具（build system），主要用于
+<strong>自动编译和构建程序</strong>，功能和 Make/CMake
+类似，但它有一个很大的特点：用Python写构建脚本。</p>
 <span id="more"></span>
-<p>大多数Linux发行版本中，python是其标准系统组件，可以直接运行用python编写的代码。并且通常情况下，用python编写的脚本易于理解、扩展、维护和复用，性能也优于shell脚本，并且python本身更能让你专注于解决问题而不是去搞明白语言本身。有很多公司采用python搭建编译框架。</p>
-<p>例如，一些手机设备厂商，会购买高通很多芯片平台，这些芯片平台的软件代码购买过来后，手机设备厂商有很多客制化的代码，需要移植在各个平台，并且各个平台有自己的一套shell编译脚本，需要单独移植和适配。采用pthon编译框架后，单独的仓库和分支，可以方便很多feature和多平台的管理，并且可以快速适配新平台，提高了代码移植和适配的效率降低出错的可能性。</p>
-<p>查看高通给过来的源代码，使用的就是python来组织编译的脚本，一些终端设备厂商更多的是向高通看齐。</p>
-<h2 id="shell脚本运行python">shell脚本运行python</h2>
-<p>在模块编译的时候，大家都习惯了shell脚本编译，于是乎就有了在shell脚本中去运行pthon脚本。</p>
-<p>shell脚本中，指定python编译版本(which
-python指令查看应用安装路径)和传递给python脚本的参数：</p>
-<figure class="highlight shell"><table><tr><td class="code"><pre><span class="line">echo &quot;传递的参数为：$*&quot;</span><br><span class="line">python_install_path=`where is python`</span><br><span class="line">path_name=&quot;/Volumes/MyHD/shell_python&quot;</span><br><span class="line">python_name=&quot;shell.py&quot;</span><br><span class="line"><span class="meta prompt_">$</span><span class="language-bash">&#123;python_install_path&#125;2.7 <span class="variable">$path_name</span>/<span class="variable">$python_name</span> <span class="variable">$1</span></span></span><br></pre></td></tr></table></figure>
-<p>python脚本：</p>
-<figure class="highlight python"><table><tr><td class="code"><pre><span class="line"><span class="comment"># -*- coding: utf-8 -*-</span></span><br><span class="line"></span><br><span class="line"><span class="keyword">import</span> sys</span><br><span class="line"></span><br><span class="line"><span class="keyword">if</span> __name__ == <span class="string">&#x27;__main__&#x27;</span>:</span><br><span class="line">	<span class="keyword">for</span> x <span class="keyword">in</span> xrange(<span class="number">0</span>,<span class="built_in">int</span>(sys.argv[<span class="number">1</span>])):</span><br><span class="line">		<span class="built_in">print</span> <span class="string">&quot;Hello World&quot;</span> + <span class="built_in">str</span>(x)</span><br></pre></td></tr></table></figure>
-<p>运行结果：</p>
-<figure>
-<img src="script.png" alt="python.sh" />
-<figcaption aria-hidden="true">python.sh</figcaption>
-</figure>
-<h2 id="make">make</h2>
-<p>终端设备的代码主要分为AP(application processor)侧和CP(communication
-processor)侧，CP侧主要是一些通信模块，例如，基带处理器(baseband
-processor)、rf器件等，对应的代码这块都是用C/C++语言编写，对于这些代码的编译就有很多值得学习的地方。</p>
-<p>对于C/C++语言的编译分为四个阶段：预处理、编译、汇编和链接</p>
-<p>未完待续…….</p>
+<p>跨平台支持：Linux、Windows、macOS</p>
+<p>一句话理解：SCons = 用 Python 写的Make工具。它通过 Python
+脚本来描述：源代码依赖关系、编译方式、输出文件，然后自动完成编译。</p>
+<table>
+<thead>
+<tr>
+<th>工具</th>
+<th>构建文件</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Make</td>
+<td>Makefile</td>
+</tr>
+<tr>
+<td>CMake</td>
+<td>CMakeLists.txt</td>
+</tr>
+<tr>
+<td>Scons</td>
+<td>SConstruct</td>
+</tr>
+</tbody>
+</table>
+<table>
+<thead>
+<tr>
+<th>函数</th>
+<th>作用</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>Environment()</td>
+<td>构建环境</td>
+</tr>
+<tr>
+<td>Program()</td>
+<td>生成可执行程序</td>
+</tr>
+<tr>
+<td>Library()</td>
+<td>生成库</td>
+</tr>
+<tr>
+<td>Object()</td>
+<td>生成目标文件</td>
+</tr>
+</tbody>
+</table>
 ]]></content>
       <tags>
-        <tag>编译</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>硬编码和软编码</title>
-    <url>/2020/10/05/20201005/</url>
-    <content><![CDATA[<p>在工作过程中，听到同事说起，硬编码和软编码，大脑大概明白其意思，具体一想，如何专业的表述这对孪生概念呢，需要展开来了解一下。</p>
-<span id="more"></span>
-<p>在网上查阅这两个概念，由于当前短视频较火，这两个概念在视频编解码方面有所指，硬编码是利用硬件芯片本身GPU、DSP等非CPU去给视频编码，而软编码则指是通过软件本身或者CPU对视频进行编码。</p>
-<p>而目前我在工作中接触的这两个概念主要是针对代码的灵活性和可扩展性角度来讲的，更多的是一种设计思想。</p>
-<h2 id="硬编码">硬编码</h2>
-<p>简单直白的说就是写死值，之前博主在一家公司写代码的时候，称这种在代码中是一种<strong>坏味道</strong>，例如，<code>if（a == 10）</code>，这个10一看不知道是什么意思，直接用的<strong>魔数</strong>。亦或解析某个路径下的文件，写代码时，直接将这个文件路径固定，不管以后是否挪到了其他路径，默认它就永远是在那个路径下，没有考虑变化。</p>
-<h2 id="软编码">软编码</h2>
-<p>一句话来说，定好地方，方便后续修改和扩展。在大型软件编码中，软编码很重要，会有很多地方用到相同的值，如果是在某个地方定义好值，在代码中用它的别称，如果后续这个值有变化，可以很方便的修改，只需在一处修改。软编码可以理解为以不变应万变，这个不变是指在代码中大部分逻辑不需要动，变是指后续市场需求的变化而需要软件做的一些适配，而这种适配只需要修改某些小角落。</p>
-]]></content>
-      <tags>
-        <tag>概念</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>回顾大年初二 丢失手机事件总结</title>
-    <url>/2021/02/17/20210217/</url>
-    <content><![CDATA[<h2 id="背景">背景</h2>
-<p>大年初二世界之窗夜场游玩，逛到阿尔卑斯冰雪世界，买了游玩票，玩了陡长滑道，然后电话亭落雪场景拍照，接着到了儿童滑道，看到了很多小朋友，不要脸的和小朋友排滑道，接着不幸的事情发生了，滑下来后，走了几步，摸了下口袋，发现手机不见了。</p>
-<span id="more"></span>
-<h2 id="经过">经过</h2>
-<p>发现手机不见，第一反应是落在了滑圈里头。转过头发现，不知道自己用过的圈，是在哪个小朋友手里，然后就开始绷紧神经，快速在离自己附近的圈进行排查，在圈内花了不到三秒用手做圆弧的轨迹搜索（ps.因为圈在别人手里不好意思花太长时间占用别人游玩的时间，后面从监控视频里头看到，自己过于着急，并没有花较多的时间在每个圈找，其实自己在手机存在的那个圈里有找），没有找到。</p>
-<p>然后就开始用女友的电话打我的电话，我手表还能感受到电话，然后找圈，发现还是没有找到。接着第四个电话，手表感应不到了，说明有人捡走了，但是手机能打通。</p>
-<p>接着去前台寻求广播帮助和登记手机丢失。继续拨打手机号发现，已经被关机了，说明拾取手机的人不想交还。</p>
-<p>女友的手机find我的手机，需要登陆我的apple账号，但是我已经忘了，只能回去用我的Mac电脑或者我的另外一部iPhone手机用Find功能。</p>
-<p>自己借助女友的手机边走出世界之窗边紧急冻结微信，支付宝等关键账号。过程中急于冻结关键账号，没怎么看路，小转了一个弯。不能冻结的账号，只能回去用电脑去冻结。</p>
-<p>出来世界之窗门口，寻求站岗民警的帮助，其要我先拨打110。于是个人决定先回家冻结关键账号，再报警。由于期待能联系上拾取我手机的人，没有去挂失自己的手机号，想先等两天，再挂失。</p>
-<p>由于我住的离世界之窗只有10分钟左右的单车时间，走路大概18分钟左右，于是借助女友的手机扫开了美团单车，先行一步回家，冻结关键账号，然后将手机mark
-as
-lost，标记为丢失，只要我的手机开机就会被定位和锁定位置。接着我在住的地方进行了110报警，说明了手机丢失情况，寻求民警帮助。</p>
-<p>不到三分钟，接到了所在街道的民警电话，并来到了我所住的地方核实身份以及情况，并做好了录影。其建议我去查看监控，然后他说是想现在去看还是等到明天早上，因为是晚上10点多了，并且冰雪大世界工作人员已经下班，应该是无法查看监控了，于是我选择了明天去查看监控。</p>
-<p>于是上午10点，我带上了我的另外一部手机，去到了世界之窗门口，和世界之窗的站岗民警联系上，要求看监控，然后反馈是在冰雪世界丢的，就带我去对应的点查看监控，然后冰雪世界的监控负责人要11点才上班，然后就等到了11点，相关工作人员就带领我们去对应的监控室查看，反馈了是在儿童滑道并且是昨天下午7点20到7点30之间，监控的位置很好，确定了我出现在镜头，然后确定我坐的那个圈，过了两分钟发现了拾取手机的人。</p>
-<p>拾取手机的人是一个中年男人，他是看到了前一个小朋友的圈中一个亮屏幕的手机，因为那时候我正在用我女友的手机打，那个中年男人发现手机之后，立马拾取捡到兜里，然后在雪道上头要起孩子和老婆遮挡一下视线，然后将我的手机关机。接着他们一家先后开始离开滑雪场准备回家。</p>
-<p>和民警一起查看完监控，截取多个摄像头的视频，并下载好截取的关键视频。民警开始联系所里的人做相关的人脸识别，因为他们是一大家子，两个小孩两个大人，拾取手机的中年男子还手提两个明显的白色包，只要识别出任何一个就可以确认拾取手机的男子。并且民警也告诉我他这种行为是拾取，并不是偷，不能立案，只能协助你，尽量和那个人取得联系，要求其归还。</p>
-<p>接着中午在益田假日广场吃完饭，在女友的帮助下，扫码骑车去在新年营业的联通营业厅办理丢失补办新卡。</p>
-<p>上午和民警一起确认完监控，民警要我和女友该干嘛干嘛去，接下来他会去处理，下午就收到了民警联系电话，已经联系到拾取手机的人，其愿意归还，由于其住的较远，就采取了邮件方式。</p>
-<p>我和拾取我手机的人通过民警作为中间人，取得了微信联系。通过合适的文字表达，表示感谢，接着我向其发了2个200元感谢红包，告知其我的相对不是那么具体的地址和电话，要其通过顺丰到付邮寄过来。其下午通过顺丰给我邮寄了过来，我第二天上午收到我的手机。</p>
-<h2 id="总结">总结</h2>
-<p>首先要称赞深圳民警的办事效率，花了不到一天的时间很幸运的找到了我的手机拾取人，并作为中间人要拾取人归还。</p>
-<p>手机作为现代人的必需品，和空气一样重要的东西，要妥善保管好，尤其在游玩的时候，要建立好足够的防丢意识。</p>
-<p>苹果手机内置不错的find防丢软件，即使电话卡注销，也是会通过GPS实时反馈所丢失的手机位置。</p>
-<p>遇事不慌张，镇定处理，控制好自己的大脑神经，要暗示自己，尽己所能的处理好自己所能做的就行，同时做好最坏的打算，不需要过分的焦虑。</p>
-<p>尽人事听天命。</p>
-]]></content>
-      <tags>
-        <tag>生活</tag>
+        <tag>compile scans</tag>
       </tags>
   </entry>
   <entry>
@@ -366,160 +442,6 @@ peak，但运行时间增加）</li>
 ]]></content>
       <tags>
         <tag>内存</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>scons(a software constructe tool)</title>
-    <url>/2022/03/20/20220320-2/</url>
-    <content><![CDATA[<p>SCons是一个软件构建工具（build system），主要用于
-<strong>自动编译和构建程序</strong>，功能和 Make/CMake
-类似，但它有一个很大的特点：用Python写构建脚本。</p>
-<span id="more"></span>
-<p>跨平台支持：Linux、Windows、macOS</p>
-<p>一句话理解：SCons = 用 Python 写的Make工具。它通过 Python
-脚本来描述：源代码依赖关系、编译方式、输出文件，然后自动完成编译。</p>
-<table>
-<thead>
-<tr>
-<th>工具</th>
-<th>构建文件</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Make</td>
-<td>Makefile</td>
-</tr>
-<tr>
-<td>CMake</td>
-<td>CMakeLists.txt</td>
-</tr>
-<tr>
-<td>Scons</td>
-<td>SConstruct</td>
-</tr>
-</tbody>
-</table>
-<table>
-<thead>
-<tr>
-<th>函数</th>
-<th>作用</th>
-</tr>
-</thead>
-<tbody>
-<tr>
-<td>Environment()</td>
-<td>构建环境</td>
-</tr>
-<tr>
-<td>Program()</td>
-<td>生成可执行程序</td>
-</tr>
-<tr>
-<td>Library()</td>
-<td>生成库</td>
-</tr>
-<tr>
-<td>Object()</td>
-<td>生成目标文件</td>
-</tr>
-</tbody>
-</table>
-]]></content>
-      <tags>
-        <tag>compile scans</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>macOS+gtest+vscode环境搭建</title>
-    <url>/2022/03/20/20220320/</url>
-    <content><![CDATA[<p>cd 到某个目录，然后在command窗口git clone
-https://github.com/google/googletest.git 下载gtest源码</p>
-<p>Reference</p>
-<p>​
-https://www.bilibili.com/video/BV1L7411L7aZ?spm_id_from=333.337.search-card.all.click</p>
-]]></content>
-      <tags>
-        <tag>gtest vscode</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C/C++面试基础</title>
-    <url>/2026/02/04/C_C++_Interview/</url>
-    <content><![CDATA[<p>  
-面试和平时做项目还是不太一样，平时写代码debug更多面对电脑，而面试是要去和面试官交流，侧重于能表达出东西，在较短的时间内了解彼此的契合度，去尽可能的展现自己。面试还是要提前做针对性的准备，对岗位要求和自己的技术栈、项目经历重合度较高的地方，进行重点总结，复习编程语言理论概念。</p>
-<span id="more"></span>
-<ul>
-<li><p>C语言如何避免踩内存</p>
-<p>三层防护去避免踩内存</p>
-<ul>
-<li>编码层面：所有指针初始化NULL，malloc使用sizeof推导大小，free后置为NULL，并且所有数组访问做边界检查</li>
-<li>设计层面：明确内存ownership，避免裸指针滥用</li>
-<li>工具层面：使用AddressSanitizer和Valgrind做运行时检测<br />
-这样基本可以避免90%的内存问题。</li>
-</ul></li>
-<li><p>什么是裸指针</p>
-<ul>
-<li>裸指针是指只保存内存地址、没有任何生命周期、大小或所有权信息的普通指针。</li>
-<li>它不会自动管理内存，也没有边界保护，因此容易导致越界访问、use-after-free和double
-free。</li>
-<li>在工程中通常需要通过封装结构体或明确ownership语义来降低风险。</li>
-</ul></li>
-<li><p>C++如何避免内存泄漏</p>
-<ul>
-<li>使用类封装数据，利用类的构造函数申请内存，析构函数释放内存</li>
-<li>使用智能指针，unique_ptr, share_ptre及weak_ptr</li>
-</ul></li>
-<li><p>C和C++有什么区别</p>
-<ul>
-<li>C++是面向对象的语言，C语言是面向过程的语言</li>
-<li>C++引入new/delete运算符，取代了C中的malloc/free库函数</li>
-<li>C++引入类、引用的概念，函数重载的特性，C中没有</li>
-</ul></li>
-<li><p>深拷贝和浅拷贝的区别</p>
-<ul>
-<li>主要区别在于如何处理对象内部动态分配的资源</li>
-<li>深拷贝是对对象的完全独立复制，包括对象内部动态分配的资源。不仅复制对象的值，也会复制对象所指向的堆上的数据</li>
-<li>深拷贝通常涉及到手动分配内存，并在拷贝构造函数或赋值操作符中进行资源的复制</li>
-<li>浅拷贝是对象内部动态分配的资源，新对象和原对象共享同一份</li>
-</ul></li>
-<li><p>C++多态的实现</p>
-<ul>
-<li>编译时多态：父类里头方法重载，函数名相同，参数列表或返回值不一样</li>
-<li>运行时多态：虚函数表管理父类指针指向子类指针，子类重写父类的虚函数</li>
-</ul></li>
-<li><p>右值引用</p>
-<ul>
-<li>右值引用是C++11引入的新特性，用&amp;&amp;表示，用来绑定临时对象。</li>
-<li>它主要用于实现移动语义，通过移动资源而不是拷贝对象来提升性能，比如在string或vector传递时可以避免大量内存拷贝。</li>
-<li>同时右值引用也是完美转发的重要基础。</li>
-</ul></li>
-<li><p>什么是万能引用</p>
-<ul>
-<li>在C++11中，如果 T&amp;&amp;
-出现在模版类型推导中，它不是普通的右值引用，而是万能引用。</li>
-<li>万能引用能同时绑定左指和右值，具体类型通过模板推导和引用折叠规则决定。</li>
-<li>它主要用于实现完美转发，配合std::forward保持参数的原始值类别，是STL和范型编程的重要基础。</li>
-</ul></li>
-<li><p>std::move是做什么的？</p>
-<ul>
-<li>std::move本身并不会移动对象，它只是把对象转换为右值引用，从而允许调用移动构造函数或移动赋值函数。<br />
-</li>
-<li>真正执行资源转移的是类的移动构造函数。<br />
-</li>
-<li>std::move的作用是显式地告诉编译器，这个对象的资源可以被转移。</li>
-</ul></li>
-<li><p>移动构造函数</p>
-<ul>
-<li>移动构造函数是C++11引入的，用右值引用作为参数。</li>
-<li>它通过转移对象内部资源而不是复制资源来构造新对象，从而避免昂贵的拷贝操作。</li>
-<li>移动构造通常在临时对象初始化或者使用std::move时触发，在STL容易扩容时也会大量使用。</li>
-</ul></li>
-</ul>
-]]></content>
-      <tags>
-        <tag>面试</tag>
       </tags>
   </entry>
   <entry>
@@ -960,6 +882,349 @@ case重新优化build和execute的时间分配解决了这种corner case。</p>
       </tags>
   </entry>
   <entry>
+    <title>C/C++面试基础</title>
+    <url>/2026/02/04/C_C++_Interview/</url>
+    <content><![CDATA[<p>  
+面试和平时做项目还是不太一样，平时写代码debug更多面对电脑，而面试是要去和面试官交流，侧重于能表达出东西，在较短的时间内了解彼此的契合度，去尽可能的展现自己。面试还是要提前做针对性的准备，对岗位要求和自己的技术栈、项目经历重合度较高的地方，进行重点总结，复习编程语言理论概念。</p>
+<span id="more"></span>
+<ul>
+<li><p>C语言如何避免踩内存</p>
+<p>三层防护去避免踩内存</p>
+<ul>
+<li>编码层面：所有指针初始化NULL，malloc使用sizeof推导大小，free后置为NULL，并且所有数组访问做边界检查</li>
+<li>设计层面：明确内存ownership，避免裸指针滥用</li>
+<li>工具层面：使用AddressSanitizer和Valgrind做运行时检测<br />
+这样基本可以避免90%的内存问题。</li>
+</ul></li>
+<li><p>什么是裸指针</p>
+<ul>
+<li>裸指针是指只保存内存地址、没有任何生命周期、大小或所有权信息的普通指针。</li>
+<li>它不会自动管理内存，也没有边界保护，因此容易导致越界访问、use-after-free和double
+free。</li>
+<li>在工程中通常需要通过封装结构体或明确ownership语义来降低风险。</li>
+</ul></li>
+<li><p>C++如何避免内存泄漏</p>
+<ul>
+<li>使用类封装数据，利用类的构造函数申请内存，析构函数释放内存</li>
+<li>使用智能指针，unique_ptr, share_ptre及weak_ptr</li>
+</ul></li>
+<li><p>C和C++有什么区别</p>
+<ul>
+<li>C++是面向对象的语言，C语言是面向过程的语言</li>
+<li>C++引入new/delete运算符，取代了C中的malloc/free库函数</li>
+<li>C++引入类、引用的概念，函数重载的特性，C中没有</li>
+</ul></li>
+<li><p>深拷贝和浅拷贝的区别</p>
+<ul>
+<li>主要区别在于如何处理对象内部动态分配的资源</li>
+<li>深拷贝是对对象的完全独立复制，包括对象内部动态分配的资源。不仅复制对象的值，也会复制对象所指向的堆上的数据</li>
+<li>深拷贝通常涉及到手动分配内存，并在拷贝构造函数或赋值操作符中进行资源的复制</li>
+<li>浅拷贝是对象内部动态分配的资源，新对象和原对象共享同一份</li>
+</ul></li>
+<li><p>C++多态的实现</p>
+<ul>
+<li>编译时多态：父类里头方法重载，函数名相同，参数列表或返回值不一样</li>
+<li>运行时多态：虚函数表管理父类指针指向子类指针，子类重写父类的虚函数</li>
+</ul></li>
+<li><p>右值引用</p>
+<ul>
+<li>右值引用是C++11引入的新特性，用&amp;&amp;表示，用来绑定临时对象。</li>
+<li>它主要用于实现移动语义，通过移动资源而不是拷贝对象来提升性能，比如在string或vector传递时可以避免大量内存拷贝。</li>
+<li>同时右值引用也是完美转发的重要基础。</li>
+</ul></li>
+<li><p>什么是万能引用</p>
+<ul>
+<li>在C++11中，如果 T&amp;&amp;
+出现在模版类型推导中，它不是普通的右值引用，而是万能引用。</li>
+<li>万能引用能同时绑定左指和右值，具体类型通过模板推导和引用折叠规则决定。</li>
+<li>它主要用于实现完美转发，配合std::forward保持参数的原始值类别，是STL和范型编程的重要基础。</li>
+</ul></li>
+<li><p>std::move是做什么的？</p>
+<ul>
+<li>std::move本身并不会移动对象，它只是把对象转换为右值引用，从而允许调用移动构造函数或移动赋值函数。<br />
+</li>
+<li>真正执行资源转移的是类的移动构造函数。<br />
+</li>
+<li>std::move的作用是显式地告诉编译器，这个对象的资源可以被转移。</li>
+</ul></li>
+<li><p>移动构造函数</p>
+<ul>
+<li>移动构造函数是C++11引入的，用右值引用作为参数。</li>
+<li>它通过转移对象内部资源而不是复制资源来构造新对象，从而避免昂贵的拷贝操作。</li>
+<li>移动构造通常在临时对象初始化或者使用std::move时触发，在STL容易扩容时也会大量使用。</li>
+</ul></li>
+</ul>
+]]></content>
+      <tags>
+        <tag>面试</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>C++单例模式</title>
+    <url>/2026/03/15/Singleton/</url>
+    <content><![CDATA[<h3 id="背景">1. 背景</h3>
+<p>由于业务算法的不断迭代，处理流程变的更复杂，以及面对内存压力，原来的C语言会让代码更臃肿。代码框架在逐步演进和重构，业务逻辑已经开始逐步采用现代C++进行重写，减少内存碎片和内存泄漏，用上了更高级的语法，吃上了细糠。有的代码已经存在了十几年，大家在上面做各种堆砌，corner
+cases的覆盖。不过现在好的一点是，可以借助大模型帮我们梳理代码结构，添加代码注释，帮我们画代码调用的流程图，方便我们更快的理解，提高代码阅读效率。以前刚入职那会儿可是要要花较多的时间一个个文件看一个个自己梳理。</p>
+<span id="more"></span>
+<p>自己在代码重构中用到了单例模式，用于存储某个独立的流程产生的数据，接下来的几个独立流程依赖这些数据进行计算，所以采用了单例模式作为数据仓储，用于其他几个独立流程能去访问其中的数据。</p>
+<h3 id="什么是单例">2. 什么是单例？</h3>
+<p>C++单例模式是一种创建型设计模式，确保一个类只有一个实例，并提供一个全局访问点。
+- 私有构造函数，防止外部new - 禁止拷贝/赋值（C++11: 删除 copy/move
+构造/赋值） - 提供静态方法获取实例</p>
+<h3 id="线程安全版本">3. 线程安全版本</h3>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;mutex&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ThreadSafeSingleton</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">ThreadSafeSingleton</span>(<span class="type">const</span> ThreadSafeSingleton&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    ThreadSafeSingleton&amp; <span class="keyword">operator</span>=(<span class="type">const</span> ThreadSafeSingleton&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    <span class="built_in">ThreadSafeSingleton</span>(ThreadSafeSingleton&amp;&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    ThreadSafeSingleton&amp; <span class="keyword">operator</span>=(ThreadSafeSingleton&amp;&amp;) = <span class="keyword">delete</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> ThreadSafeSingleton* <span class="title">getInstance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//双重检查锁定</span></span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="function">std::lock_guard&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(mtx)</span></span>;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">nullptr</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                instance = <span class="keyword">new</span> <span class="built_in">ThreadSafeSingleton</span>();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">priviate:</span><br><span class="line">    <span class="type">static</span> ThreadSafeSingleton* instance;</span><br><span class="line">    <span class="type">static</span> std::mutex mtx;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ThreadSafeSingleton</span>() &#123;&#125;</span><br><span class="line">    ~<span class="built_in">ThreadSafeSingleton</span>() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="c11之后最优雅的实现meyers-singleton">4.
+C++11之后最优雅的实现(Meyer’s Singleton)</h3>
+<p>对于现代C++，推荐使用Meyer’s Singleton，因为：</p>
+<ul>
+<li>线程安全（C++11保证局部静态变量初始化是线程安全的）</li>
+<li>自动析构</li>
+<li>代码简洁</li>
+<li>延迟初始化（可以在程序启动时初始化）</li>
+</ul>
+<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MeyerSingleton</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MeyerSingleton</span>(<span class="type">const</span> MeyerSingleton&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    MeyerSingleton&amp; <span class="keyword">operator</span>=(<span class="type">const</span> MeyerSingleton&amp;) = <span class="keyword">delete</span>; </span><br><span class="line">    <span class="built_in">MeyerSingleton</span>(MeyerSingleton&amp;&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    MeyerSingleton&amp; <span class="keyword">operator</span>=(MeyerSingleton&amp;&amp;) = <span class="keyword">delete</span>; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> MeyerSingleton&amp; <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="type">static</span> MeyerSingleton instance;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//业务逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">MeyerSingleton</span>() &#123;&#125;</span><br><span class="line">    ～<span class="built_in">MeyerSingleton</span>() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+<h3 id="单例模式的缺点">5. 单例模式的缺点</h3>
+<ul>
+<li>单元测试困难（难以替换/注入 mock）</li>
+<li>全局状态，可能导致代码藕合度高</li>
+<li>隐式的全局状态，难以跟踪</li>
+<li>违背依赖注入原则，更推荐通过构造函数注入需要的资源</li>
+</ul>
+]]></content>
+      <tags>
+        <tag>设计模式</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>ffmpeg_use</title>
+    <url>/2021/01/10/ffmpeg-use/</url>
+    <content><![CDATA[<h1 id="视频格式转换">1. 视频格式转换</h1>
+<h2 id="前言">1.1. 前言</h2>
+<p>有位同仁，最近在拓展副业，将自己的作品上传到某网站，简介部分需要swf格式的video，而本地只有mov格式的，需要转换，寻求我的帮助。</p>
+<p>由于本人是程序员兼个人电脑是mac，周末有时间还能稍微折腾一下，不希望直接去app
+store寻找购买现成的软件，也不想去下载盗版破解软件不安全。在网上搜索到了一个开源的音视频处理软件FFmpeg，很多音视频软件是基于该开源软件进行的二次开发。本文是基于其提供的静态库，采用敲命令行的方式进行视频格式的转换。</p>
+<span id="more"></span>
+<h2 id="安装方式">1.2. 安装方式</h2>
+<p>FFmpeg官网提供了三种方式<a
+href="https://trac.ffmpeg.org/wiki/CompilationGuide/macOS">安装</a>其软件：</p>
+<ol type="1">
+<li><p>使用<a href="https://brew.sh/">Homebrew</a></p>
+<p><code>brew install ffmpeg</code></p></li>
+<li><p>下载官网<a href="https://ffmpeg.org/download.html">static build
+for macOS</a></p></li>
+<li><p>下载官网源代码自己编译</p></li>
+</ol>
+<h2 id="static-build方式">1.3. static build方式</h2>
+<p>由于博主升级了操作系统，Homebrew不能使用，使用brew install
+ffmpeg会自动updating
+homebrew，然后updating失败，可以使用<code>export HOMEBREW_NO_AUTO_UPDATE=true</code>取消自动升级，但是安装还是失败了，于是博主采用了第二种方式直接去ffmpeg官网下载<a
+href="https://ffmpeg.org/download.html">static build for macOS</a>。</p>
+<p>### 1.3.1. 安装与使用</p>
+<ol type="1">
+<li>将下载下来的压缩包解压</li>
+<li>将解压出来的文件放到/usr/local/bin路径下（右键单击Finder–&gt;Go to
+Folder…—&gt;输入/usr/local/bin—&gt;return键）</li>
+<li>打开terminal，cd到/usr/local/bin/，执行chmod 777
+ffmpeg指令，修改该build的使用权限</li>
+<li>在你存放视频的目录打开terminal，执行ffmpeg -i xxx.mov -f swf
+xxx.swf指令</li>
+</ol>
+<h2 id="后继">1.4. 后继</h2>
+<p>具体其他的使用指令可去其官网查看，会介绍其使用语法，或者ffmpeg
+-h也有简单的介绍。</p>
+<p>自己后续可能基于其库进行二次开发。</p>
+]]></content>
+      <tags>
+        <tag>video_formate_convert</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>AI基础概念及理论学习</title>
+    <url>/2026/02/08/AI-Learn/</url>
+    <content><![CDATA[<p>  
+目前AI已经进入了普通老百姓视角的主舞台，各大科技公司在这个台上你方唱罢我来舞，日新月异，占据了不少公众视野。对于科技大厂而言，搞AI是一件政治正确的事情，你不搞不主动去靠就是不行，要被打入冷宫。既然潮水已来，就顺流而下，去拥抱它。作为个人如何拥抱AI，要么侧重去参与迭代AI功能本身，要么侧重如何为我所用，不管怎么样都是要略懂一些AI基础知识。可以初步防止在二级市场被割韭菜或者就业市场被动失业。</p>
+<span id="more"></span>
+<p><strong>洋气的名字</strong></p>
+<ul>
+<li>LLM(Large Language Model)
+大语言模型：区别于古老的智障语言模型，前面加了个大，模型参数变多了，具备了一定的智能</li>
+<li>Prompt 提示词：一问一答</li>
+<li>Context 上下文：背景信息</li>
+<li>Memory 记忆：不仅仅一问一答，对上下文进行压缩，可以进行追问</li>
+<li>Agent
+智能体：不仅仅是和大模型交互，还拥有上网功能、搜索本地文档/数据库、文件读取、执行脚本、PDF转换等能力，减少和大模型的沟通次数，处理一些大模型无法操作的东西，获取模型以外的信息能力，整合多方的结果发送给用户。相对于后面要讲的Function
+Call和MCP,
+中间的Agent就像一个传话筒，把大模型的话转化成调用工具的代码，把工具调用的结果再原封不动的传话给大模型，同时不忘了给用户传话，主打一个我不生产信息，我只做一个信息的搬运工。Agent和用户对话，虽然最底层还是文字，但是交互形式上可以丰富多彩，可以是CLI(Command
+Line Interface)，Claude
+Code（早期是一个编程Agent，现在已经走上了通用Agent道路，名字起的很失败），现在大火的开源桌面助手OpenClaw等</li>
+<li>RAG(Retrieval-Augmented Generation)
+检索增强生成，用于本地数据库搜索，与传统数据库不同，使用了向量数据库</li>
+<li>Web Search 联网搜索，提高实时性及减少token的消耗</li>
+<li>Function
+Calling：Agent和大模型之间，关于工具调用所约定的对话格式，让大模型按照死板的格式回复给Agent去调用工具，就像前端和后端开发一样，约定接口格式，例如一个json模版</li>
+<li>MCP(Model Context
+Protocol)模型上下文协议：Agent和工具集之间交互的一套约定，大模型是一个只会说话不会做事的智者，而MCP能提供各种工具的程序集,
+tools/list.. tools/call..</li>
+<li>Langchain
+：纯编程来实现流程走向，全是硬编码，稳定但是缺乏灵活性</li>
+<li>Workflow 工作流：低代码，可以功能模块块拖拽</li>
+<li>Skill
+技能：SKILL.md提前写好了说明文档和直接可以运行的脚本，即agent的技能，相比Langchain和Workflow兼顾了灵活性和稳定性</li>
+<li>SubAgent
+：拆分复杂的任务，独立的子任务可以在子agent中完成，本质上就是做上下文隔离，子agent产生的上下文不会保留在主agent中</li>
+<li>Token
+令牌：人工智能模型处理信息的最小单位，可以把它的工作原理想象成我们人类阅读和组词语的过程，当我们看到一句话，我们不会逐字停顿，而是会按词组来理解。比如“我喜欢解bug”，我们的大脑会处理成
+“我/喜欢/解/bug”
+这几个片段。在人工智能的世界里，模型看到的也不是完整的句子，而是被切分成的Token。这些Token可能是一个词、一个汉字、一个标点符号，甚至是半个字（当用两个Token
+ID来表示一个字的时候）。对于主流的的人工智能模型，通常一个汉字大约是1到2个Token。</li>
+<li>AGI(Artifical General Intelligence)
+通用人工智能：LLM算一个专才，还不是像“人类一样的通才”，不具备完整的人类级推理能力。AGI是一种像人类一样可以在几乎所有认知领域自主思考和学习的人工智能</li>
+<li>GPT(Generative Pre-trained Transformer)
+生成式预训练变换模型：它是一种深度学习算法，属于自然语言处理（NLP）领域的人工智能模型，旨在生成具有连贯性和逻辑性的自然语言。</li>
+</ul>
+<p><strong>人工智能</strong></p>
+<p>  
+智能本质上就是针对不同情境给出针对性的输出反应，不会乱来的黑箱，数学表达就是<span
+class="math inline"><em>f</em>(<em>x</em>) = <em>y</em></span>，引用一位美国的数学教授Thomas
+A. Garrity上课的一句话：Functions describe the world, everything is
+described by functions, the sound of my voice on your eardrum, function!
+That’s kind of hitting your eye balls right now, function! The entries
+you put in your random matrices, function! It’s all function!</p>
+<p><em>人工智能</em>：人工搭建起一套智能（黑箱），根据不同的环境信息给出针对性的输出和回应的系统，这个输出可以是动作、语言，也可以是一种判断和预测。人如果无法区分是和AI聊天还是和人聊天，那就实现了人的智能。</p>
+<p><em>专家系统</em>：清晰的规则，例如：疾病诊断和金融咨询，静态，不能自我迭代，完全是复制人类经验，能力上限就是人类专家的水平，无法做到比人更好。</p>
+<p><em>神经网络(Neural
+Network)</em>：是模拟人脑神经元连接方式的模型结构，具有可自动学习特征，不需要人工设计，有时候很难提取其中的规律和感觉，就可以通过大量的数据来提取特征。目前从理论上来说，它的准确率不是100%的，始终存在对抗样本，在噪声的世界中做稳定近似的学问。</p>
+<ul>
+<li>多层结构（输入层/隐藏层/输出层）</li>
+<li>通过反向传播训练</li>
+<li>参数量大</li>
+<li>表达能力强</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">人工智能（AI）</span><br><span class="line">    └── 机器学习（ML）</span><br><span class="line">            └── 深度学习（DL）</span><br><span class="line">                    └── 神经网络（Neural Network）</span><br></pre></td></tr></table></figure>
+<p>当神经网络层数很多时，就叫深度学习Deep Learning。</p>
+<p>多层神经网络(Deep Neural Network)的真正价值在于它的结构弹性：   
+理论上，逼近任何复杂函数    实践中，可以通过层级结构逐步逼近真实世界</p>
+<p>每一层神经网络都在做两件事：    1、抽取更高层的语义特征   
+2、压缩与去冗余</p>
+<p>Transformer思想源头：从压缩到重构，Encode-Decode架构，是工程极致化实现</p>
+<ul>
+<li>Compressed(x)，将x压缩为抽象语义</li>
+<li>Function(Compressed(x)) = Compressed(y)，在语义空间中进行变换</li>
+<li>y = Decompressed(Compressed(y))，再将其解压为目标语言</li>
+</ul>
+<p><em>大语言模型LLM</em></p>
+<ul>
+<li>模型结构：哪来这种神奇的黑箱，超大的多层神经网络</li>
+<li>损失函数：怎么奖励一个机器，损失函数是用来衡量模型预测结果与真实值之间差距的函数。在训练过程中，我们通过最小化损失函数来优化模型参数。它本质上是一个可微的优化目标函数，比如回归常用均方误差MSE(Mean
+Squared
+Error)，分类常用交叉熵。通过计算损失对参数的梯度，并进行反向传播，模型可以不断更新参数，使用预测结果越来越准确。</li>
+<li>训练过程：机器怎么建立条件反射，利于梯度下降找到损失函数低的参数，每次向着局部损失函数下降最快的方向前进，得出一套参数。</li>
+</ul>
+<p><em>泛化能力（Generalization）</em>：即规律，推广，举一反三，神经网络具有很强的泛化能力</p>
+<p>  
+我本科期间参加了数学建模比赛，学校派了很多理学院的数学老师在暑假给我们培训，讲过下面的各种智能模型，看到下面的名词很有熟悉感，尤其是那个神经网络模型的梯度下降(Gradient
+Vector)和反向传播(Back
+Propagation)，当时不怎么明白，现在回过头来看，感觉会清晰很多。</p>
+<p>  
+2026年，个人感觉，AI基座大模型的入场券基本已经发放完毕，AI大脑几家主流公司在堆算力优化模型，美国主要有5家：Open
+AI，Google DeepMind, Anthropic, Meta,
+xAI；中国主要有：深度求索，字节跳动，阿里巴巴，腾讯，百度，华为，智谱AI，MiniMax，月之暗面，百川智能（感谢Meta
+Llam3的开源，让大家知道了黑箱里头更多的细节，缩短了中国与美国在大模型领域的差距）。在基座模型上进行发展更多的能力，例如，给他们配上手、眼、脚，可能是机器人公司和一些智能硬件，垂直领域的发力。软件层面可能会有越来越多的行业推出类似Manus、OpenClaw这样的智能体，在垂直应用领域，中国会遍地开花。</p>
+]]></content>
+      <tags>
+        <tag>Artificial Intelligencs</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>我在高通中国的五年</title>
+    <url>/2026/02/12/five-years-in-qcom/</url>
+    <content><![CDATA[<p>  
+我是在2020年12月份加入高通，那时候还是疫情期间，面试也是全程线上。苹果回到高通基带芯片的怀抱不久，iPhone和iPad大部分产线在深圳，需要人来做现场技术支持，所以我是以支持苹果的名义招进高通中国基带软件研发团队。因为苹果是高通的VIP客户（给的钱多），所以是研发团队作为主导来直接对接他们。</p>
+<span id="more"></span>
+<p>  
+转眼间五年过去了，正好趁这次高通中国modem软件研发团队的调整，可以做一些回顾和总结。</p>
+<p>  
+在高通中国我觉得比较棒的点是，公司相对信任员工，没有严格的打卡制度，相对灵活的上班时间；做需求push感没有那么强，可以按自己的workload和节奏去排时间。自己所在的团队氛围还不错，大家相互比较尊重，同事间的关系也相对简单。代码产生了bug更多的是专注于去解决问题，而不是去追责。技术总监会有人文关怀。</p>
+<p>   我是在RFSCA(Radio Frequency Sysytem Calibration and
+Analysis)团队，主要负责射频前端模拟器件的校准。刚入职的前一年半，主要用C++做在Windows系统上运行的产线校准工具的开发，后面三年半侧重做嵌入端（RTOS）C/C++的开发。具体对接的业务有以下几块：</p>
+<ul>
+<li>苹果：针对iPhone各个硬件阶段做校准Bring
+Up，每年都有去苹果工厂实验室做现场技术支持和搭建支持远程的硬件环境。客户产线用自己的校准工具，新平台嵌入端校准框架发生变化，我针对客户特殊的校准流程设计了新的API来支持客户自己的工具。他们的校准工具依赖我们内部的ESC
+Parser
+DLL，要维护这个解码流的工具，他们提了不少相关的问题过来。还有就是维护该客户用的较多的feature，例如RxTrigger，FBRx
+offset(后续也推给了其他客户)等。可惜苹果要开始大规模上他们自己的基带了，深圳三个实验室的设备都已经撤出来了。</li>
+<li>Customer Engineer Team:
+国内OEMs的校准问题解决和定制化需求实现，当然也有韩国、日本的一些客户，刚进来的时候还有只能用4G的H厂的cases。</li>
+<li>新平台QRD的校准Bring
+Up，国内的硬件团队会参考Global的新硬件设计来做给国内客户参考的硬件，软件团队要和硬件团队一起在项目的各个阶段完成各个支持的Bands校准。</li>
+<li>bAPT：China研发来负责这种关键的校准feature情况比较少，我的tech
+leader争取过来了，交给了我，也是对我的认可。这个是算法团队提出来的需求，做了几个平台的迭代，后续的算法优化，也参与了和算法团队的讨论。这个feature做的也是很动荡，第一版做完之后，合作的算法、RFLM、LTE
+Tech、NV MGR、测试人员被lay
+off，China只剩我一个负责这个feature的后续迭代开发。这个feature几个平台的优化也是换了两个算法的人员，其中一个还主动离开了高通去了其他公司。春节之后China
+Modem研发团队受美国BIS法案的影响，基带嵌入端代码权限被锁死，成了对接China
+CE团队和研发团队的中间件team。我本地开发的关于bAPT重构的代码也提交不了，并且自己还有一个更省校准时间的idea，有点小遗憾。但是通过这个需求，自己有从执行者到思考者的一个转变，不仅仅是去根据要求去做实现，会思考有没有更好的解决方案，会去针对算法团队给出的解决方案提出质疑并给出我认为更合适的方案进行商讨。</li>
+<li>仪表厂商：射频前端的校准是需要依赖第三方的仪表，所以我们这个组的工具代码是需要支持仪表厂商，目前OEMs工厂主流仪表用的是德国的罗德与施瓦茨CMW100，公司给我的工作站配的仪表也是CMW100。遇到仪表的软件的问题需要和他们一起co-debug，或者适配他们的新feature修改我们的工具代码。</li>
+</ul>
+<p>  
+个人感觉这个岗位还挺有意思，校准分很多硬件模块通路(XO、QET、SDR、PA、LNA、Tx、Rx、FBRx…)，需要打交道的人很多，也可以很深入的研究复杂的XPT算法。高通独有的QET硬件，配合独有IP的ET算法，这个ET算法挺复杂的，还用到了机器学习。如果是做射频前端的校准，相比其他厂商，高通的ET校准算法在能耗上面是有挺大优势。但是不知道和华为Mate
+50上射频前端所用的Doherty
+PA的比较是怎么样的。还有很多高通独有硬件独有的VISPA
+features，很多是需要校准来配合的。</p>
+<p>  
+自己在这个岗位上幸福的时刻，是自己有过几次进入了心流体验，解bug解的很兴奋，忘记了时间，这种有些挑战，但是再给点时间，就能找到线索并fix它的bug很有意思。相比做需求，自己更加喜欢解bug，就像玩小游戏一样，不需要太多的时间，但是会有及时的反馈。所以我并不是很排斥上班这件事情。</p>
+]]></content>
+      <tags>
+        <tag>职场</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>How to fix your entire life in one day</title>
+    <url>/2026/02/24/how-to-fix-your-in-one-day/</url>
+    <content><![CDATA[<p>看到了一个博主DAN KOE分享了一篇文章：<a
+href="https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1">How
+to fix your entire life in 1
+day</a>，感觉结合自己当前的状态还是所有感触，所以准备细细研读和做笔记。</p>
+<p>这篇文章的基石：阿德勒心理学（Adlerian Psychology）</p>
+<p>先抛一个问题：你对当前的生活是满意的、不满意的、还是假装满意的？</p>
+<span id="more"></span>
+<h2 id="改变身份">1. 改变身份</h2>
+<h2 id="察觉自己">2. 察觉自己</h2>
+<h2 id="付诸行动">3. 付诸行动</h2>
+<p>工作就是玩</p>
+<p>健康的生活方式</p>
+<p>识人法则 看行动</p>
+<p>了解心智的运作方式，才可能编辑</p>
+<p>真的想改变并变更好，改变潜意识中的目标</p>
+<p>改变自己八步骤</p>
+<p>你的价值观来自父母</p>
+<p>自我发展9个阶段</p>
+<p>成功三要素 主动性 机会 智慧</p>
+<p>聪明不聪明的差别 迭代 坚持 洞察全局</p>
+<p>大部分人的一生</p>
+<p>提高认知6步骤来做出改变</p>
+<p>遇到人才 有智慧却没有勇气 不说服</p>
+<p>知难行易 察觉自己 是否改变 收获什么 付诸行动</p>
+<p>思考负能量激发正能量</p>
+<p>7步让自己变强</p>
+]]></content>
+      <tags>
+        <tag>心灵鸡汤</tag>
+      </tags>
+  </entry>
+  <entry>
+    <title>硬盘文件在Mac上操作不了的问题</title>
+    <url>/2021/02/17/mac-finder-file/</url>
+    <content><![CDATA[<p>通过command指令修改在硬盘文件上的属性，移除只有finder可见属性。然后就可以操组，copy到mac上。</p>
+<p>1,先安装软件 Mounty for
+NTFS，这个软件可以让Mac系统支持NTFS硬盘读写操作。</p>
+<p>2,文件变灰色的原因是文件的名后面多了一个@，可以在终端中用命令行消除。</p>
+<pre><code>  在终端中输入xattr -d com.apple.FinderInfo ，然后在后面输入文件地址(直接把文件拖入终端中就行了)。回车该文件就变回可用状态了。</code></pre>
+]]></content>
+      <tags>
+        <tag>mac-finder-file</tag>
+      </tags>
+  </entry>
+  <entry>
     <title>SSD固态硬盘</title>
     <url>/2026/02/27/SSD-DDR/</url>
     <content><![CDATA[<p>在车上，想要弄一个存储空间大一些的SSD固态硬盘来存行车记录仪和哨兵模式下产生的视频，这样记录的视频被覆盖重写的周期会长一些。在小红书上查了一下，点赞评论数较多的是买的SSD固态盘加硬盘盒，图方便省事可以直接上移动固态硬盘盒或者三星迷你U盘fit
@@ -1261,267 +1526,6 @@ style="text-align: left;">文件大小：<strong>16EB</strong>；分区大小：
 ]]></content>
       <tags>
         <tag>行业体感</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>C++单例模式</title>
-    <url>/2026/03/15/Singleton/</url>
-    <content><![CDATA[<h3 id="背景">1. 背景</h3>
-<p>由于业务算法的不断迭代，处理流程变的更复杂，以及面对内存压力，原来的C语言会让代码更臃肿。代码框架在逐步演进和重构，业务逻辑已经开始逐步采用现代C++进行重写，减少内存碎片和内存泄漏，用上了更高级的语法，吃上了细糠。有的代码已经存在了十几年，大家在上面做各种堆砌，corner
-cases的覆盖。不过现在好的一点是，可以借助大模型帮我们梳理代码结构，添加代码注释，帮我们画代码调用的流程图，方便我们更快的理解，提高代码阅读效率。以前刚入职那会儿可是要要花较多的时间一个个文件看一个个自己梳理。</p>
-<span id="more"></span>
-<p>自己在代码重构中用到了单例模式，用于存储某个独立的流程产生的数据，接下来的几个独立流程依赖这些数据进行计算，所以采用了单例模式作为数据仓储，用于其他几个独立流程能去访问其中的数据。</p>
-<h3 id="什么是单例">2. 什么是单例？</h3>
-<p>C++单例模式是一种创建型设计模式，确保一个类只有一个实例，并提供一个全局访问点。
-- 私有构造函数，防止外部new - 禁止拷贝/赋值（C++11: 删除 copy/move
-构造/赋值） - 提供静态方法获取实例</p>
-<h3 id="线程安全版本">3. 线程安全版本</h3>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="meta">#<span class="keyword">include</span> <span class="string">&lt;mutex&gt;</span></span></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">ThreadSafeSingleton</span></span><br><span class="line">&#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">ThreadSafeSingleton</span>(<span class="type">const</span> ThreadSafeSingleton&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    ThreadSafeSingleton&amp; <span class="keyword">operator</span>=(<span class="type">const</span> ThreadSafeSingleton&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    <span class="built_in">ThreadSafeSingleton</span>(ThreadSafeSingleton&amp;&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    ThreadSafeSingleton&amp; <span class="keyword">operator</span>=(ThreadSafeSingleton&amp;&amp;) = <span class="keyword">delete</span>;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> ThreadSafeSingleton* <span class="title">getInstance</span><span class="params">()</span></span></span><br><span class="line"><span class="function">    </span>&#123;</span><br><span class="line">        <span class="comment">//双重检查锁定</span></span><br><span class="line">        <span class="keyword">if</span> (instance == <span class="literal">nullptr</span>)</span><br><span class="line">        &#123;</span><br><span class="line">            <span class="function">std::lock_guard&lt;std::mutex&gt; <span class="title">lock</span><span class="params">(mtx)</span></span>;</span><br><span class="line">            <span class="keyword">if</span> (instance == <span class="literal">nullptr</span>)</span><br><span class="line">            &#123;</span><br><span class="line">                instance = <span class="keyword">new</span> <span class="built_in">ThreadSafeSingleton</span>();</span><br><span class="line">            &#125;</span><br><span class="line">        &#125;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">priviate:</span><br><span class="line">    <span class="type">static</span> ThreadSafeSingleton* instance;</span><br><span class="line">    <span class="type">static</span> std::mutex mtx;</span><br><span class="line"></span><br><span class="line">    <span class="built_in">ThreadSafeSingleton</span>() &#123;&#125;</span><br><span class="line">    ~<span class="built_in">ThreadSafeSingleton</span>() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="c11之后最优雅的实现meyers-singleton">4.
-C++11之后最优雅的实现(Meyer’s Singleton)</h3>
-<p>对于现代C++，推荐使用Meyer’s Singleton，因为： -
-线程安全（C++11保证局部静态变量初始化是线程安全的） - 自动析构 -
-代码简洁 - 延迟初始化（可以在程序启动时初始化）</p>
-<figure class="highlight c++"><table><tr><td class="code"><pre><span class="line"><span class="keyword">class</span> <span class="title class_">MeyerSingleton</span> &#123;</span><br><span class="line"><span class="keyword">public</span>:</span><br><span class="line">    <span class="built_in">MeyerSingleton</span>(<span class="type">const</span> MeyerSingleton&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    MeyerSingleton&amp; <span class="keyword">operator</span>=(<span class="type">const</span> MeyerSingleton&amp;) = <span class="keyword">delete</span>; </span><br><span class="line">    <span class="built_in">MeyerSingleton</span>(MeyerSingleton&amp;&amp;) = <span class="keyword">delete</span>;</span><br><span class="line">    MeyerSingleton&amp; <span class="keyword">operator</span>=(MeyerSingleton&amp;&amp;) = <span class="keyword">delete</span>; </span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">static</span> MeyerSingleton&amp; <span class="title">getInstance</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="type">static</span> MeyerSingleton instance;</span><br><span class="line">        <span class="keyword">return</span> instance;</span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line">    <span class="function"><span class="type">void</span> <span class="title">doSomething</span><span class="params">()</span> </span>&#123;</span><br><span class="line">        <span class="comment">//业务逻辑</span></span><br><span class="line">    &#125;</span><br><span class="line"></span><br><span class="line"><span class="keyword">private</span>:</span><br><span class="line">    <span class="built_in">MeyerSingleton</span>() &#123;&#125;</span><br><span class="line">    ～<span class="built_in">MeyerSingleton</span>() &#123;&#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
-<h3 id="单利模式的缺点">5. 单利模式的缺点</h3>
-<ul>
-<li>单元测试困难（难以替换/注入 mock）</li>
-<li>全局状态，可能导致代码藕合度高</li>
-<li>隐式的全局状态，难以跟踪</li>
-<li>违背依赖注入原则，更推荐通过构造函数注入需要的资源</li>
-</ul>
-]]></content>
-      <tags>
-        <tag>设计模式</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>ffmpeg_use</title>
-    <url>/2021/01/10/ffmpeg-use/</url>
-    <content><![CDATA[<h1 id="视频格式转换">1. 视频格式转换</h1>
-<h2 id="前言">1.1. 前言</h2>
-<p>有位同仁，最近在拓展副业，将自己的作品上传到某网站，简介部分需要swf格式的video，而本地只有mov格式的，需要转换，寻求我的帮助。</p>
-<p>由于本人是程序员兼个人电脑是mac，周末有时间还能稍微折腾一下，不希望直接去app
-store寻找购买现成的软件，也不想去下载盗版破解软件不安全。在网上搜索到了一个开源的音视频处理软件FFmpeg，很多音视频软件是基于该开源软件进行的二次开发。本文是基于其提供的静态库，采用敲命令行的方式进行视频格式的转换。</p>
-<span id="more"></span>
-<h2 id="安装方式">1.2. 安装方式</h2>
-<p>FFmpeg官网提供了三种方式<a
-href="https://trac.ffmpeg.org/wiki/CompilationGuide/macOS">安装</a>其软件：</p>
-<ol type="1">
-<li><p>使用<a href="https://brew.sh/">Homebrew</a></p>
-<p><code>brew install ffmpeg</code></p></li>
-<li><p>下载官网<a href="https://ffmpeg.org/download.html">static build
-for macOS</a></p></li>
-<li><p>下载官网源代码自己编译</p></li>
-</ol>
-<h2 id="static-build方式">1.3. static build方式</h2>
-<p>由于博主升级了操作系统，Homebrew不能使用，使用brew install
-ffmpeg会自动updating
-homebrew，然后updating失败，可以使用<code>export HOMEBREW_NO_AUTO_UPDATE=true</code>取消自动升级，但是安装还是失败了，于是博主采用了第二种方式直接去ffmpeg官网下载<a
-href="https://ffmpeg.org/download.html">static build for macOS</a>。</p>
-<p>### 1.3.1. 安装与使用</p>
-<ol type="1">
-<li>将下载下来的压缩包解压</li>
-<li>将解压出来的文件放到/usr/local/bin路径下（右键单击Finder–&gt;Go to
-Folder…—&gt;输入/usr/local/bin—&gt;return键）</li>
-<li>打开terminal，cd到/usr/local/bin/，执行chmod 777
-ffmpeg指令，修改该build的使用权限</li>
-<li>在你存放视频的目录打开terminal，执行ffmpeg -i xxx.mov -f swf
-xxx.swf指令</li>
-</ol>
-<h2 id="后继">1.4. 后继</h2>
-<p>具体其他的使用指令可去其官网查看，会介绍其使用语法，或者ffmpeg
--h也有简单的介绍。</p>
-<p>自己后续可能基于其库进行二次开发。</p>
-]]></content>
-      <tags>
-        <tag>video_formate_convert</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>How to fix your entire life in one day</title>
-    <url>/2026/02/24/how-to-fix-your-in-one-day/</url>
-    <content><![CDATA[<p>看到了一个博主DAN KOE分享了一篇文章：<a
-href="https://letters.thedankoe.com/p/how-to-fix-your-entire-life-in-1">How
-to fix your entire life in 1
-day</a>，感觉结合自己当前的状态还是所有感触，所以准备细细研读和做笔记。</p>
-<p>这篇文章的基石：阿德勒心理学（Adlerian Psychology）</p>
-<p>先抛一个问题：你对当前的生活是满意的、不满意的、还是假装满意的？</p>
-<span id="more"></span>
-<h2 id="改变身份">1. 改变身份</h2>
-<h2 id="察觉自己">2. 察觉自己</h2>
-<h2 id="付诸行动">3. 付诸行动</h2>
-<p>工作就是玩</p>
-<p>健康的生活方式</p>
-<p>识人法则 看行动</p>
-<p>了解心智的运作方式，才可能编辑</p>
-<p>真的想改变并变更好，改变潜意识中的目标</p>
-<p>改变自己八步骤</p>
-<p>你的价值观来自父母</p>
-<p>自我发展9个阶段</p>
-<p>成功三要素 主动性 机会 智慧</p>
-<p>聪明不聪明的差别 迭代 坚持 洞察全局</p>
-<p>大部分人的一生</p>
-<p>提高认知6步骤来做出改变</p>
-<p>遇到人才 有智慧却没有勇气 不说服</p>
-<p>知难行易 察觉自己 是否改变 收获什么 付诸行动</p>
-<p>思考负能量激发正能量</p>
-<p>7步让自己变强</p>
-]]></content>
-      <tags>
-        <tag>心灵鸡汤</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>硬盘文件在Mac上操作不了的问题</title>
-    <url>/2021/02/17/mac-finder-file/</url>
-    <content><![CDATA[<p>通过command指令修改在硬盘文件上的属性，移除只有finder可见属性。然后就可以操组，copy到mac上。</p>
-<p>1,先安装软件 Mounty for
-NTFS，这个软件可以让Mac系统支持NTFS硬盘读写操作。</p>
-<p>2,文件变灰色的原因是文件的名后面多了一个@，可以在终端中用命令行消除。</p>
-<pre><code>  在终端中输入xattr -d com.apple.FinderInfo ，然后在后面输入文件地址(直接把文件拖入终端中就行了)。回车该文件就变回可用状态了。</code></pre>
-]]></content>
-      <tags>
-        <tag>mac-finder-file</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>我在高通中国的五年</title>
-    <url>/2026/02/12/five-years-in-qcom/</url>
-    <content><![CDATA[<p>  
-我是在2020年12月份加入高通，那时候还是疫情期间，面试也是全程线上。苹果回到高通基带芯片的怀抱不久，iPhone和iPad大部分产线在深圳，需要人来做现场技术支持，所以我是以支持苹果的名义招进高通中国基带软件研发团队。因为苹果是高通的VIP客户（给的钱多），所以是研发团队作为主导来直接对接他们。</p>
-<span id="more"></span>
-<p>  
-转眼间五年过去了，正好趁这次高通中国modem软件研发团队的调整，可以做一些回顾和总结。</p>
-<p>  
-在高通中国我觉得比较棒的点是，公司相对信任员工，没有严格的打卡制度，相对灵活的上班时间；做需求push感没有那么强，可以按自己的workload和节奏去排时间。自己所在的团队氛围还不错，大家相互比较尊重，同事间的关系也相对简单。代码产生了bug更多的是专注于去解决问题，而不是去追责。技术总监会有人文关怀。</p>
-<p>   我是在RFSCA(Radio Frequency Sysytem Calibration and
-Analysis)团队，主要负责射频前端模拟器件的校准。刚入职的前一年半，主要用C++做在Windows系统上运行的产线校准工具的开发，后面三年半侧重做嵌入端（RTOS）C/C++的开发。具体对接的业务有以下几块：</p>
-<ul>
-<li>苹果：针对iPhone各个硬件阶段做校准Bring
-Up，每年都有去苹果工厂实验室做现场技术支持和搭建支持远程的硬件环境。客户产线用自己的校准工具，新平台嵌入端校准框架发生变化，我针对客户特殊的校准流程设计了新的API来支持客户自己的工具。他们的校准工具依赖我们内部的ESC
-Parser
-DLL，要维护这个解码流的工具，他们提了不少相关的问题过来。还有就是维护该客户用的较多的feature，例如RxTrigger，FBRx
-offset(后续也推给了其他客户)等。可惜苹果要开始大规模上他们自己的基带了，深圳三个实验室的设备都已经撤出来了。</li>
-<li>Customer Engineer Team:
-国内OEMs的校准问题解决和定制化需求实现，当然也有韩国、日本的一些客户，刚进来的时候还有只能用4G的H厂的cases。</li>
-<li>新平台QRD的校准Bring
-Up，国内的硬件团队会参考Global的新硬件设计来做给国内客户参考的硬件，软件团队要和硬件团队一起在项目的各个阶段完成各个支持的Bands校准。</li>
-<li>bAPT：China研发来负责这种关键的校准feature情况比较少，我的tech
-leader争取过来了，交给了我，也是对我的认可。这个是算法团队提出来的需求，做了几个平台的迭代，后续的算法优化，也参与了和算法团队的讨论。这个feature做的也是很动荡，第一版做完之后，合作的算法、RFLM、LTE
-Tech、NV MGR、测试人员被lay
-off，China只剩我一个负责这个feature的后续迭代开发。这个feature几个平台的优化也是换了两个算法的人员，其中一个还主动离开了高通去了其他公司。春节之后China
-Modem研发团队受美国BIS法案的影响，基带嵌入端代码权限被锁死，成了对接China
-CE团队和研发团队的中间件team。我本地开发的关于bAPT重构的代码也提交不了，并且自己还有一个更省校准时间的idea，有点小遗憾。但是通过这个需求，自己有从执行者到思考者的一个转变，不仅仅是去根据要求去做实现，会思考有没有更好的解决方案，会去针对算法团队给出的解决方案提出质疑并给出我认为更合适的方案进行商讨。</li>
-<li>仪表厂商：射频前端的校准是需要依赖第三方的仪表，所以我们这个组的工具代码是需要支持仪表厂商，目前OEMs工厂主流仪表用的是德国的罗德与施瓦茨CMW100，公司给我的工作站配的仪表也是CMW100。遇到仪表的软件的问题需要和他们一起co-debug，或者适配他们的新feature修改我们的工具代码。</li>
-</ul>
-<p>  
-个人感觉这个岗位还挺有意思，校准分很多硬件模块通路(XO、QET、SDR、PA、LNA、Tx、Rx、FBRx…)，需要打交道的人很多，也可以很深入的研究复杂的XPT算法。高通独有的QET硬件，配合独有IP的ET算法，这个ET算法挺复杂的，还用到了机器学习。如果是做射频前端的校准，相比其他厂商，高通的ET校准算法在能耗上面是有挺大优势。但是不知道和华为Mate
-50上射频前端所用的Doherty
-PA的比较是怎么样的。还有很多高通独有硬件独有的VISPA
-features，很多是需要校准来配合的。</p>
-<p>  
-自己在这个岗位上幸福的时刻，是自己有过几次进入了心流体验，解bug解的很兴奋，忘记了时间，这种有些挑战，但是再给点时间，就能找到线索并fix它的bug很有意思。相比做需求，自己更加喜欢解bug，就像玩小游戏一样，不需要太多的时间，但是会有及时的反馈。所以我并不是很排斥上班这件事情。</p>
-]]></content>
-      <tags>
-        <tag>职场</tag>
-      </tags>
-  </entry>
-  <entry>
-    <title>AI基础概念及理论学习</title>
-    <url>/2026/02/08/AI-Learn/</url>
-    <content><![CDATA[<p>  
-目前AI已经进入了普通老百姓视角的主舞台，各大科技公司在这个台上你方唱罢我来舞，日新月异，占据了不少公众视野。对于科技大厂而言，搞AI是一件政治正确的事情，你不搞不主动去靠就是不行，要被打入冷宫。既然潮水已来，就顺流而下，去拥抱它。作为个人如何拥抱AI，要么侧重去参与迭代AI功能本身，要么侧重如何为我所用，不管怎么样都是要略懂一些AI基础知识。可以初步防止在二级市场被割韭菜或者就业市场被动失业。</p>
-<span id="more"></span>
-<p><strong>洋气的名字</strong></p>
-<ul>
-<li>LLM(Large Language Model)
-大语言模型：区别于古老的智障语言模型，前面加了个大，模型参数变多了，具备了一定的智能</li>
-<li>Prompt 提示词：一问一答</li>
-<li>Context 上下文：背景信息</li>
-<li>Memory 记忆：不仅仅一问一答，对上下文进行压缩，可以进行追问</li>
-<li>Agent
-智能体：不仅仅是和大模型交互，还拥有上网功能、搜索本地文档/数据库、文件读取、执行脚本、PDF转换等能力，减少和大模型的沟通次数，处理一些大模型无法操作的东西，获取模型以外的信息能力，整合多方的结果发送给用户。相对于后面要讲的Function
-Call和MCP,
-中间的Agent就像一个传话筒，把大模型的话转化成调用工具的代码，把工具调用的结果再原封不动的传话给大模型，同时不忘了给用户传话，主打一个我不生产信息，我只做一个信息的搬运工。Agent和用户对话，虽然最底层还是文字，但是交互形式上可以丰富多彩，可以是CLI(Command
-Line Interface)，Claude
-Code（早期是一个编程Agent，现在已经走上了通用Agent道路，名字起的很失败），现在大火的开源桌面助手OpenClaw等</li>
-<li>RAG(Retrieval-Augmented Generation)
-检索增强生成，用于本地数据库搜索，与传统数据库不同，使用了向量数据库</li>
-<li>Web Search 联网搜索，提高实时性及减少token的消耗</li>
-<li>Function
-Calling：Agent和大模型之间，关于工具调用所约定的对话格式，让大模型按照死板的格式回复给Agent去调用工具，就像前端和后端开发一样，约定接口格式，例如一个json模版</li>
-<li>MCP(Model Context
-Protocol)模型上下文协议：Agent和工具集之间交互的一套约定，大模型是一个只会说话不会做事的智者，而MCP能提供各种工具的程序集,
-tools/list.. tools/call..</li>
-<li>Langchain
-：纯编程来实现流程走向，全是硬编码，稳定但是缺乏灵活性</li>
-<li>Workflow 工作流：低代码，可以功能模块块拖拽</li>
-<li>Skill
-技能：SKILL.md提前写好了说明文档和直接可以运行的脚本，即agent的技能，相比Langchain和Workflow兼顾了灵活性和稳定性</li>
-<li>SubAgent
-：拆分复杂的任务，独立的子任务可以在子agent中完成，本质上就是做上下文隔离，子agent产生的上下文不会保留在主agent中</li>
-<li>Token
-令牌：人工智能模型处理信息的最小单位，可以把它的工作原理想象成我们人类阅读和组词语的过程，当我们看到一句话，我们不会逐字停顿，而是会按词组来理解。比如“我喜欢解bug”，我们的大脑会处理成
-“我/喜欢/解/bug”
-这几个片段。在人工智能的世界里，模型看到的也不是完整的句子，而是被切分成的Token。这些Token可能是一个词、一个汉字、一个标点符号，甚至是半个字（当用两个Token
-ID来表示一个字的时候）。对于主流的的人工智能模型，通常一个汉字大约是1到2个Token。</li>
-<li>AGI(Artifical General Intelligence)
-通用人工智能：LLM算一个专才，还不是像“人类一样的通才”，不具备完整的人类级推理能力。AGI是一种像人类一样可以在几乎所有认知领域自主思考和学习的人工智能</li>
-<li>GPT(Generative Pre-trained Transformer)
-生成式预训练变换模型：它是一种深度学习算法，属于自然语言处理（NLP）领域的人工智能模型，旨在生成具有连贯性和逻辑性的自然语言。</li>
-</ul>
-<p><strong>人工智能</strong></p>
-<p>  
-智能本质上就是针对不同情境给出针对性的输出反应，不会乱来的黑箱，数学表达就是<span
-class="math inline"><em>f</em>(<em>x</em>) = <em>y</em></span>，引用一位美国的数学教授Thomas
-A. Garrity上课的一句话：Functions describe the world, everything is
-described by functions, the sound of my voice on your eardrum, function!
-That’s kind of hitting your eye balls right now, function! The entries
-you put in your random matrices, function! It’s all function!</p>
-<p><em>人工智能</em>：人工搭建起一套智能（黑箱），根据不同的环境信息给出针对性的输出和回应的系统，这个输出可以是动作、语言，也可以是一种判断和预测。人如果无法区分是和AI聊天还是和人聊天，那就实现了人的智能。</p>
-<p><em>专家系统</em>：清晰的规则，例如：疾病诊断和金融咨询，静态，不能自我迭代，完全是复制人类经验，能力上限就是人类专家的水平，无法做到比人更好。</p>
-<p><em>神经网络(Neural
-Network)</em>：是模拟人脑神经元连接方式的模型结构，具有可自动学习特征，不需要人工设计，有时候很难提取其中的规律和感觉，就可以通过大量的数据来提取特征。目前从理论上来说，它的准确率不是100%的，始终存在对抗样本，在噪声的世界中做稳定近似的学问。</p>
-<ul>
-<li>多层结构（输入层/隐藏层/输出层）</li>
-<li>通过反向传播训练</li>
-<li>参数量大</li>
-<li>表达能力强</li>
-</ul>
-<figure class="highlight plaintext"><table><tr><td class="code"><pre><span class="line">人工智能（AI）</span><br><span class="line">    └── 机器学习（ML）</span><br><span class="line">            └── 深度学习（DL）</span><br><span class="line">                    └── 神经网络（Neural Network）</span><br></pre></td></tr></table></figure>
-<p>当神经网络层数很多时，就叫深度学习Deep Learning。</p>
-<p>多层神经网络(Deep Neural Network)的真正价值在于它的结构弹性：   
-理论上，逼近任何复杂函数    实践中，可以通过层级结构逐步逼近真实世界</p>
-<p>每一层神经网络都在做两件事：    1、抽取更高层的语义特征   
-2、压缩与去冗余</p>
-<p>Transformer思想源头：从压缩到重构，Encode-Decode架构，是工程极致化实现</p>
-<ul>
-<li>Compressed(x)，将x压缩为抽象语义</li>
-<li>Function(Compressed(x)) = Compressed(y)，在语义空间中进行变换</li>
-<li>y = Decompressed(Compressed(y))，再将其解压为目标语言</li>
-</ul>
-<p><em>大语言模型LLM</em></p>
-<ul>
-<li>模型结构：哪来这种神奇的黑箱，超大的多层神经网络</li>
-<li>损失函数：怎么奖励一个机器，损失函数是用来衡量模型预测结果与真实值之间差距的函数。在训练过程中，我们通过最小化损失函数来优化模型参数。它本质上是一个可微的优化目标函数，比如回归常用均方误差MSE(Mean
-Squared
-Error)，分类常用交叉熵。通过计算损失对参数的梯度，并进行反向传播，模型可以不断更新参数，使用预测结果越来越准确。</li>
-<li>训练过程：机器怎么建立条件反射，利于梯度下降找到损失函数低的参数，每次向着局部损失函数下降最快的方向前进，得出一套参数。</li>
-</ul>
-<p><em>泛化能力（Generalization）</em>：即规律，推广，举一反三，神经网络具有很强的泛化能力</p>
-<p>  
-我本科期间参加了数学建模比赛，学校派了很多理学院的数学老师在暑假给我们培训，讲过下面的各种智能模型，看到下面的名词很有熟悉感，尤其是那个神经网络模型的梯度下降(Gradient
-Vector)和反向传播(Back
-Propagation)，当时不怎么明白，现在回过头来看，感觉会清晰很多。</p>
-<p>  
-2026年，个人感觉，AI基座大模型的入场券基本已经发放完毕，AI大脑几家主流公司在堆算力优化模型，美国主要有5家：Open
-AI，Google DeepMind, Anthropic, Meta,
-xAI；中国主要有：深度求索，字节跳动，阿里巴巴，腾讯，百度，华为，智谱AI，MiniMax，月之暗面，百川智能（感谢Meta
-Llam3的开源，让大家知道了黑箱里头更多的细节，缩短了中国与美国在大模型领域的差距）。在基座模型上进行发展更多的能力，例如，给他们配上手、眼、脚，可能是机器人公司和一些智能硬件，垂直领域的发力。软件层面可能会有越来越多的行业推出类似Manus、OpenClaw这样的智能体，在垂直应用领域，中国会遍地开花。</p>
-]]></content>
-      <tags>
-        <tag>Artificial Intelligencs</tag>
       </tags>
   </entry>
 </search>
