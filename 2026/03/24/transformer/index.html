@@ -28,7 +28,7 @@
 <meta property="og:locale" content="zh_CN">
 <meta property="og:image" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/03/24/transformer/Transformer.PNG">
 <meta property="article:published_time" content="2026-03-24T15:00:25.000Z">
-<meta property="article:modified_time" content="2026-03-29T14:51:05.059Z">
+<meta property="article:modified_time" content="2026-03-31T14:49:17.294Z">
 <meta property="article:author" content="Nick Liu">
 <meta property="article:tag" content="AI">
 <meta name="twitter:card" content="summary">
@@ -286,6 +286,25 @@ CNN(Convolutional Neural Network) 卷积神经网络</h4>
 <p>擅长处理图像/空间结构数据—-图片识别，就像一个拿着放大镜仔细观察图片的人。</p>
 <p>CNN虽然能进行并行计算，但他的视野比较窄，也很难记住全局信息</p>
 <h3 id="transformer">2. Transformer</h3>
+<p>Transformer是一个非常重要的深度学习框架，尤其在NLP，LLM，视觉等领域都很核心。</p>
+<p><strong>5个核心概念</strong></p>
+<ol type="1">
+<li><p>Token
+模型不会直接理解一句话，而是先把文本拆成一个个单位，这些单位叫token。</p></li>
+<li><p>Embedding
+token不能直接输入神经网络，所以要先变成向量，这一步叫词嵌入(embedding)</p></li>
+<li><p>Positional Encoding
+Transformer本身不像RNN那样天然知道顺序，所以需要额外告诉它：</p>
+<ul>
+<li>第一个词在哪</li>
+<li>第二个词在哪</li>
+<li>第三个词在哪 这就是 <em>位置编码</em>。</li>
+</ul></li>
+<li><p>Self-Attention
+这是transformer最核心的部分。意思是：处理某个词时，模型会看句子里其他词，并决定“我该关注谁更多”。</p></li>
+<li><p>Multi-Head Attention
+不是只看一种“关注方式”，而是同时从多个角度看，最后把这些信息合并起来。</p></li>
+</ol>
 <h4 id="架构图">2.1. 架构图</h4>
 <figure>
 <img src="Transformer.PNG" alt="Transformer architecture diagram" />
