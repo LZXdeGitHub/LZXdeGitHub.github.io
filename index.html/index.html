@@ -181,7 +181,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-count">20</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -240,6 +240,13 @@
     </span>
 
   
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+        <a href="/tags/%E7%8E%AF%E5%A2%83%E6%90%AD%E5%BB%BA/" rel="tag"># 环境搭建</a>
+    </span>
 
   
 </div>
@@ -268,124 +275,14 @@ GitHub、Stack Overflow 等境外网站。</p>
 SSL 错误</li>
 </ul>
 <p>一旦关闭代理，这些错误常常立刻消失。这背后的原因究竟是什么？终端环境下的流量与浏览器到底有什么不同？</p>
-<h2
-id="为什么终端下载不应该盲目开启代理">为什么终端下载不应该盲目开启代理</h2>
-<h3 id="终端不会自动继承系统代理">1. 终端不会自动继承系统代理</h3>
-<p>macOS 的 <strong>系统代理设置</strong>（在“网络偏好设置”中配置的
-HTTP/HTTPS 代理）主要对符合 <strong>Apple 网络框架</strong>
-的应用生效——比如 Safari、App Store，甚至部分 Chrome
-功能，但绝大多数命令行工具（<code>curl</code>、<code>wget</code>、<code>git</code>、<code>brew</code>、<code>npm</code>、<code>pip</code>
-等）并不遵循这一设置。</p>
-<p>终端程序要使用代理，通常需要依赖环境变量：</p>
-<ul>
-<li><code>http_proxy</code> / <code>HTTP_PROXY</code></li>
-<li><code>https_proxy</code> / <code>HTTPS_PROXY</code></li>
-<li><code>all_proxy</code> / <code>ALL_PROXY</code>（socks5 等）</li>
-</ul>
-<p>如果你只是开启了 ClashX 或 Surge
-的“系统代理”开关，而没有在终端里额外设置这些环境变量，那么<strong>终端流量其实是直连的</strong>，表面上看起来代理对它毫无影响，对吧？问题恰恰出在另一个常见操作上：很多代理工具提供“增强模式”或“终端代理”功能，会自动注入或修改这些环境变量。当规则配置不适当时，反而会导致大量本该直连的流量被强行拉入代理，酿成故障。</p>
-<h3 id="代理规则的无差别误伤">2. 代理规则的“无差别误伤”</h3>
-<p>浏览器访问网页时，代理工具通常根据域名、IP
-等规则进行智能分流：国内网站直连，国外网站走代理。但终端里访问的地址经常混杂着：</p>
-<ul>
-<li><strong>国内镜像源</strong>（如清华、中科大、阿里云的 Homebrew
-镜像）</li>
-<li><strong>企业内部私有仓库</strong>（内网 npm、私有 Git 服务器）</li>
-<li><strong>云服务商的内网地址</strong>（如
-<code>oss-cn-beijing.aliyuncs.com</code>）</li>
-<li><strong>本机服务</strong>（<code>localhost</code>、<code>127.0.0.1</code>）</li>
-</ul>
-<p>若代理规则未正确排除这些地址，终端里的请求就会被错误地发往代理服务器。代理服务器要么不认识这些内网地址，要么因为网络隔离而连接超时，表现为各种“超时”“拒绝连接”错误。</p>
-<h3 id="https-证书校验冲突">3. HTTPS 证书校验冲突</h3>
-<p>部分代理工具会对 HTTPS 流量进行
-<strong>中间人解密</strong>（MITM），以便审查或修改内容。这需要代理在本地生成并安装自签名证书。浏览器通常由于导入了该证书而信任它，但终端里的工具（<code>curl</code>、<code>git</code>、<code>python</code>
-等）使用系统独立的证书存储，不一定认这个“外来证书”。</p>
-<p>于是你会看到类似错误：</p>
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SSL certificate problem: unable to get local issuer certificate</span><br><span class="line">fatal: unable to access &#x27;https://github.com/...&#x27;: SSL certificate problem</span><br></pre></td></tr></table></figure>
-<p>即使你关闭了 MITM，某些代理在处理 HTTPS 流量时，仍可能破坏 TLS
-握手（例如不支持 SNI、ALPN 协商），导致 <code>ssl3_get_record</code>
-错误。</p>
-<h3 id="协议与认证方式的限制">4. 协议与认证方式的限制</h3>
-<p>很多下载场景使用 <strong>SSH 协议</strong>（如
-<code>git clone git@github.com:user/repo.git</code>）或
-<strong>非标准端口</strong>。普通 HTTP(S)
-代理无法直接承载这些流量，需要额外的封装（如 <code>ssh over https</code>
-或 <code>socks5</code>）。若环境变量只配置了 HTTP 代理，SSH
-连接便会直接失败，而错误信息往往不够直观，让人摸不着头脑。</p>
-<h3 id="环境变量的污染与遗漏">5. 环境变量的“污染”与遗漏</h3>
-<p>有些开发者为了在终端临时翻墙，会在 <code>~/.zshrc</code> 或
-<code>~/.bash_profile</code> 里添加：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=http://127.0.0.1:7890</span><br><span class="line"><span class="built_in">export</span> https_proxy=http://127.0.0.1:7890</span><br></pre></td></tr></table></figure>
-<p>这样虽一劳永逸，但时间一长就忘了这回事。当代理软件没启动（端口不通）或者切换了网络环境后，所有终端网络请求都会因为连不上本地代理端口而全部瘫痪，并且很难第一时间想到是环境变量在作怪。</p>
-<h2
-id="终端下载时的正确处理方式与注意点">终端下载时的正确处理方式与注意点</h2>
-<h3 id="检查当前终端的代理状态">1. 检查当前终端的代理状态</h3>
-<p>在下载出错时，第一时间执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">env</span> | grep -i proxy</span><br></pre></td></tr></table></figure>
-<p>如果输出类似
-<code>http_proxy=http://127.0.0.1:7890</code>，说明当前终端已配置代理。你也可以用：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$http_proxy</span></span><br></pre></td></tr></table></figure>
-<p>来确认。若发现有值且你目前不需要代理，可以直接清除（见下一条）。</p>
-<h3 id="临时关闭终端代理">2. 临时关闭终端代理</h3>
-<p>在当前终端会话中执行：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unset</span> http_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY</span><br></pre></td></tr></table></figure>
-<p>这只会影响当前窗口，关闭窗口或新建标签页后，会重新加载 shell
-配置文件。若你想永久关闭，请检查并注释掉
-<code>~/.zshrc</code>、<code>~/.bash_profile</code> 中相关 export
-语句，然后执行 <code>source ~/.zshrc</code> 使其生效。</p>
-<h3 id="关闭代理工具的增强终端代理模式">3.
-关闭代理工具的“增强/终端代理”模式</h3>
-<p>以 ClashX 为例：</p>
-<ul>
-<li>关闭 <strong>Enhanced Mode</strong>（增强模式）</li>
-<li>或在“设置”中取消勾选 <strong>Set as system proxy</strong>
-的同时，留意是否有“终端代理”相关开关（某些版本会额外注入环境变量）</li>
-<li>Surge 用户可检查 <strong>Set as System Proxy</strong> 和
-<strong>Enhanced Mode</strong> 两个选项</li>
-</ul>
-<p>如果你的代理工具仅用于浏览器，建议<strong>停用所有针对系统范围或终端的功能</strong>，避免干扰命令行。</p>
-<h3 id="为单个命令按需配置代理而不是全局写入">4.
-为单个命令按需配置代理（而不是全局写入）</h3>
-<p>如果你确实需要让某个命令走代理，建议<strong>不要</strong>修改 shell
-全局配置，而是使用命令前缀的方式：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 仅此次 git clone 走代理</span></span><br><span class="line">http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890 git <span class="built_in">clone</span> https://github.com/example/repo.git</span><br></pre></td></tr></table></figure>
-<p>或使用更为精细的 tool 级配置：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 为 git 设置代理（仅针对 HTTP 协议）</span></span><br><span class="line">git config --global http.proxy http://127.0.0.1:7890</span><br><span class="line">git config --global https.proxy http://127.0.0.1:7890</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不需要时删除配置</span></span><br><span class="line">git config --global --<span class="built_in">unset</span> http.proxy</span><br><span class="line">git config --global --<span class="built_in">unset</span> https.proxy</span><br></pre></td></tr></table></figure>
-<p>这样就不会污染整个终端环境，其他不受影响的命令依然直连。</p>
-<h3 id="优先使用国内镜像源减少代理依赖">5.
-优先使用国内镜像源，减少代理依赖</h3>
-<p>很多下载问题其实不必依赖代理，通过换用高速国内镜像源即可解决：</p>
-<ul>
-<li><strong>Homebrew</strong>：推荐使用中科大、清华镜像（见相应教程）</li>
-<li><strong>npm</strong>：设置淘宝源
-<code>npm config set registry https://registry.npmmirror.com</code></li>
-<li><strong>pip</strong>：使用阿里云/清华源
-<code>pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/</code></li>
-<li><strong>Docker</strong>：配置国内镜像加速器</li>
-</ul>
-<p>这样做既加快了下载速度，又规避了终端代理引发的一连串问题。</p>
-<h3 id="内网地址务必加入代理绕过列表">6.
-内网地址务必加入代理绕过列表</h3>
-<p>如果你必须长期在终端中保留代理设置，请确保将内网、本机地址写入
-<code>no_proxy</code> 环境变量（多数命令行工具都支持）：</p>
-<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> no_proxy=<span class="string">&quot;localhost,127.0.0.1,::1,*.local,*.internal,192.168.*,10.*,172.16.*&quot;</span></span><br></pre></td></tr></table></figure>
-<p>这样可以避免访问公司内部 GitLab、私有 npm registry
-或后端服务时被代理干扰。</p>
-<h2 id="总结">总结</h2>
-<p>在 macOS
-下搭建开发环境、使用终端下载软件包时，<strong>不要想当然地认为“开了 VPN
-就能加速”</strong>。终端网络行为与浏览器截然不同，代理配置稍有不慎就会让一个简单的
-<code>brew install</code> 变成卡关噩梦。</p>
-<p><strong>一套安全、高效的习惯是：</strong></p>
-<ol type="1">
-<li>环境搭建阶段，<strong>先关闭终端代理</strong>（清除环境变量、关闭代理工具增强模式）；</li>
-<li>使用国内镜像源改善直连速度；</li>
-<li>若个别资源确实需要代理，<strong>仅在执行该命令时临时注入环境变量</strong>，用完即焚；</li>
-<li>定期检查
-<code>env | grep -i proxy</code>，避免遗留配置影响后续工作。</li>
-</ol>
-<p>谨记这些要点，你将免受大量莫名其妙的网络问题困扰，把精力真正留在写代码上。</p>
-
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/05/17/vpn-proxy/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
       
     </div>
 
