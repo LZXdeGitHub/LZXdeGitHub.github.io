@@ -1,0 +1,459 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true,"pjax":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="背景：一个看似矛盾的现象 在 macOS 上搭建开发环境（如安装 Homebrew、Node.js、Python、Git 仓库等）时，我们几乎离不开终端。与此同时，很多开发者习惯保持 VPN 或代理（如 ClashX、Surge、V2Ray 等）开启，以便在浏览器中顺畅访问 GitHub、Stack Overflow 等境外网站。 然而，正是在这种“双开”状态下，终端里的下载命令却频频报错：  b">
+<meta property="og:type" content="article">
+<meta property="og:title" content="macOS 终端环境搭建：为什么下载依赖时请先关闭 VPN&#x2F;代理">
+<meta property="og:url" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/17/vpn-proxy/index.html">
+<meta property="og:site_name" content="Nick Liu&#39;s Blog">
+<meta property="og:description" content="背景：一个看似矛盾的现象 在 macOS 上搭建开发环境（如安装 Homebrew、Node.js、Python、Git 仓库等）时，我们几乎离不开终端。与此同时，很多开发者习惯保持 VPN 或代理（如 ClashX、Surge、V2Ray 等）开启，以便在浏览器中顺畅访问 GitHub、Stack Overflow 等境外网站。 然而，正是在这种“双开”状态下，终端里的下载命令却频频报错：  b">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-17T13:47:09.000Z">
+<meta property="article:modified_time" content="2026-05-17T13:47:57.782Z">
+<meta property="article:author" content="Nick Liu">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/17/vpn-proxy/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/17/vpn-proxy/","path":"2026/05/17/vpn-proxy/","title":"macOS 终端环境搭建：为什么下载依赖时请先关闭 VPN/代理"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>macOS 终端环境搭建：为什么下载依赖时请先关闭 VPN/代理 | Nick Liu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"version":"10.2.3","theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com"}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nick Liu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be Better && Be Smarter</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%83%8C%E6%99%AF%E4%B8%80%E4%B8%AA%E7%9C%8B%E4%BC%BC%E7%9F%9B%E7%9B%BE%E7%9A%84%E7%8E%B0%E8%B1%A1"><span class="nav-number">1.</span> <span class="nav-text">背景：一个看似矛盾的现象</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E7%BB%88%E7%AB%AF%E4%B8%8B%E8%BD%BD%E4%B8%8D%E5%BA%94%E8%AF%A5%E7%9B%B2%E7%9B%AE%E5%BC%80%E5%90%AF%E4%BB%A3%E7%90%86"><span class="nav-number">2.</span> <span class="nav-text">为什么终端下载不应该盲目开启代理</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E4%B8%8D%E4%BC%9A%E8%87%AA%E5%8A%A8%E7%BB%A7%E6%89%BF%E7%B3%BB%E7%BB%9F%E4%BB%A3%E7%90%86"><span class="nav-number">2.1.</span> <span class="nav-text">1. 终端不会自动继承系统代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%A3%E7%90%86%E8%A7%84%E5%88%99%E7%9A%84%E6%97%A0%E5%B7%AE%E5%88%AB%E8%AF%AF%E4%BC%A4"><span class="nav-number">2.2.</span> <span class="nav-text">2. 代理规则的“无差别误伤”</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#https-%E8%AF%81%E4%B9%A6%E6%A0%A1%E9%AA%8C%E5%86%B2%E7%AA%81"><span class="nav-number">2.3.</span> <span class="nav-text">3. HTTPS 证书校验冲突</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%8D%8F%E8%AE%AE%E4%B8%8E%E8%AE%A4%E8%AF%81%E6%96%B9%E5%BC%8F%E7%9A%84%E9%99%90%E5%88%B6"><span class="nav-number">2.4.</span> <span class="nav-text">4. 协议与认证方式的限制</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%8F%98%E9%87%8F%E7%9A%84%E6%B1%A1%E6%9F%93%E4%B8%8E%E9%81%97%E6%BC%8F"><span class="nav-number">2.5.</span> <span class="nav-text">5. 环境变量的“污染”与遗漏</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BB%88%E7%AB%AF%E4%B8%8B%E8%BD%BD%E6%97%B6%E7%9A%84%E6%AD%A3%E7%A1%AE%E5%A4%84%E7%90%86%E6%96%B9%E5%BC%8F%E4%B8%8E%E6%B3%A8%E6%84%8F%E7%82%B9"><span class="nav-number">3.</span> <span class="nav-text">终端下载时的正确处理方式与注意点</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%A3%80%E6%9F%A5%E5%BD%93%E5%89%8D%E7%BB%88%E7%AB%AF%E7%9A%84%E4%BB%A3%E7%90%86%E7%8A%B6%E6%80%81"><span class="nav-number">3.1.</span> <span class="nav-text">1. 检查当前终端的代理状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%B4%E6%97%B6%E5%85%B3%E9%97%AD%E7%BB%88%E7%AB%AF%E4%BB%A3%E7%90%86"><span class="nav-number">3.2.</span> <span class="nav-text">2. 临时关闭终端代理</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%85%B3%E9%97%AD%E4%BB%A3%E7%90%86%E5%B7%A5%E5%85%B7%E7%9A%84%E5%A2%9E%E5%BC%BA%E7%BB%88%E7%AB%AF%E4%BB%A3%E7%90%86%E6%A8%A1%E5%BC%8F"><span class="nav-number">3.3.</span> <span class="nav-text">3.
+关闭代理工具的“增强&#x2F;终端代理”模式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%B8%BA%E5%8D%95%E4%B8%AA%E5%91%BD%E4%BB%A4%E6%8C%89%E9%9C%80%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86%E8%80%8C%E4%B8%8D%E6%98%AF%E5%85%A8%E5%B1%80%E5%86%99%E5%85%A5"><span class="nav-number">3.4.</span> <span class="nav-text">4.
+为单个命令按需配置代理（而不是全局写入）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BC%98%E5%85%88%E4%BD%BF%E7%94%A8%E5%9B%BD%E5%86%85%E9%95%9C%E5%83%8F%E6%BA%90%E5%87%8F%E5%B0%91%E4%BB%A3%E7%90%86%E4%BE%9D%E8%B5%96"><span class="nav-number">3.5.</span> <span class="nav-text">5.
+优先使用国内镜像源，减少代理依赖</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%86%85%E7%BD%91%E5%9C%B0%E5%9D%80%E5%8A%A1%E5%BF%85%E5%8A%A0%E5%85%A5%E4%BB%A3%E7%90%86%E7%BB%95%E8%BF%87%E5%88%97%E8%A1%A8"><span class="nav-number">3.6.</span> <span class="nav-text">6.
+内网地址务必加入代理绕过列表</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">4.</span> <span class="nav-text">总结</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Nick Liu</p>
+  <div class="site-description" itemprop="description">My Blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">21</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">19</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/17/vpn-proxy/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Nick Liu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nick Liu's Blog">
+      <meta itemprop="description" content="My Blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="macOS 终端环境搭建：为什么下载依赖时请先关闭 VPN&#x2F;代理 | Nick Liu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          macOS 终端环境搭建：为什么下载依赖时请先关闭 VPN/代理
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-05-17 21:47:09" itemprop="dateCreated datePublished" datetime="2026-05-17T21:47:09+08:00">2026-05-17</time>
+    </span>
+
+  
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h2 id="背景一个看似矛盾的现象">背景：一个看似矛盾的现象</h2>
+<p>在 macOS 上搭建开发环境（如安装 Homebrew、Node.js、Python、Git
+仓库等）时，我们几乎离不开终端。与此同时，很多开发者习惯保持 VPN
+或代理（如 ClashX、Surge、V2Ray 等）开启，以便在浏览器中顺畅访问
+GitHub、Stack Overflow 等境外网站。</p>
+<p>然而，正是在这种“双开”状态下，终端里的下载命令却频频报错：</p>
+<ul>
+<li><code>brew install</code> 卡在 <code>Updating Homebrew...</code>
+半天不动</li>
+<li><code>git clone</code> 抛出 <code>Connection refused</code> 或
+<code>443 错误</code></li>
+<li><code>npm install</code> 出现
+<code>request to https://registry.npmjs.org/... failed, reason: connect ETIMEDOUT</code></li>
+<li>甚至拉取国内镜像源也报 <code>certificate has expired</code> 之类的
+SSL 错误</li>
+</ul>
+<p>一旦关闭代理，这些错误常常立刻消失。这背后的原因究竟是什么？终端环境下的流量与浏览器到底有什么不同？</p>
+<h2
+id="为什么终端下载不应该盲目开启代理">为什么终端下载不应该盲目开启代理</h2>
+<h3 id="终端不会自动继承系统代理">1. 终端不会自动继承系统代理</h3>
+<p>macOS 的 <strong>系统代理设置</strong>（在“网络偏好设置”中配置的
+HTTP/HTTPS 代理）主要对符合 <strong>Apple 网络框架</strong>
+的应用生效——比如 Safari、App Store，甚至部分 Chrome
+功能，但绝大多数命令行工具（<code>curl</code>、<code>wget</code>、<code>git</code>、<code>brew</code>、<code>npm</code>、<code>pip</code>
+等）并不遵循这一设置。</p>
+<p>终端程序要使用代理，通常需要依赖环境变量：</p>
+<ul>
+<li><code>http_proxy</code> / <code>HTTP_PROXY</code></li>
+<li><code>https_proxy</code> / <code>HTTPS_PROXY</code></li>
+<li><code>all_proxy</code> / <code>ALL_PROXY</code>（socks5 等）</li>
+</ul>
+<p>如果你只是开启了 ClashX 或 Surge
+的“系统代理”开关，而没有在终端里额外设置这些环境变量，那么<strong>终端流量其实是直连的</strong>，表面上看起来代理对它毫无影响，对吧？问题恰恰出在另一个常见操作上：很多代理工具提供“增强模式”或“终端代理”功能，会自动注入或修改这些环境变量。当规则配置不适当时，反而会导致大量本该直连的流量被强行拉入代理，酿成故障。</p>
+<h3 id="代理规则的无差别误伤">2. 代理规则的“无差别误伤”</h3>
+<p>浏览器访问网页时，代理工具通常根据域名、IP
+等规则进行智能分流：国内网站直连，国外网站走代理。但终端里访问的地址经常混杂着：</p>
+<ul>
+<li><strong>国内镜像源</strong>（如清华、中科大、阿里云的 Homebrew
+镜像）</li>
+<li><strong>企业内部私有仓库</strong>（内网 npm、私有 Git 服务器）</li>
+<li><strong>云服务商的内网地址</strong>（如
+<code>oss-cn-beijing.aliyuncs.com</code>）</li>
+<li><strong>本机服务</strong>（<code>localhost</code>、<code>127.0.0.1</code>）</li>
+</ul>
+<p>若代理规则未正确排除这些地址，终端里的请求就会被错误地发往代理服务器。代理服务器要么不认识这些内网地址，要么因为网络隔离而连接超时，表现为各种“超时”“拒绝连接”错误。</p>
+<h3 id="https-证书校验冲突">3. HTTPS 证书校验冲突</h3>
+<p>部分代理工具会对 HTTPS 流量进行
+<strong>中间人解密</strong>（MITM），以便审查或修改内容。这需要代理在本地生成并安装自签名证书。浏览器通常由于导入了该证书而信任它，但终端里的工具（<code>curl</code>、<code>git</code>、<code>python</code>
+等）使用系统独立的证书存储，不一定认这个“外来证书”。</p>
+<p>于是你会看到类似错误：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">SSL certificate problem: unable to get local issuer certificate</span><br><span class="line">fatal: unable to access &#x27;https://github.com/...&#x27;: SSL certificate problem</span><br></pre></td></tr></table></figure>
+<p>即使你关闭了 MITM，某些代理在处理 HTTPS 流量时，仍可能破坏 TLS
+握手（例如不支持 SNI、ALPN 协商），导致 <code>ssl3_get_record</code>
+错误。</p>
+<h3 id="协议与认证方式的限制">4. 协议与认证方式的限制</h3>
+<p>很多下载场景使用 <strong>SSH 协议</strong>（如
+<code>git clone git@github.com:user/repo.git</code>）或
+<strong>非标准端口</strong>。普通 HTTP(S)
+代理无法直接承载这些流量，需要额外的封装（如 <code>ssh over https</code>
+或 <code>socks5</code>）。若环境变量只配置了 HTTP 代理，SSH
+连接便会直接失败，而错误信息往往不够直观，让人摸不着头脑。</p>
+<h3 id="环境变量的污染与遗漏">5. 环境变量的“污染”与遗漏</h3>
+<p>有些开发者为了在终端临时翻墙，会在 <code>~/.zshrc</code> 或
+<code>~/.bash_profile</code> 里添加：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> http_proxy=http://127.0.0.1:7890</span><br><span class="line"><span class="built_in">export</span> https_proxy=http://127.0.0.1:7890</span><br></pre></td></tr></table></figure>
+<p>这样虽一劳永逸，但时间一长就忘了这回事。当代理软件没启动（端口不通）或者切换了网络环境后，所有终端网络请求都会因为连不上本地代理端口而全部瘫痪，并且很难第一时间想到是环境变量在作怪。</p>
+<h2
+id="终端下载时的正确处理方式与注意点">终端下载时的正确处理方式与注意点</h2>
+<h3 id="检查当前终端的代理状态">1. 检查当前终端的代理状态</h3>
+<p>在下载出错时，第一时间执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">env</span> | grep -i proxy</span><br></pre></td></tr></table></figure>
+<p>如果输出类似
+<code>http_proxy=http://127.0.0.1:7890</code>，说明当前终端已配置代理。你也可以用：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="variable">$http_proxy</span></span><br></pre></td></tr></table></figure>
+<p>来确认。若发现有值且你目前不需要代理，可以直接清除（见下一条）。</p>
+<h3 id="临时关闭终端代理">2. 临时关闭终端代理</h3>
+<p>在当前终端会话中执行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">unset</span> http_proxy https_proxy all_proxy HTTP_PROXY HTTPS_PROXY ALL_PROXY</span><br></pre></td></tr></table></figure>
+<p>这只会影响当前窗口，关闭窗口或新建标签页后，会重新加载 shell
+配置文件。若你想永久关闭，请检查并注释掉
+<code>~/.zshrc</code>、<code>~/.bash_profile</code> 中相关 export
+语句，然后执行 <code>source ~/.zshrc</code> 使其生效。</p>
+<h3 id="关闭代理工具的增强终端代理模式">3.
+关闭代理工具的“增强/终端代理”模式</h3>
+<p>以 ClashX 为例：</p>
+<ul>
+<li>关闭 <strong>Enhanced Mode</strong>（增强模式）</li>
+<li>或在“设置”中取消勾选 <strong>Set as system proxy</strong>
+的同时，留意是否有“终端代理”相关开关（某些版本会额外注入环境变量）</li>
+<li>Surge 用户可检查 <strong>Set as System Proxy</strong> 和
+<strong>Enhanced Mode</strong> 两个选项</li>
+</ul>
+<p>如果你的代理工具仅用于浏览器，建议<strong>停用所有针对系统范围或终端的功能</strong>，避免干扰命令行。</p>
+<h3 id="为单个命令按需配置代理而不是全局写入">4.
+为单个命令按需配置代理（而不是全局写入）</h3>
+<p>如果你确实需要让某个命令走代理，建议<strong>不要</strong>修改 shell
+全局配置，而是使用命令前缀的方式：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 仅此次 git clone 走代理</span></span><br><span class="line">http_proxy=http://127.0.0.1:7890 https_proxy=http://127.0.0.1:7890 git <span class="built_in">clone</span> https://github.com/example/repo.git</span><br></pre></td></tr></table></figure>
+<p>或使用更为精细的 tool 级配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line"><span class="comment"># 为 git 设置代理（仅针对 HTTP 协议）</span></span><br><span class="line">git config --global http.proxy http://127.0.0.1:7890</span><br><span class="line">git config --global https.proxy http://127.0.0.1:7890</span><br><span class="line"></span><br><span class="line"><span class="comment"># 不需要时删除配置</span></span><br><span class="line">git config --global --<span class="built_in">unset</span> http.proxy</span><br><span class="line">git config --global --<span class="built_in">unset</span> https.proxy</span><br></pre></td></tr></table></figure>
+<p>这样就不会污染整个终端环境，其他不受影响的命令依然直连。</p>
+<h3 id="优先使用国内镜像源减少代理依赖">5.
+优先使用国内镜像源，减少代理依赖</h3>
+<p>很多下载问题其实不必依赖代理，通过换用高速国内镜像源即可解决：</p>
+<ul>
+<li><strong>Homebrew</strong>：推荐使用中科大、清华镜像（见相应教程）</li>
+<li><strong>npm</strong>：设置淘宝源
+<code>npm config set registry https://registry.npmmirror.com</code></li>
+<li><strong>pip</strong>：使用阿里云/清华源
+<code>pip config set global.index-url https://mirrors.aliyun.com/pypi/simple/</code></li>
+<li><strong>Docker</strong>：配置国内镜像加速器</li>
+</ul>
+<p>这样做既加快了下载速度，又规避了终端代理引发的一连串问题。</p>
+<h3 id="内网地址务必加入代理绕过列表">6.
+内网地址务必加入代理绕过列表</h3>
+<p>如果你必须长期在终端中保留代理设置，请确保将内网、本机地址写入
+<code>no_proxy</code> 环境变量（多数命令行工具都支持）：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">export</span> no_proxy=<span class="string">&quot;localhost,127.0.0.1,::1,*.local,*.internal,192.168.*,10.*,172.16.*&quot;</span></span><br></pre></td></tr></table></figure>
+<p>这样可以避免访问公司内部 GitLab、私有 npm registry
+或后端服务时被代理干扰。</p>
+<h2 id="总结">总结</h2>
+<p>在 macOS
+下搭建开发环境、使用终端下载软件包时，<strong>不要想当然地认为“开了 VPN
+就能加速”</strong>。终端网络行为与浏览器截然不同，代理配置稍有不慎就会让一个简单的
+<code>brew install</code> 变成卡关噩梦。</p>
+<p><strong>一套安全、高效的习惯是：</strong></p>
+<ol type="1">
+<li>环境搭建阶段，<strong>先关闭终端代理</strong>（清除环境变量、关闭代理工具增强模式）；</li>
+<li>使用国内镜像源改善直连速度；</li>
+<li>若个别资源确实需要代理，<strong>仅在执行该命令时临时注入环境变量</strong>，用完即焚；</li>
+<li>定期检查
+<code>env | grep -i proxy</code>，避免遗留配置影响后续工作。</li>
+</ol>
+<p>谨记这些要点，你将免受大量莫名其妙的网络问题困扰，把精力真正留在写代码上。</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/03/24/transformer/" rel="prev" title="Transformer(Attention Is All You Need)">
+                  <i class="fa fa-angle-left"></i> Transformer(Attention Is All You Need)
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nick Liu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
