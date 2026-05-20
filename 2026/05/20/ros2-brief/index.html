@@ -1,0 +1,645 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true,"pjax":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="ROS2 入门指南：从零认识机器人开发框架 前言 随着机器人、自动驾驶、无人机以及具身智能（Embodied AI）的发展，ROS2（Robot Operating System 2） 已逐渐成为机器人软件开发的重要基础设施。 如果你来自：  嵌入式开发（BSP&#x2F;Linux Driver） C++开发 自动驾驶 AI&#x2F;深度学习 软件工程  学习 ROS2 都会是一个不错的技术扩展方向。">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ROS2 入门指南：从零认识机器人开发框架">
+<meta property="og:url" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/20/ros2-brief/index.html">
+<meta property="og:site_name" content="Nick Liu&#39;s Blog">
+<meta property="og:description" content="ROS2 入门指南：从零认识机器人开发框架 前言 随着机器人、自动驾驶、无人机以及具身智能（Embodied AI）的发展，ROS2（Robot Operating System 2） 已逐渐成为机器人软件开发的重要基础设施。 如果你来自：  嵌入式开发（BSP&#x2F;Linux Driver） C++开发 自动驾驶 AI&#x2F;深度学习 软件工程  学习 ROS2 都会是一个不错的技术扩展方向。">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-20T14:54:02.000Z">
+<meta property="article:modified_time" content="2026-05-20T14:55:32.214Z">
+<meta property="article:author" content="Nick Liu">
+<meta property="article:tag" content="C++">
+<meta property="article:tag" content="Python">
+<meta property="article:tag" content="ROS2">
+<meta property="article:tag" content="Robotics">
+<meta property="article:tag" content="自动驾驶">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/20/ros2-brief/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/20/ros2-brief/","path":"2026/05/20/ros2-brief/","title":"ROS2 入门指南：从零认识机器人开发框架"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>ROS2 入门指南：从零认识机器人开发框架 | Nick Liu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"version":"10.2.3","theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com"}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nick Liu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be Better && Be Smarter</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#ros2-%E5%85%A5%E9%97%A8%E6%8C%87%E5%8D%97%E4%BB%8E%E9%9B%B6%E8%AE%A4%E8%AF%86%E6%9C%BA%E5%99%A8%E4%BA%BA%E5%BC%80%E5%8F%91%E6%A1%86%E6%9E%B6"><span class="nav-number">1.</span> <span class="nav-text">ROS2
+入门指南：从零认识机器人开发框架</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF-ros2"><span class="nav-number">2.</span> <span class="nav-text">1. 什么是 ROS2？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%9C%80%E8%A6%81-ros2"><span class="nav-number">3.</span> <span class="nav-text">2. 为什么需要 ROS2？</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ros2-%E6%9E%B6%E6%9E%84"><span class="nav-number">4.</span> <span class="nav-text">3. ROS2 架构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ros2-%E6%A0%B8%E5%BF%83%E6%A6%82%E5%BF%B5"><span class="nav-number">5.</span> <span class="nav-text">4. ROS2 核心概念</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#node%E8%8A%82%E7%82%B9"><span class="nav-number">5.1.</span> <span class="nav-text">4.1 Node（节点）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#topic%E8%AF%9D%E9%A2%98"><span class="nav-number">5.2.</span> <span class="nav-text">4.2 Topic（话题）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#message%E6%B6%88%E6%81%AF"><span class="nav-number">5.3.</span> <span class="nav-text">4.3 Message（消息）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#service%E6%9C%8D%E5%8A%A1"><span class="nav-number">5.4.</span> <span class="nav-text">4.4 Service（服务）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#action%E5%8A%A8%E4%BD%9C"><span class="nav-number">5.5.</span> <span class="nav-text">4.5 Action（动作）</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ros2-%E5%B7%A5%E4%BD%9C%E7%A9%BA%E9%97%B4"><span class="nav-number">6.</span> <span class="nav-text">5. ROS2 工作空间</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%AE%89%E8%A3%85-ros2ubuntu-%E7%A4%BA%E4%BE%8B"><span class="nav-number">7.</span> <span class="nav-text">6. 安装 ROS2（Ubuntu 示例）</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%AC%AC%E4%B8%80%E4%B8%AA-ros2-package"><span class="nav-number">8.</span> <span class="nav-text">7. 创建第一个 ROS2 Package</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E4%B8%AA-publisher-%E7%A4%BA%E4%BE%8B"><span class="nav-number">9.</span> <span class="nav-text">8. 第一个 Publisher 示例</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ros2-%E5%B8%B8%E7%94%A8%E5%B7%A5%E5%85%B7"><span class="nav-number">10.</span> <span class="nav-text">9. ROS2 常用工具</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#rviz2"><span class="nav-number">10.1.</span> <span class="nav-text">RViz2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#gazebo"><span class="nav-number">10.2.</span> <span class="nav-text">Gazebo</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#rosbag2"><span class="nav-number">10.3.</span> <span class="nav-text">rosbag2</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#tf2"><span class="nav-number">10.4.</span> <span class="nav-text">TF2</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#ros2-%E5%AD%A6%E4%B9%A0%E8%B7%AF%E7%BA%BF%E6%8E%A8%E8%8D%90"><span class="nav-number">11.</span> <span class="nav-text">10. ROS2 学习路线推荐</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E9%98%B6%E6%AE%B5"><span class="nav-number">11.1.</span> <span class="nav-text">第一阶段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E9%98%B6%E6%AE%B5"><span class="nav-number">11.2.</span> <span class="nav-text">第二阶段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E9%98%B6%E6%AE%B5"><span class="nav-number">11.3.</span> <span class="nav-text">第三阶段</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E9%98%B6%E6%AE%B5"><span class="nav-number">11.4.</span> <span class="nav-text">第四阶段</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">12.</span> <span class="nav-text">总结</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%8F%82%E8%80%83%E8%B5%84%E6%96%99"><span class="nav-number">13.</span> <span class="nav-text">参考资料</span></a></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Nick Liu</p>
+  <div class="site-description" itemprop="description">My Blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">23</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">25</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/20/ros2-brief/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Nick Liu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nick Liu's Blog">
+      <meta itemprop="description" content="My Blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="ROS2 入门指南：从零认识机器人开发框架 | Nick Liu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          ROS2 入门指南：从零认识机器人开发框架
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-05-20 22:54:02" itemprop="dateCreated datePublished" datetime="2026-05-20T22:54:02+08:00">2026-05-20</time>
+    </span>
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+        <a href="/tags/ROS2/" rel="tag"># ROS2</a> 
+        <a href="/tags/Robotics/" rel="tag"># Robotics</a> 
+        <a href="/tags/C/" rel="tag"># C++</a> 
+        <a href="/tags/Python/" rel="tag"># Python</a> 
+        <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" rel="tag"># 自动驾驶</a>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><h1 id="ros2-入门指南从零认识机器人开发框架">ROS2
+入门指南：从零认识机器人开发框架</h1>
+<h2 id="前言">前言</h2>
+<p>随着机器人、自动驾驶、无人机以及具身智能（Embodied
+AI）的发展，<strong>ROS2（Robot Operating System 2）</strong>
+已逐渐成为机器人软件开发的重要基础设施。</p>
+<p>如果你来自：</p>
+<ul>
+<li>嵌入式开发（BSP/Linux Driver）</li>
+<li>C++开发</li>
+<li>自动驾驶</li>
+<li>AI/深度学习</li>
+<li>软件工程</li>
+</ul>
+<p>学习 ROS2 都会是一个不错的技术扩展方向。</p>
+<span id="more"></span>
+<p>本文将介绍：</p>
+<p>✅ 什么是 ROS2<br />
+✅ ROS2 为什么出现<br />
+✅ ROS2 核心概念<br />
+✅ ROS2 通信机制<br />
+✅ 开发环境<br />
+✅ 第一个 ROS2 示例<br />
+✅ 后续学习路线</p>
+<p>适合：<strong>零基础入门</strong></p>
+<hr />
+<h1 id="什么是-ros2">1. 什么是 ROS2？</h1>
+<p>ROS2（Robot Operating System 2）并不是一个真正的操作系统，而是：</p>
+<blockquote>
+<p>一套用于机器人开发的软件框架和工具链。</p>
+</blockquote>
+<p>它提供：</p>
+<ul>
+<li>节点通信</li>
+<li>消息传输</li>
+<li>硬件抽象</li>
+<li>可视化工具</li>
+<li>仿真工具</li>
+<li>调试工具</li>
+</ul>
+<p>类似于：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Android → 手机开发平台</span><br><span class="line"></span><br><span class="line">ROS2 → 机器人开发平台</span><br></pre></td></tr></table></figure>
+<p>机器人系统通常包含：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">摄像头</span><br><span class="line">雷达</span><br><span class="line">GPS</span><br><span class="line">控制器</span><br><span class="line">算法模块</span><br><span class="line">路径规划</span><br><span class="line">电机控制</span><br></pre></td></tr></table></figure>
+<p>ROS2 可以帮助这些模块互相通信。</p>
+<hr />
+<h1 id="为什么需要-ros2">2. 为什么需要 ROS2？</h1>
+<p>ROS1 曾经是机器人领域主流，但存在问题：</p>
+<table>
+<thead>
+<tr>
+<th>问题</th>
+<th>ROS2 改进</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td>实时性差</td>
+<td>支持实时系统</td>
+</tr>
+<tr>
+<td>单机通信</td>
+<td>支持分布式</td>
+</tr>
+<tr>
+<td>安全机制弱</td>
+<td>增加安全通信</td>
+</tr>
+<tr>
+<td>多机器人困难</td>
+<td>更适合复杂系统</td>
+</tr>
+<tr>
+<td>Linux绑定</td>
+<td>支持 Windows/macOS</td>
+</tr>
+</tbody>
+</table>
+<p>ROS2 最大变化：</p>
+<p>采用 <strong>DDS（Data Distribution Service）</strong>
+作为通信中间件。</p>
+<p>因此：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">ROS1:</span><br><span class="line">Node &lt;-&gt; ROS Master</span><br><span class="line"></span><br><span class="line">ROS2:</span><br><span class="line">Node &lt;-&gt; DDS</span><br></pre></td></tr></table></figure>
+<p>ROS2 不再依赖 Master。</p>
+<hr />
+<h1 id="ros2-架构">3. ROS2 架构</h1>
+<p>整体结构：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br></pre></td><td class="code"><pre><span class="line">Application Layer</span><br><span class="line">        │</span><br><span class="line">        ▼</span><br><span class="line">ROS2 API (rclcpp / rclpy)</span><br><span class="line">        │</span><br><span class="line">        ▼</span><br><span class="line">RCL Layer</span><br><span class="line">        │</span><br><span class="line">        ▼</span><br><span class="line">DDS Middleware</span><br><span class="line">        │</span><br><span class="line">        ▼</span><br><span class="line">Operating System</span><br></pre></td></tr></table></figure>
+<p>常见 DDS：</p>
+<ul>
+<li>Fast DDS</li>
+<li>Cyclone DDS</li>
+<li>Connext DDS</li>
+</ul>
+<hr />
+<h1 id="ros2-核心概念">4. ROS2 核心概念</h1>
+<p>学习 ROS2 首先要理解几个核心对象。</p>
+<hr />
+<h2 id="node节点">4.1 Node（节点）</h2>
+<p>节点是：</p>
+<blockquote>
+<p>完成某个独立功能的软件模块</p>
+</blockquote>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">Camera Node</span><br><span class="line">Lidar Node</span><br><span class="line">Motor Node</span><br><span class="line">Localization Node</span><br></pre></td></tr></table></figure>
+<p>一个机器人：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">Robot</span><br><span class="line"> ├── Camera Node</span><br><span class="line"> ├── Mapping Node</span><br><span class="line"> ├── Control Node</span><br><span class="line"> └── Navigation Node</span><br></pre></td></tr></table></figure>
+<p>查看节点：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 node list</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="topic话题">4.2 Topic（话题）</h2>
+<p>用于：</p>
+<p><strong>发布 / 订阅 通信</strong></p>
+<p>类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Publisher ---&gt; Topic ---&gt; Subscriber</span><br></pre></td></tr></table></figure>
+<p>例如：</p>
+<p>摄像头发布图像：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Camera</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">/camera/image</span><br><span class="line">   │</span><br><span class="line">   ▼</span><br><span class="line">AI Detection</span><br></pre></td></tr></table></figure>
+<p>查看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 topic list</span><br></pre></td></tr></table></figure>
+<p>监听：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 topic <span class="built_in">echo</span> /topic_name</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="message消息">4.3 Message（消息）</h2>
+<p>Topic 传输数据格式：</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">sensor_msgs/Image</span><br><span class="line"></span><br><span class="line">geometry_msgs/Twist</span><br><span class="line"></span><br><span class="line">nav_msgs/Odometry</span><br></pre></td></tr></table></figure>
+<p>速度控制：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">linear.x</span><br><span class="line"></span><br><span class="line">angular.z</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="service服务">4.4 Service（服务）</h2>
+<p>适合：</p>
+<p>请求 → 响应</p>
+<p>类似：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">Client</span><br><span class="line">   │ Request</span><br><span class="line">   ▼</span><br><span class="line">Server</span><br><span class="line">   │ Response</span><br><span class="line">   ▼</span><br><span class="line">Client</span><br></pre></td></tr></table></figure>
+<p>适用于：</p>
+<ul>
+<li>查询状态</li>
+<li>修改参数</li>
+<li>开关控制</li>
+</ul>
+<p>查看：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 service list</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="action动作">4.5 Action（动作）</h2>
+<p>适合：</p>
+<p>耗时任务</p>
+<p>例如：</p>
+<p>机器人导航：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br></pre></td><td class="code"><pre><span class="line">发送目标</span><br><span class="line"></span><br><span class="line">↓</span><br><span class="line"></span><br><span class="line">执行中反馈</span><br><span class="line"></span><br><span class="line">↓</span><br><span class="line"></span><br><span class="line">完成</span><br></pre></td></tr></table></figure>
+<p>常见：</p>
+<ul>
+<li>导航</li>
+<li>机械臂运动</li>
+<li>路径规划</li>
+</ul>
+<hr />
+<h1 id="ros2-工作空间">5. ROS2 工作空间</h1>
+<p>创建：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> -p ~/ros2_ws/src</span><br><span class="line"></span><br><span class="line"><span class="built_in">cd</span> ~/ros2_ws</span><br></pre></td></tr></table></figure>
+<p>编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">colcon build</span><br></pre></td></tr></table></figure>
+<p>加载环境：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> install/setup.bash</span><br></pre></td></tr></table></figure>
+<p>目录：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">ros2_ws/</span><br><span class="line"></span><br><span class="line">├── src/</span><br><span class="line">├── build/</span><br><span class="line">├── install/</span><br><span class="line">└── log/</span><br></pre></td></tr></table></figure>
+<hr />
+<h1 id="安装-ros2ubuntu-示例">6. 安装 ROS2（Ubuntu 示例）</h1>
+<p>推荐：</p>
+<p>Ubuntu 22.04</p>
+<p>安装：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">sudo</span> apt update</span><br><span class="line"></span><br><span class="line"><span class="built_in">sudo</span> apt install ros-humble-desktop</span><br></pre></td></tr></table></figure>
+<p>配置：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">echo</span> <span class="string">&quot;source /opt/ros/humble/setup.bash&quot;</span> &gt;&gt; ~/.bashrc</span><br><span class="line"></span><br><span class="line"><span class="built_in">source</span> ~/.bashrc</span><br></pre></td></tr></table></figure>
+<p>验证：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 --version</span><br></pre></td></tr></table></figure>
+<hr />
+<h1 id="创建第一个-ros2-package">7. 创建第一个 ROS2 Package</h1>
+<p>进入：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/ros2_ws/src</span><br></pre></td></tr></table></figure>
+<p>创建：</p>
+<p>Python：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ros2 pkg create my_pkg \</span><br><span class="line">--build-type ament_python</span><br></pre></td></tr></table></figure>
+<p>C++：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ros2 pkg create my_cpp_pkg \</span><br><span class="line">--build-type ament_cmake</span><br></pre></td></tr></table></figure>
+<hr />
+<p>编译：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/ros2_ws</span><br><span class="line"></span><br><span class="line">colcon build</span><br></pre></td></tr></table></figure>
+<p>加载：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">source</span> install/setup.bash</span><br></pre></td></tr></table></figure>
+<hr />
+<h1 id="第一个-publisher-示例">8. 第一个 Publisher 示例</h1>
+<p>创建：</p>
+<figure class="highlight python"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br><span class="line">25</span><br><span class="line">26</span><br><span class="line">27</span><br><span class="line">28</span><br><span class="line">29</span><br><span class="line">30</span><br><span class="line">31</span><br><span class="line">32</span><br><span class="line">33</span><br><span class="line">34</span><br><span class="line">35</span><br><span class="line">36</span><br><span class="line">37</span><br><span class="line">38</span><br><span class="line">39</span><br><span class="line">40</span><br><span class="line">41</span><br><span class="line">42</span><br><span class="line">43</span><br></pre></td><td class="code"><pre><span class="line"><span class="keyword">import</span> rclpy</span><br><span class="line"><span class="keyword">from</span> rclpy.node <span class="keyword">import</span> Node</span><br><span class="line"></span><br><span class="line"><span class="keyword">from</span> std_msgs.msg <span class="keyword">import</span> String</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">class</span> <span class="title class_">Publisher</span>(<span class="title class_ inherited__">Node</span>):</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">__init__</span>(<span class="params">self</span>):</span><br><span class="line"></span><br><span class="line">        <span class="built_in">super</span>().__init__(<span class="string">&quot;publisher&quot;</span>)</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.pub = <span class="variable language_">self</span>.create_publisher(</span><br><span class="line">            String,</span><br><span class="line">            <span class="string">&quot;hello&quot;</span>,</span><br><span class="line">            <span class="number">10</span></span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.timer = <span class="variable language_">self</span>.create_timer(</span><br><span class="line">            <span class="number">1.0</span>,</span><br><span class="line">            <span class="variable language_">self</span>.publish</span><br><span class="line">        )</span><br><span class="line"></span><br><span class="line">    <span class="keyword">def</span> <span class="title function_">publish</span>(<span class="params">self</span>):</span><br><span class="line"></span><br><span class="line">        msg = String()</span><br><span class="line"></span><br><span class="line">        msg.data=<span class="string">&quot;hello ros2&quot;</span></span><br><span class="line"></span><br><span class="line">        <span class="variable language_">self</span>.pub.publish(msg)</span><br><span class="line"></span><br><span class="line"></span><br><span class="line"><span class="keyword">def</span> <span class="title function_">main</span>():</span><br><span class="line"></span><br><span class="line">    rclpy.init()</span><br><span class="line"></span><br><span class="line">    node=Publisher()</span><br><span class="line"></span><br><span class="line">    rclpy.spin(node)</span><br><span class="line"></span><br><span class="line">    node.destroy_node()</span><br><span class="line"></span><br><span class="line">    rclpy.shutdown()</span><br></pre></td></tr></table></figure>
+<p>运行：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 run package_name node_name</span><br></pre></td></tr></table></figure>
+<p>监听：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 topic <span class="built_in">echo</span> /hello</span><br></pre></td></tr></table></figure>
+<p>输出：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">hello ros2</span><br><span class="line"></span><br><span class="line">hello ros2</span><br><span class="line"></span><br><span class="line">hello ros2</span><br></pre></td></tr></table></figure>
+<hr />
+<h1 id="ros2-常用工具">9. ROS2 常用工具</h1>
+<h2 id="rviz2">RViz2</h2>
+<p>可视化：</p>
+<p>启动：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">rviz2</span><br></pre></td></tr></table></figure>
+<p>查看：</p>
+<ul>
+<li>雷达</li>
+<li>地图</li>
+<li>TF</li>
+<li>Camera</li>
+</ul>
+<hr />
+<h2 id="gazebo">Gazebo</h2>
+<p>机器人仿真：</p>
+<p>支持：</p>
+<ul>
+<li>物理环境</li>
+<li>传感器</li>
+<li>机器人模型</li>
+</ul>
+<hr />
+<h2 id="rosbag2">rosbag2</h2>
+<p>录制：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 bag record</span><br></pre></td></tr></table></figure>
+<p>回放：</p>
+<figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">ros2 bag play</span><br></pre></td></tr></table></figure>
+<hr />
+<h2 id="tf2">TF2</h2>
+<p>坐标转换：</p>
+<p>例如：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">map</span><br><span class="line"></span><br><span class="line">└── odom</span><br><span class="line"></span><br><span class="line">      └── base_link</span><br><span class="line"></span><br><span class="line">             └── camera_link</span><br></pre></td></tr></table></figure>
+<hr />
+<h1 id="ros2-学习路线推荐">10. ROS2 学习路线推荐</h1>
+<p>建议顺序：</p>
+<h2 id="第一阶段">第一阶段</h2>
+<p>基础：</p>
+<ul>
+<li>Linux</li>
+<li>Git</li>
+<li>Python</li>
+<li>C++</li>
+</ul>
+<p>时间：</p>
+<p>2 周</p>
+<hr />
+<h2 id="第二阶段">第二阶段</h2>
+<p>ROS2：</p>
+<p>学习：</p>
+<ul>
+<li>Node</li>
+<li>Topic</li>
+<li>Service</li>
+<li>Action</li>
+<li>Parameter</li>
+</ul>
+<p>时间：</p>
+<p>2 周</p>
+<hr />
+<h2 id="第三阶段">第三阶段</h2>
+<p>进阶：</p>
+<p>学习：</p>
+<ul>
+<li>DDS</li>
+<li>QoS</li>
+<li>TF2</li>
+<li>生命周期节点</li>
+</ul>
+<p>时间：</p>
+<p>3 周</p>
+<hr />
+<h2 id="第四阶段">第四阶段</h2>
+<p>项目：</p>
+<p>建议做：</p>
+<p>① 雷达避障<br />
+② SLAM 建图<br />
+③ 导航系统<br />
+④ 机械臂控制<br />
+⑤ 自动驾驶 Demo</p>
+<hr />
+<h1 id="总结">总结</h1>
+<p>ROS2 是机器人开发的重要基础设施。</p>
+<p>理解：</p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br></pre></td><td class="code"><pre><span class="line">Node</span><br><span class="line">↓</span><br><span class="line"></span><br><span class="line">Topic</span><br><span class="line"></span><br><span class="line">↓</span><br><span class="line"></span><br><span class="line">Service</span><br><span class="line"></span><br><span class="line">↓</span><br><span class="line"></span><br><span class="line">Action</span><br><span class="line"></span><br><span class="line">↓</span><br><span class="line"></span><br><span class="line">DDS</span><br></pre></td></tr></table></figure>
+<p>基本就完成了入门。</p>
+<p>下一篇建议学习：</p>
+<blockquote>
+<p>ROS2 通信机制详解：Topic、Service、Action 区别与使用场景</p>
+</blockquote>
+<hr />
+<h1 id="参考资料">参考资料</h1>
+<p>官方文档：</p>
+<p>https://docs.ros.org/</p>
+<p>ROS2 Tutorials：</p>
+<p>https://docs.ros.org/en/humble/Tutorials.html</p>
+<hr />
+<p>如果本文对你有帮助，欢迎点赞、收藏和交流。</p>
+<p>持续更新：</p>
+<p>《ROS2 入门到实战》系列 🚀</p>
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/ROS2/" rel="tag"># ROS2</a>
+              <a href="/tags/Robotics/" rel="tag"># Robotics</a>
+              <a href="/tags/C/" rel="tag"># C++</a>
+              <a href="/tags/Python/" rel="tag"># Python</a>
+              <a href="/tags/%E8%87%AA%E5%8A%A8%E9%A9%BE%E9%A9%B6/" rel="tag"># 自动驾驶</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/18/quantitative-trading-environment/" rel="prev" title="2017 Intel Mac + macOS Ventura 搭建美股量化环境（Docker + Python + Backtrader + Jupyter 完整教程）">
+                  <i class="fa fa-angle-left"></i> 2017 Intel Mac + macOS Ventura 搭建美股量化环境（Docker + Python + Backtrader + Jupyter 完整教程）
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nick Liu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
