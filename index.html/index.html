@@ -175,7 +175,7 @@
   <nav class="site-state">
       <div class="site-state-item site-state-posts">
         <a href="/archives/">
-          <span class="site-state-item-count">24</span>
+          <span class="site-state-item-count">25</span>
           <span class="site-state-item-name">日志</span>
         </a>
       </div>
@@ -185,7 +185,7 @@
       </div>
       <div class="site-state-item site-state-tags">
           <a href="/tags/">
-        <span class="site-state-item-count">30</span>
+        <span class="site-state-item-count">31</span>
         <span class="site-state-item-name">标签</span></a>
       </div>
   </nav>
@@ -202,6 +202,137 @@
     </div>
 
     <div class="main-inner index posts-expand">
+
+    
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
+    <link itemprop="mainEntityOfPage" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/31/os-interview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Nick Liu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nick Liu's Blog">
+      <meta itemprop="description" content="My Blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content=" | Nick Liu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h2 class="post-title" itemprop="name headline">
+          <a href="/2026/05/31/os-interview/" class="post-title-link" itemprop="url">操作系统原理经典面试题 20 道（通俗版）</a>
+        </h2>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-05-31 20:02:57" itemprop="dateCreated datePublished" datetime="2026-05-31T20:02:57+08:00">2026-05-31</time>
+    </span>
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+        <a href="/tags/os-interview/" rel="tag"># os interview</a>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody">
+          <blockquote>
+<p>适合面试速记与复习，每题配通俗类比，难度从基础到进阶递增。</p>
+</blockquote>
+<h2 id="目录">目录</h2>
+<p><strong>基础篇</strong></p>
+<ul>
+<li><a href="#目录">目录</a></li>
+<li><a href="#基础篇">基础篇</a>
+<ul>
+<li><a href="#1-进程和线程的区别">1. 进程和线程的区别</a></li>
+<li><a href="#2-什么是死锁产生的-4-个必要条件">2. 什么是死锁？产生的 4
+个必要条件</a></li>
+<li><a href="#3-进程间通信ipc有哪些方式">3.
+进程间通信（IPC）有哪些方式</a></li>
+<li><a href="#4-进程的几种状态">4. 进程的几种状态</a></li>
+<li><a href="#5-虚拟内存是什么有什么用">5.
+虚拟内存是什么？有什么用</a></li>
+<li><a href="#6-什么是缺页中断page-fault">6. 什么是缺页中断（Page
+Fault）</a></li>
+<li><a href="#7-用户态和内核态的区别为什么要分">7.
+用户态和内核态的区别？为什么要分</a></li>
+<li><a href="#8-进程调度算法有哪些">8. 进程调度算法有哪些</a></li>
+<li><a href="#9-什么是上下文切换-context-switch">9. 什么是上下文切换
+（Context Switch）</a></li>
+<li><a href="#10-同步互斥临界区怎么实现线程同步">10.
+同步、互斥、临界区？怎么实现线程同步</a></li>
+</ul></li>
+</ul>
+<p><strong>进阶篇</strong></p>
+<ol start="11" type="1">
+<li><a href="#11-自旋锁-vs-互斥锁">自旋锁 vs 互斥锁</a></li>
+<li><a
+href="#12-io-多路复用selectpollepoll-的区别">IO多路复用：select、poll、epoll区别</a></li>
+<li><a href="#13-什么是零拷贝zero-copy">什么零拷贝（Zero-Copy）</a></li>
+<li><a href="#14-分页和分段有什么区别">分页和分段有什么区别</a></li>
+<li><a
+href="#15-什么是僵尸进程和孤儿进程">什么是僵尸进程和孤儿进程</a></li>
+<li><a href="#16-什么是-cpu-缓存为什么要分多集缓存">什么是 CPU
+缓存？为什么要分多集缓存</a></li>
+<li><a href="#17-中断和轮询有什么区别">中断和轮询有什么区别</a></li>
+<li><a
+href="#18-什么是用户级线程和内核级线程">什么是用户级别线程和内核级线程</a></li>
+<li><a
+href="#19-什么是内存碎片内部碎片和外部碎片的区别">什么是内存碎片？内部碎片和外部碎片的区别</a></li>
+<li><a href="#20-生产者-消费者怎么解决">生产者-消费者怎么解决</a></li>
+</ol>
+<hr />
+          <!--noindex-->
+            <div class="post-button">
+              <a class="btn" href="/2026/05/31/os-interview/#more" rel="contents">
+                阅读全文 &raquo;
+              </a>
+            </div>
+          <!--/noindex-->
+        
+      
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+        <div class="post-eof"></div>
+      
+    </footer>
+  </article>
+</div>
+
+
+
 
     
 
@@ -1020,92 +1151,6 @@ day</a>，感觉结合自己当前的状态还是所有感触，所以准备细�
           <!--noindex-->
             <div class="post-button">
               <a class="btn" href="/2026/02/24/how-to-fix-your-in-one-day/#more" rel="contents">
-                阅读全文 &raquo;
-              </a>
-            </div>
-          <!--/noindex-->
-        
-      
-    </div>
-
-    
-    
-    
-
-    <footer class="post-footer">
-        <div class="post-eof"></div>
-      
-    </footer>
-  </article>
-</div>
-
-
-
-
-    
-
-
-<div class="post-block">
-  
-  
-
-  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="">
-    <link itemprop="mainEntityOfPage" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/02/12/five-years-in-qcom/">
-
-    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
-      <meta itemprop="image" content="/images/avatar.gif">
-      <meta itemprop="name" content="Nick Liu">
-    </span>
-
-    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
-      <meta itemprop="name" content="Nick Liu's Blog">
-      <meta itemprop="description" content="My Blog">
-    </span>
-
-    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content=" | Nick Liu's Blog">
-      <meta itemprop="description" content="">
-    </span>
-      <header class="post-header">
-        <h2 class="post-title" itemprop="name headline">
-          <a href="/2026/02/12/five-years-in-qcom/" class="post-title-link" itemprop="url">我在高通中国的五年</a>
-        </h2>
-
-        <div class="post-meta-container">
-          <div class="post-meta">
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-calendar"></i>
-      </span>
-      <span class="post-meta-item-text">发表于</span>
-
-      <time title="创建时间：2026-02-12 21:22:49" itemprop="dateCreated datePublished" datetime="2026-02-12T21:22:49+08:00">2026-02-12</time>
-    </span>
-
-  
-    <span class="post-meta-item">
-      <span class="post-meta-item-icon">
-        <i class="far fa-tags"></i>
-      </span>
-      <span class="post-meta-item-text">标签：</span>
-        <a href="/tags/%E8%81%8C%E5%9C%BA/" rel="tag"># 职场</a>
-    </span>
-
-  
-</div>
-
-        </div>
-      </header>
-
-    
-    
-    
-    <div class="post-body" itemprop="articleBody">
-          <p>  
-我是在2020年12月份加入高通，那时候还是疫情期间，面试也是全程线上。苹果回到高通基带芯片的怀抱不久，iPhone和iPad大部分产线在深圳，需要人来做现场技术支持，所以我是以支持苹果的名义招进高通中国基带软件研发团队。因为苹果是高通的VIP客户（给的钱多），所以是研发团队作为主导来直接对接他们。</p>
-          <!--noindex-->
-            <div class="post-button">
-              <a class="btn" href="/2026/02/12/five-years-in-qcom/#more" rel="contents">
                 阅读全文 &raquo;
               </a>
             </div>

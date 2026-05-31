@@ -1,0 +1,503 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+  <meta charset="UTF-8">
+<meta name="viewport" content="width=device-width">
+<meta name="theme-color" content="#222"><meta name="generator" content="Hexo 8.1.1">
+
+  <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon-next.png">
+  <link rel="icon" type="image/png" sizes="32x32" href="/images/favicon-32x32-next.png">
+  <link rel="icon" type="image/png" sizes="16x16" href="/images/favicon-16x16-next.png">
+  <link rel="mask-icon" href="/images/logo.svg" color="#222">
+
+<link rel="stylesheet" href="/css/main.css">
+
+
+
+<link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/7.0.0/css/all.min.css" integrity="sha256-VHqXKFhhMxcpubYf9xiWdCiojEbY9NexQ4jh8AxbvcM=" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/3.1.1/animate.min.css" integrity="sha256-PR7ttpcvz8qrF57fur/yAx1qXMFJeJFiA6pSzWi0OIE=" crossorigin="anonymous">
+
+<script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true,"pjax":false}}</script><script src="/js/config.js" defer></script>
+
+    <meta name="description" content="适合面试速记与复习，每题配通俗类比，难度从基础到进阶递增。  目录 基础篇  目录 基础篇  1. 进程和线程的区别 2. 什么是死锁？产生的 4 个必要条件 3. 进程间通信（IPC）有哪些方式 4. 进程的几种状态 5. 虚拟内存是什么？有什么用 6. 什么是缺页中断（Page Fault） 7. 用户态和内核态的区别？为什么要分 8. 进程调度算法有哪些 9. 什么是上下文切换 （Cont">
+<meta property="og:type" content="article">
+<meta property="og:title" content="操作系统原理经典面试题 20 道（通俗版）">
+<meta property="og:url" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/31/os-interview/index.html">
+<meta property="og:site_name" content="Nick Liu&#39;s Blog">
+<meta property="og:description" content="适合面试速记与复习，每题配通俗类比，难度从基础到进阶递增。  目录 基础篇  目录 基础篇  1. 进程和线程的区别 2. 什么是死锁？产生的 4 个必要条件 3. 进程间通信（IPC）有哪些方式 4. 进程的几种状态 5. 虚拟内存是什么？有什么用 6. 什么是缺页中断（Page Fault） 7. 用户态和内核态的区别？为什么要分 8. 进程调度算法有哪些 9. 什么是上下文切换 （Cont">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2026-05-31T12:02:57.000Z">
+<meta property="article:modified_time" content="2026-05-31T14:26:40.236Z">
+<meta property="article:author" content="Nick Liu">
+<meta property="article:tag" content="os interview">
+<meta name="twitter:card" content="summary">
+
+
+<link rel="canonical" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/31/os-interview/">
+
+
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/31/os-interview/","path":"2026/05/31/os-interview/","title":"操作系统原理经典面试题 20 道（通俗版）"}</script>
+
+<script class="next-config" data-name="calendar" type="application/json">""</script>
+<title>操作系统原理经典面试题 20 道（通俗版） | Nick Liu's Blog</title>
+  
+
+
+
+
+
+
+
+
+  
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/animejs/3.2.1/anime.min.js" integrity="sha256-XL2inqUJaslATFnHdJOi9GfQ60on8Wx1C2H8DYiN1xY=" crossorigin="anonymous" defer></script>
+<script src="/js/utils.js" defer></script><script src="/js/motion.js" defer></script><script src="/js/sidebar.js" defer></script><script src="/js/next-boot.js" defer></script>
+
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/hexo-generator-searchdb/1.5.0/search.js" integrity="sha256-xFC6PJ82SL9b3WkGjFavNiA9gm5z6UBxWPiu4CYjptg=" crossorigin="anonymous" defer></script>
+<script src="/js/third-party/search/local-search.js" defer></script>
+
+
+  <script class="next-config" data-name="mermaid" type="application/json">{"enable":true,"version":"10.2.3","theme":{"light":"default","dark":"dark"},"js":{"url":"https://cdnjs.cloudflare.com"}}</script>
+  <script src="/js/third-party/tags/mermaid.js" defer></script>
+
+
+
+
+
+  
+
+
+
+
+  
+
+  <script class="next-config" data-name="enableMath" type="application/json">true</script><script class="next-config" data-name="mathjax" type="application/json">{"enable":true,"tags":"none","js":{"url":"https://cdnjs.cloudflare.com/ajax/libs/mathjax/3.2.2/es5/tex-mml-chtml.js","integrity":"sha256-MASABpB4tYktI2Oitl4t+78w/lyA+D7b/s9GEP0JOGI="}}</script>
+<script src="/js/third-party/math/mathjax.js" defer></script>
+
+
+
+  <noscript>
+    <link rel="stylesheet" href="/css/noscript.css">
+  </noscript>
+</head>
+
+<body itemscope itemtype="http://schema.org/WebPage" class="use-motion">
+  <div class="headband"></div>
+
+  <main class="main">
+    <div class="column">
+      <header class="header" itemscope itemtype="http://schema.org/WPHeader"><div class="site-brand-container">
+  <div class="site-nav-toggle">
+    <div class="toggle" aria-label="切换导航栏" role="button">
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+        <span class="toggle-line"></span>
+    </div>
+  </div>
+
+  <div class="site-meta">
+
+    <a href="/" class="brand" rel="start">
+      <i class="logo-line"></i>
+      <p class="site-title">Nick Liu's Blog</p>
+      <i class="logo-line"></i>
+    </a>
+      <p class="site-subtitle" itemprop="description">Be Better && Be Smarter</p>
+  </div>
+
+  <div class="site-nav-right">
+    <div class="toggle popup-trigger" aria-label="搜索" role="button">
+        <i class="fa fa-search fa-fw fa-lg"></i>
+    </div>
+  </div>
+</div>
+
+
+
+<nav class="site-nav">
+  <ul class="main-menu menu"><li class="menu-item menu-item-home"><a href="/" rel="section"><i class="fa fa-home fa-fw"></i>首页</a></li><li class="menu-item menu-item-tags"><a href="/tags/" rel="section"><i class="fa fa-tags fa-fw"></i>标签</a></li>
+      <li class="menu-item menu-item-search">
+        <a role="button" class="popup-trigger"><i class="fa fa-search fa-fw"></i>搜索
+        </a>
+      </li>
+  </ul>
+</nav>
+
+
+
+  <div class="search-pop-overlay">
+    <div class="popup search-popup">
+      <div class="search-header">
+        <span class="search-icon">
+          <i class="fa fa-search"></i>
+        </span>
+        <div class="search-input-container">
+          <input autocomplete="off" autocapitalize="off" maxlength="80"
+                placeholder="搜索..." spellcheck="false"
+                type="search" class="search-input">
+        </div>
+        <span class="popup-btn-close" role="button">
+          <i class="fa fa-times-circle"></i>
+        </span>
+      </div>
+      <div class="search-result-container">
+        <div class="search-result-icon">
+          <i class="fa fa-spinner fa-pulse fa-5x"></i>
+        </div>
+      </div>
+    </div>
+  </div>
+
+</header>
+        
+  
+  <aside class="sidebar">
+
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
+      <ul class="sidebar-nav">
+        <li class="sidebar-nav-toc">
+          文章目录
+        </li>
+        <li class="sidebar-nav-overview">
+          站点概览
+        </li>
+      </ul>
+
+      <div class="sidebar-panel-container">
+        <!--noindex-->
+        <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%9B%AE%E5%BD%95"><span class="nav-number">1.</span> <span class="nav-text">目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%9F%BA%E7%A1%80%E7%AF%87"><span class="nav-number">2.</span> <span class="nav-text">基础篇</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E5%92%8C%E7%BA%BF%E7%A8%8B%E7%9A%84%E5%8C%BA%E5%88%AB"><span class="nav-number">2.1.</span> <span class="nav-text">1. 进程和线程的区别</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E6%AD%BB%E9%94%81%E4%BA%A7%E7%94%9F%E7%9A%84-4-%E4%B8%AA%E5%BF%85%E8%A6%81%E6%9D%A1%E4%BB%B6"><span class="nav-number">2.2.</span> <span class="nav-text">2. 什么是死锁？产生的 4
+个必要条件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E9%97%B4%E9%80%9A%E4%BF%A1ipc%E6%9C%89%E5%93%AA%E4%BA%9B%E6%96%B9%E5%BC%8F"><span class="nav-number">2.3.</span> <span class="nav-text">3. 进程间通信（IPC）有哪些方式</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E7%9A%84%E5%87%A0%E7%A7%8D%E7%8A%B6%E6%80%81"><span class="nav-number">2.4.</span> <span class="nav-text">4. 进程的几种状态</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%99%9A%E6%8B%9F%E5%86%85%E5%AD%98%E6%98%AF%E4%BB%80%E4%B9%88%E6%9C%89%E4%BB%80%E4%B9%88%E7%94%A8"><span class="nav-number">2.5.</span> <span class="nav-text">5. 虚拟内存是什么？有什么用</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E7%BC%BA%E9%A1%B5%E4%B8%AD%E6%96%ADpage-fault"><span class="nav-number">2.6.</span> <span class="nav-text">6. 什么是缺页中断（Page Fault）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%94%A8%E6%88%B7%E6%80%81%E5%92%8C%E5%86%85%E6%A0%B8%E6%80%81%E7%9A%84%E5%8C%BA%E5%88%AB%E4%B8%BA%E4%BB%80%E4%B9%88%E8%A6%81%E5%88%86"><span class="nav-number">2.7.</span> <span class="nav-text">7.
+用户态和内核态的区别？为什么要分</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BF%9B%E7%A8%8B%E8%B0%83%E5%BA%A6%E7%AE%97%E6%B3%95%E6%9C%89%E5%93%AA%E4%BA%9B"><span class="nav-number">2.8.</span> <span class="nav-text">8. 进程调度算法有哪些</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E4%BB%80%E4%B9%88%E6%98%AF%E4%B8%8A%E4%B8%8B%E6%96%87%E5%88%87%E6%8D%A2-context-switch"><span class="nav-number">2.9.</span> <span class="nav-text">9. 什么是上下文切换 （Context
+Switch）</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%90%8C%E6%AD%A5%E4%BA%92%E6%96%A5%E4%B8%B4%E7%95%8C%E5%8C%BA%E6%80%8E%E4%B9%88%E5%AE%9E%E7%8E%B0%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5"><span class="nav-number">2.10.</span> <span class="nav-text">10.
+同步、互斥、临界区？怎么实现线程同步</span></a></li></ol></li></ol></div>
+        </div>
+        <!--/noindex-->
+
+        <div class="site-overview-wrap sidebar-panel">
+          <div class="site-author animated" itemprop="author" itemscope itemtype="http://schema.org/Person">
+  <p class="site-author-name" itemprop="name">Nick Liu</p>
+  <div class="site-description" itemprop="description">My Blog</div>
+</div>
+<div class="site-state-wrap animated">
+  <nav class="site-state">
+      <div class="site-state-item site-state-posts">
+        <a href="/archives/">
+          <span class="site-state-item-count">25</span>
+          <span class="site-state-item-name">日志</span>
+        </a>
+      </div>
+      <div class="site-state-item site-state-categories">
+        <span class="site-state-item-count">1</span>
+        <span class="site-state-item-name">分类</span>
+      </div>
+      <div class="site-state-item site-state-tags">
+          <a href="/tags/">
+        <span class="site-state-item-count">31</span>
+        <span class="site-state-item-name">标签</span></a>
+      </div>
+  </nav>
+</div>
+
+        </div>
+      </div>
+    </div>
+
+    
+  </aside>
+
+
+    </div>
+
+    <div class="main-inner post posts-expand">
+
+
+  
+
+
+<div class="post-block">
+  
+  
+
+  <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
+    <link itemprop="mainEntityOfPage" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/31/os-interview/">
+
+    <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
+      <meta itemprop="image" content="/images/avatar.gif">
+      <meta itemprop="name" content="Nick Liu">
+    </span>
+
+    <span hidden itemprop="publisher" itemscope itemtype="http://schema.org/Organization">
+      <meta itemprop="name" content="Nick Liu's Blog">
+      <meta itemprop="description" content="My Blog">
+    </span>
+
+    <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
+      <meta itemprop="name" content="操作系统原理经典面试题 20 道（通俗版） | Nick Liu's Blog">
+      <meta itemprop="description" content="">
+    </span>
+      <header class="post-header">
+        <h1 class="post-title" itemprop="name headline">
+          操作系统原理经典面试题 20 道（通俗版）
+        </h1>
+
+        <div class="post-meta-container">
+          <div class="post-meta">
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-calendar"></i>
+      </span>
+      <span class="post-meta-item-text">发表于</span>
+
+      <time title="创建时间：2026-05-31 20:02:57" itemprop="dateCreated datePublished" datetime="2026-05-31T20:02:57+08:00">2026-05-31</time>
+    </span>
+
+  
+    <span class="post-meta-item">
+      <span class="post-meta-item-icon">
+        <i class="far fa-tags"></i>
+      </span>
+      <span class="post-meta-item-text">标签：</span>
+        <a href="/tags/os-interview/" rel="tag"># os interview</a>
+    </span>
+
+  
+</div>
+
+        </div>
+      </header>
+
+    
+    
+    
+    <div class="post-body" itemprop="articleBody"><blockquote>
+<p>适合面试速记与复习，每题配通俗类比，难度从基础到进阶递增。</p>
+</blockquote>
+<h2 id="目录">目录</h2>
+<p><strong>基础篇</strong></p>
+<ul>
+<li><a href="#目录">目录</a></li>
+<li><a href="#基础篇">基础篇</a>
+<ul>
+<li><a href="#1-进程和线程的区别">1. 进程和线程的区别</a></li>
+<li><a href="#2-什么是死锁产生的-4-个必要条件">2. 什么是死锁？产生的 4
+个必要条件</a></li>
+<li><a href="#3-进程间通信ipc有哪些方式">3.
+进程间通信（IPC）有哪些方式</a></li>
+<li><a href="#4-进程的几种状态">4. 进程的几种状态</a></li>
+<li><a href="#5-虚拟内存是什么有什么用">5.
+虚拟内存是什么？有什么用</a></li>
+<li><a href="#6-什么是缺页中断page-fault">6. 什么是缺页中断（Page
+Fault）</a></li>
+<li><a href="#7-用户态和内核态的区别为什么要分">7.
+用户态和内核态的区别？为什么要分</a></li>
+<li><a href="#8-进程调度算法有哪些">8. 进程调度算法有哪些</a></li>
+<li><a href="#9-什么是上下文切换-context-switch">9. 什么是上下文切换
+（Context Switch）</a></li>
+<li><a href="#10-同步互斥临界区怎么实现线程同步">10.
+同步、互斥、临界区？怎么实现线程同步</a></li>
+</ul></li>
+</ul>
+<p><strong>进阶篇</strong></p>
+<ol start="11" type="1">
+<li><a href="#11-自旋锁-vs-互斥锁">自旋锁 vs 互斥锁</a></li>
+<li><a
+href="#12-io-多路复用selectpollepoll-的区别">IO多路复用：select、poll、epoll区别</a></li>
+<li><a href="#13-什么是零拷贝zero-copy">什么零拷贝（Zero-Copy）</a></li>
+<li><a href="#14-分页和分段有什么区别">分页和分段有什么区别</a></li>
+<li><a
+href="#15-什么是僵尸进程和孤儿进程">什么是僵尸进程和孤儿进程</a></li>
+<li><a href="#16-什么是-cpu-缓存为什么要分多集缓存">什么是 CPU
+缓存？为什么要分多集缓存</a></li>
+<li><a href="#17-中断和轮询有什么区别">中断和轮询有什么区别</a></li>
+<li><a
+href="#18-什么是用户级线程和内核级线程">什么是用户级别线程和内核级线程</a></li>
+<li><a
+href="#19-什么是内存碎片内部碎片和外部碎片的区别">什么是内存碎片？内部碎片和外部碎片的区别</a></li>
+<li><a href="#20-生产者-消费者怎么解决">生产者-消费者怎么解决</a></li>
+</ol>
+<hr />
+<span id="more"></span>
+<h2 id="基础篇">基础篇</h2>
+<h3 id="进程和线程的区别">1. 进程和线程的区别</h3>
+<p><strong>通俗理解：</strong></p>
+<ul>
+<li><strong>进程</strong>好比一个<strong>工厂</strong>，有独立的厂房、设备、资源（独立内存空间）。</li>
+<li><strong>线程</strong>好比工厂里的<strong>工人</strong>，共享工厂的资源一起干活。</li>
+</ul>
+<p>｜ 对比 ｜ 进程 ｜ 线程 ｜ ｜——｜——｜——｜ ｜ 资源 ｜ 独立内存空间 ｜
+共享所属进程的内存 ｜ ｜ 开销 ｜ 创建/切换开销大 ｜ 开销小 ｜ ｜ 通信 ｜
+复杂（需IPC） ｜ 简单（直接读共享内存） ｜ ｜ 奔溃影响 ｜ 互不影响 ｜
+一个奔溃可能拖垮整个进程 ｜</p>
+<blockquote>
+<p>一句话：<strong>进程是资源分配的最小单位，线程是 CPU
+调度的最小单位。</strong></p>
+</blockquote>
+<hr />
+<h3 id="什么是死锁产生的-4-个必要条件">2. 什么是死锁？产生的 4
+个必要条件</h3>
+<p><strong>通俗理解：</strong>两个人过独木桥，各走到中间互不相让，谁也过不去–这就是死锁。</p>
+<p><strong>4 个必要条件（缺一不可）：</strong> 1.
+<strong>互斥</strong>：资源同时只能被一个人占用。 2.
+<strong>占有并等待</strong>：占着资源还要等别的资源。 3.
+<strong>不可剥夺</strong>：别人的资源不能强抢。 4.
+<strong>循环等待</strong>：A 等 B、B 等 A，形成环</p>
+<p><strong>怎么破？</strong>破坏任意一个条件即可，最常用的是<strong>破坏循环等待</strong>–规定大家按统一顺序申请资源（比如先拿
+1 号锁再拿 2 号锁）</p>
+<h3 id="进程间通信ipc有哪些方式">3. 进程间通信（IPC）有哪些方式</h3>
+<p>通俗说就是“进程之间怎么传话”：</p>
+<ul>
+<li><strong>管道（Pipe）</strong>：像水管，一头进一头出（如<code>ls | grep</code>）。</li>
+<li><strong>消息队列</strong>：像邮局信箱，存着消息慢慢取。</li>
+<li><strong>共享内存</strong>：开一块公共的白板，大家都能读写（<strong>最快</strong>）。</li>
+<li><strong>信号量（Semaphore）</strong>：交通信号灯，控制谁能进。</li>
+<li><strong>信号（Signal）</strong>：拍一下肩膀通知一声（如Ctrl+C）。</li>
+<li><strong>套接字（Socket）</strong>：可跨机器通信，网络程序都靠它。</li>
+</ul>
+<hr />
+<h3 id="进程的几种状态">4. 进程的几种状态</h3>
+<p><strong>通俗理解（以打工人为例）：</strong></p>
+<ul>
+<li><strong>就绪</strong>：万事具备，排队等 CPU 上班。</li>
+<li><strong>运行</strong>：正在 CPU 上干活。</li>
+<li><strong>阻塞</strong>：在等外卖（等I/O），干不了活先歇着。</li>
+</ul>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">就绪&lt;-----&gt;运行</span><br><span class="line">  ^         ｜</span><br><span class="line">  |&lt;--阻塞&lt;--</span><br></pre></td></tr></table></figure>
+<p>运行时间片用完 -&gt; 回就绪；运行中要等 I/O -&gt; 进阻塞；I/O 完成
+-&gt; 回就绪。</p>
+<hr />
+<h3 id="虚拟内存是什么有什么用">5. 虚拟内存是什么？有什么用</h3>
+<p><strong>通俗理解：</strong> 你只有 8G
+内存，却能开几十个程序，加起来远超 8G–靠的就是虚拟内存”画大饼“。</p>
+<ul>
+<li>给每个程序一个<strong>假装很大的连续内存空间</strong>（虚拟地址）。</li>
+<li>实际上数据散落在物理内存 + 硬盘上。</li>
+<li>暂时用不到的数据<strong>换出</strong>到硬盘（交换区/页面文件），用到再<strong>换入</strong>。</li>
+</ul>
+<p><strong>好处：</strong>
+程序以为内存无限大、各程序互相隔离更安全、内存利用率更高。</p>
+<hr />
+<h3 id="什么是缺页中断page-fault">6. 什么是缺页中断（Page Fault）</h3>
+<p><strong>通俗理解：</strong>
+你想看某页书，发现这页不在手边（不在物理内存），得去仓库（硬盘）取。</p>
+<p>流程：CPU 访问的页不在内存 -&gt; 触发缺页中断 -&gt;
+操作系统从硬盘把页调进内存 -&gt; 如果内存满了，按算法淘汰一页 -&gt;
+重新执行。</p>
+<p><strong>常见页面置换算法：</strong></p>
+<ul>
+<li><strong>FIFO</strong>：先进先出（最老的先淘汰）。</li>
+<li><strong>LRU</strong>：最近最少使用（很久没用的先淘汰，<strong>最常考</strong>）</li>
+<li><strong>LFU</strong>：最不经常使用（用得最少得先淘汰）。</li>
+</ul>
+<hr />
+<h3 id="用户态和内核态的区别为什么要分">7.
+用户态和内核态的区别？为什么要分</h3>
+<p><strong>通俗理解：</strong>
+内核态是“管理员模式”，用户态是”普通用户模式“。</p>
+<ul>
+<li><strong>用户态</strong>：跑普通程序，权限受限，不能直接碰硬件。</li>
+<li><strong>内核态</strong>：操作系统核心，权限最高，可直接操作硬件。</li>
+</ul>
+<p><strong>为什么分？</strong>
+防止普通程序乱搞硬件搞奔系统。普通程序想读文件、申请内存等，必须通过<strong>系统调用（System
+Call）</strong>“申请”切到内核态去办–相当于办事要走正规窗口。</p>
+<hr />
+<h3 id="进程调度算法有哪些">8. 进程调度算法有哪些</h3>
+<p><strong>通俗理解（以排队办事为例）：</strong> -
+<strong>FCFS（先来先服务）</strong>：按到达顺序，公平但慢的人堵后面。 -
+<strong>SJF（短作业优先）</strong>：办事快的先办，但长任务可能一直排不上（饿死）。
+- <strong>优先级调度</strong>：VIP 优先，低优先级可能饿死。 -
+<strong>时间片轮转（RR）</strong>：每人办固定几分钟，没办完去队尾重排（<strong>交互系统常用</strong>）。
+-
+<strong>多级反馈队列</strong>：综合以上，兼顾响应和公平（<strong>实际系统常用</strong>）。</p>
+<hr />
+<h3 id="什么是上下文切换-context-switch">9. 什么是上下文切换 （Context
+Switch）</h3>
+<p><strong>通俗理解：</strong>
+你正在写作业，突然被叫去吃饭，得先<strong>记下写到哪了</strong>（保存现场），吃完回来<strong>接着写</strong>（回复现场）。</p>
+<p>CPU 切换进程/线程时： 1.
+<strong>保存</strong>当前进程的状态（寄存器、程序计数器等）到内存。 2.
+<strong>加载</strong>下一个进程的状态。</p>
+<p><strong>代价：</strong>
+切换本身不干活，纯属开销。切换太频繁会降低系统效率，所以线程毕进程切换更快（共享资源，要保存的东西少）。</p>
+<h3 id="同步互斥临界区怎么实现线程同步">10.
+同步、互斥、临界区？怎么实现线程同步</h3>
+<p><strong>通俗理解：</strong> -
+<strong>临界区</strong>：同时只能一个人用的公共资源（如公共厕所）。 -
+<strong>互斥</strong>：保证同一时刻只有一个线程进临界区（锁门）。 -
+<strong>同步</strong>：多个线程按一定顺序协调干活（如生产者-消费者）。</p>
+<p><strong>实现手段：</strong> -
+<strong>互斥锁（Mutex）</strong>：锁门，一把钥匙，用完归还。 -
+<strong>信号量（Semphore）</strong>：可允许 N 个人同时进（计数）。 -
+<strong>条件变量</strong>：等条件满足才被唤醒（如等仓库有货）。 -
+<strong>读写锁</strong>：读可并发，写要独占。</p>
+<p>经典问题：<strong>生产者-消费者</strong>、<strong>读者-写者</strong>、<strong>哲学家就餐</strong>。</p>
+<hr />
+
+    </div>
+
+    
+    
+    
+
+    <footer class="post-footer">
+          <div class="post-tags">
+              <a href="/tags/os-interview/" rel="tag"># os interview</a>
+          </div>
+
+        
+
+          <div class="post-nav">
+            <div class="post-nav-item">
+                <a href="/2026/05/21/ros2-communication-mechanisms/" rel="prev" title="ROS2 通信机制详解：Topic、Service、Action 区别与使用场景">
+                  <i class="fa fa-angle-left"></i> ROS2 通信机制详解：Topic、Service、Action 区别与使用场景
+                </a>
+            </div>
+            <div class="post-nav-item">
+            </div>
+          </div>
+    </footer>
+  </article>
+</div>
+
+
+
+
+
+
+</div>
+  </main>
+
+  <footer class="footer">
+    <div class="footer-inner">
+
+  <div class="copyright">
+    &copy; 
+    <span itemprop="copyrightYear">2026</span>
+    <span class="with-love">
+      <i class="fa fa-heart"></i>
+    </span>
+    <span class="author" itemprop="copyrightHolder">Nick Liu</span>
+  </div>
+
+    </div>
+  </footer>
+
+  
+  <div class="toggle sidebar-toggle" role="button">
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+    <span class="toggle-line"></span>
+  </div>
+  <div class="sidebar-dimmer"></div>
+  <div class="back-to-top" role="button" aria-label="返回顶部">
+    <i class="fa fa-arrow-up fa-lg"></i>
+    <span>0%</span>
+  </div>
+
+<noscript>
+  <div class="noscript-warning">Theme NexT works best with JavaScript enabled</div>
+</noscript>
+
+</body>
+</html>
