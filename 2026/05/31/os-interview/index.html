@@ -27,7 +27,7 @@
 <meta property="og:description" content="适合面试速记与复习，每题配通俗类比，难度从基础到进阶递增。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-05-31T12:02:57.000Z">
-<meta property="article:modified_time" content="2026-06-03T14:51:33.521Z">
+<meta property="article:modified_time" content="2026-06-05T14:28:24.888Z">
 <meta property="article:author" content="Nick Liu">
 <meta property="article:tag" content="os interview">
 <meta name="twitter:card" content="summary">
@@ -589,17 +589,66 @@ CPU。</li>
 <hr />
 <h3 id="什么-cpu-缓存为什么要分多级缓存">16. 什么 CPU
 缓存？为什么要分多级缓存</h3>
-<p><strong>通俗理解：</strong></p>
+<p><strong>通俗理解：</strong> CPU
+干活极快，但去内存取数据很慢（像高管去仓库找资料）。于是在身边放几层<strong>便签/抽屉</strong>，常有数据放手边。</p>
+<ul>
+<li><strong>L1</strong>：最快最小，紧贴 CPU 核心（口袋）。</li>
+<li><strong>L2</strong>：稍大稍慢（抽屉）。</li>
+<li><strong>L3</strong>：更大更慢，多核共享（办公室柜子）。</li>
+<li><strong>内存</strong>：最大最慢（地下仓库）。</li>
+</ul>
+<p><strong>核心思想：局部性原理</strong>–刚用过的数据/它附近的数据，<strong>马上很有可能再用</strong>，所以缓存起来。这也是为什么遍历数组比遍历链表快。</p>
+<hr />
 <h3 id="中断和轮询有什么区别">17. 中断和轮询有什么区别</h3>
-<p><strong>通俗理解：</strong></p>
+<p><strong>通俗理解：</strong> 你在等快递。</p>
+<ul>
+<li><strong>轮询（Polling）</strong>：每隔几分钟<strong>自己跑下楼看</strong>快递到没到，没到白跑，累。</li>
+<li><strong>中断（Interrupt）</strong>：快递到了<strong>快递员打电话</strong>通知你，你专心干别的，来电再去拿。</li>
+</ul>
+<p>中断<strong>效率高</strong>（不空等），是现代设备 I/O
+的主流方式；轮询实现简单，适合状态变化极快、极频繁的场景。</p>
+<hr />
 <h3 id="什么是用户级线程和内核级线程">18.
 什么是用户级线程和内核级线程</h3>
 <p><strong>通俗理解：</strong></p>
+<ul>
+<li><strong>内核级线程</strong>：操作系统<strong>亲自管理</strong>调度，一个线程阻塞不影响别的线程，能用多核，但切换要进内核（慢一点）。</li>
+<li><strong>用户级线程</strong>：由<strong>程序自己（用户库）管理</strong>，内核根本不知道他们存在。切换快，但<strong>一个线程阻塞，整个进程都被卡住</strong>，且没法用多核。</li>
+</ul>
+<p>现代语言的“协程/Goroutine”多是<strong>M:N 模型</strong>：M
+个用户线程映射到 N 个内核线程，兼顾轻量和并行。</p>
+<hr />
 <h3 id="什么是内存碎片内部碎片和外部碎片的区别">19.
 什么是内存碎片？内部碎片和外部碎片的区别</h3>
-<p><strong>通俗理解：</strong></p>
+<p><strong>通俗理解（以停车场比喻）：</strong></p>
+<ul>
+<li><strong>内部碎片</strong>：分配的空间比实际需要的<strong>大</strong>，多出来的用不上。
+<ul>
+<li>比如要存 3 KB，但系统按 4KB 一页分配，<strong>剩下 1 KB
+浪费</strong>在内部。</li>
+</ul></li>
+<li><strong>外部碎片</strong>：空闲内存<strong>总量够，但不连续</strong>，凑不出一块大的。
+<ul>
+<li>比如停车场有很多零散空位，但没用连续 3 个位停大巴。</li>
+</ul></li>
+</ul>
+<p><strong>解决：</strong>
+内部碎片靠更细的分配粒度；外部碎片靠<strong>内存紧缩（compaction）</strong>
+或分页机制缓解。</p>
+<hr />
 <h3 id="生产者-消费者怎么解决-1">20. 生产者-消费者怎么解决</h3>
-<p><strong>通俗理解：</strong></p>
+<p><strong>通俗理解：</strong>
+厨师（生产者）做菜放到<strong>有限大小的传菜台</strong>，服务员（消费者）取走。要解决三个问题：</p>
+<ol type="1">
+<li>台子满了，厨师得等。</li>
+<li>台子空了，服务员得等。</li>
+<li>同一时刻不能两个人同时动台子（互斥）。</li>
+</ol>
+<p><strong>用 3 个信号量解决：</strong></p>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">mutex = 1 // 互斥锁，保护传菜台</span><br><span class="line">empty = N // 空位数量，初始化位为台子容量</span><br><span class="line">full  = 0 // 已有菜的数量，初始 0</span><br><span class="line"></span><br><span class="line">生产者：                    消费者：</span><br><span class="line">    P(empty)  // 等空位         P(full)     // 等有菜</span><br><span class="line">    P(mutex)  // 锁台子         P(mutex)</span><br><span class="line">    放菜                        取菜</span><br><span class="line">    V(mutex)  // 解锁           V(mutex)    // 解锁</span><br><span class="line">    V(full)   // 菜+1           V(empty)    // 空位 + 1</span><br></pre></td></tr></table></figure>
+<p><strong>关键：</strong> <code>P(empty)</code> / <code>P(full)</code>
+必须在 <code>P(mutex)</code>
+<strong>外面</strong>，否则会死锁（占着锁还等条件，谁也动不了）。</p>
 
     </div>
 
