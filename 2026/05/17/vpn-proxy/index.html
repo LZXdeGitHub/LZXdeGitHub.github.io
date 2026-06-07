@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true,"pjax":false}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="背景：一个看似矛盾的现象 在 macOS 上搭建开发环境（如安装 Homebrew、Node.js、Python、Git 仓库等）时，我们几乎离不开终端。与此同时，很多开发者习惯保持 VPN 或代理（如 ClashX、Surge、V2Ray 等）开启，以便在浏览器中顺畅访问 GitHub、Stack Overflow 等境外网站。 然而，正是在这种“双开”状态下，终端里的下载命令却频频报错：  b">
+    <meta name="description" content="背景：一个看似矛盾的现象 在 macOS 上搭建开发环境（如安装 Homebrew、Node.js、Python、Git 仓库等）时，我们几乎离不开终端。与此同时，很多开发者习惯保持 VPN 或代理（如 ClashX、Surge、V2Ray 等）开启，以便在浏览器中顺畅访问 GitHub、Stack Overflow 等境外网站。">
 <meta property="og:type" content="article">
 <meta property="og:title" content="macOS 终端环境搭建：为什么下载依赖时请先关闭 VPN&#x2F;代理">
 <meta property="og:url" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/05/17/vpn-proxy/index.html">
 <meta property="og:site_name" content="Nick Liu&#39;s Blog">
-<meta property="og:description" content="背景：一个看似矛盾的现象 在 macOS 上搭建开发环境（如安装 Homebrew、Node.js、Python、Git 仓库等）时，我们几乎离不开终端。与此同时，很多开发者习惯保持 VPN 或代理（如 ClashX、Surge、V2Ray 等）开启，以便在浏览器中顺畅访问 GitHub、Stack Overflow 等境外网站。 然而，正是在这种“双开”状态下，终端里的下载命令却频频报错：  b">
+<meta property="og:description" content="背景：一个看似矛盾的现象 在 macOS 上搭建开发环境（如安装 Homebrew、Node.js、Python、Git 仓库等）时，我们几乎离不开终端。与此同时，很多开发者习惯保持 VPN 或代理（如 ClashX、Surge、V2Ray 等）开启，以便在浏览器中顺畅访问 GitHub、Stack Overflow 等境外网站。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-05-17T13:47:09.000Z">
-<meta property="article:modified_time" content="2026-05-17T13:54:42.610Z">
+<meta property="article:modified_time" content="2026-06-07T08:33:45.759Z">
 <meta property="article:author" content="Nick Liu">
 <meta property="article:tag" content="环境搭建">
 <meta name="twitter:card" content="summary">
@@ -275,6 +275,7 @@
 仓库等）时，我们几乎离不开终端。与此同时，很多开发者习惯保持 VPN
 或代理（如 ClashX、Surge、V2Ray 等）开启，以便在浏览器中顺畅访问
 GitHub、Stack Overflow 等境外网站。</p>
+<span id="more"></span>
 <p>然而，正是在这种“双开”状态下，终端里的下载命令却频频报错：</p>
 <ul>
 <li><code>brew install</code> 卡在 <code>Updating Homebrew...</code>
@@ -287,7 +288,6 @@ GitHub、Stack Overflow 等境外网站。</p>
 SSL 错误</li>
 </ul>
 <p>一旦关闭代理，这些错误常常立刻消失。这背后的原因究竟是什么？终端环境下的流量与浏览器到底有什么不同？</p>
-<span id="more"></span>
 <h2
 id="为什么终端下载不应该盲目开启代理">为什么终端下载不应该盲目开启代理</h2>
 <h3 id="终端不会自动继承系统代理">1. 终端不会自动继承系统代理</h3>
