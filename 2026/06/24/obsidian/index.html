@@ -19,15 +19,15 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true,"pjax":false}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="从零搭建个人知识库：Obsidian + GitHub 实战指南 前言 随着工作年限的增长，我发现自己积累了大量技术知识和项目经验：  RF Calibration开发经验 Linux Performance优化学习 C++开发技巧 AI与Transformer学习笔记 英语面试与会议表达 项目问题分析与解决方案  这些内容散落在电脑文件夹、聊天记录、邮件和文档中，查找和复用都十分困难。 为了建立">
+    <meta name="description" content="从零搭建个人知识库：Obsidian + GitHub 实战指南">
 <meta property="og:type" content="article">
 <meta property="og:title" content="程序员的第二大脑：Mac 上使用 Obsidian + GitHub 搭建本地知识库实战">
 <meta property="og:url" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/06/24/obsidian/index.html">
 <meta property="og:site_name" content="Nick Liu&#39;s Blog">
-<meta property="og:description" content="从零搭建个人知识库：Obsidian + GitHub 实战指南 前言 随着工作年限的增长，我发现自己积累了大量技术知识和项目经验：  RF Calibration开发经验 Linux Performance优化学习 C++开发技巧 AI与Transformer学习笔记 英语面试与会议表达 项目问题分析与解决方案  这些内容散落在电脑文件夹、聊天记录、邮件和文档中，查找和复用都十分困难。 为了建立">
+<meta property="og:description" content="从零搭建个人知识库：Obsidian + GitHub 实战指南">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-24T14:26:57.000Z">
-<meta property="article:modified_time" content="2026-06-24T14:36:46.705Z">
+<meta property="article:modified_time" content="2026-06-24T14:48:08.402Z">
 <meta property="article:author" content="Nick Liu">
 <meta property="article:tag" content="Obsidian">
 <meta name="twitter:card" content="summary">
@@ -166,8 +166,8 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
-            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93obsidian-github-%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">从零搭建个人知识库：Obsidian
-+ GitHub 实战指南</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-obsidian"><span class="nav-number">2.</span> <span class="nav-text">为什么选择 Obsidian</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">3.</span> <span class="nav-text">环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.1.</span> <span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%87%86%E5%A4%87"><span class="nav-number">3.2.</span> <span class="nav-text">软件准备</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-obsidian-vault"><span class="nav-number">4.</span> <span class="nav-text">创建 Obsidian Vault</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9F%A5%E8%AF%86%E5%BA%93%E7%9B%AE%E5%BD%95"><span class="nav-number">4.1.</span> <span class="nav-text">创建知识库目录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%89%93%E5%BC%80-obsidian"><span class="nav-number">4.2.</span> <span class="nav-text">打开 Obsidian</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E8%A7%84%E5%88%92%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">规划目录结构</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-git-%E4%BB%93%E5%BA%93"><span class="nav-number">6.</span> <span class="nav-text">初始化 Git 仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-github-%E4%BB%93%E5%BA%93"><span class="nav-number">7.</span> <span class="nav-text">创建 GitHub 仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-ssh-%E7%99%BB%E5%BD%95"><span class="nav-number">8.</span> <span class="nav-text">配置 SSH 登录</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">9.</span> <span class="nav-text">关联远程仓库</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E4%BB%A3%E7%A0%81%E5%88%B0-github"><span class="nav-number">10.</span> <span class="nav-text">推送代码到 GitHub</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E5%AE%89%E8%A3%85%E7%9A%84%E6%8F%92%E4%BB%B6"><span class="nav-number">11.</span> <span class="nav-text">推荐安装的插件</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#calendar"><span class="nav-number">11.1.</span> <span class="nav-text">Calendar</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#dataview"><span class="nav-number">11.2.</span> <span class="nav-text">Dataview</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#excalidraw"><span class="nav-number">11.3.</span> <span class="nav-text">Excalidraw</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#obsidian-git"><span class="nav-number">11.4.</span> <span class="nav-text">Obsidian Git</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#obsidian-%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC"><span class="nav-number">12.</span> <span class="nav-text">Obsidian 的核心价值</span></a></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E7%9F%A5%E8%AF%86%E5%BA%93%E8%A7%84%E5%88%92"><span class="nav-number">13.</span> <span class="nav-text">我的知识库规划</span></a><ol class="nav-child"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C"><span class="nav-number">13.1.</span> <span class="nav-text">工作</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#ai"><span class="nav-number">13.2.</span> <span class="nav-text">AI</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B"><span class="nav-number">13.3.</span> <span class="nav-text">编程</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%8B%B1%E8%AF%AD"><span class="nav-number">13.4.</span> <span class="nav-text">英语</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93"><span class="nav-number">13.5.</span> <span class="nav-text">量化交易</span></a></li></ol></li><li class="nav-item nav-level-1"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">14.</span> <span class="nav-text">总结</span></a></li></ol></div>
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%BB%8E%E9%9B%B6%E6%90%AD%E5%BB%BA%E4%B8%AA%E4%BA%BA%E7%9F%A5%E8%AF%86%E5%BA%93obsidian-github-%E5%AE%9E%E6%88%98%E6%8C%87%E5%8D%97"><span class="nav-number">1.</span> <span class="nav-text">从零搭建个人知识库：Obsidian
++ GitHub 实战指南</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%89%8D%E8%A8%80"><span class="nav-number">1.1.</span> <span class="nav-text">前言</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E4%B8%BA%E4%BB%80%E4%B9%88%E9%80%89%E6%8B%A9-obsidian"><span class="nav-number">2.</span> <span class="nav-text">为什么选择 Obsidian</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E7%8E%AF%E5%A2%83%E5%87%86%E5%A4%87"><span class="nav-number">3.</span> <span class="nav-text">环境准备</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%93%8D%E4%BD%9C%E7%B3%BB%E7%BB%9F"><span class="nav-number">3.1.</span> <span class="nav-text">操作系统</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%BD%AF%E4%BB%B6%E5%87%86%E5%A4%87"><span class="nav-number">3.2.</span> <span class="nav-text">软件准备</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-obsidian-vault"><span class="nav-number">4.</span> <span class="nav-text">创建 Obsidian Vault</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA%E7%9F%A5%E8%AF%86%E5%BA%93%E7%9B%AE%E5%BD%95"><span class="nav-number">4.1.</span> <span class="nav-text">创建知识库目录</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E6%89%93%E5%BC%80-obsidian"><span class="nav-number">4.2.</span> <span class="nav-text">打开 Obsidian</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E8%A7%84%E5%88%92%E7%9B%AE%E5%BD%95%E7%BB%93%E6%9E%84"><span class="nav-number">5.</span> <span class="nav-text">规划目录结构</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9D%E5%A7%8B%E5%8C%96-git-%E4%BB%93%E5%BA%93"><span class="nav-number">6.</span> <span class="nav-text">初始化 Git 仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%88%9B%E5%BB%BA-github-%E4%BB%93%E5%BA%93"><span class="nav-number">7.</span> <span class="nav-text">创建 GitHub 仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E9%85%8D%E7%BD%AE-ssh-%E7%99%BB%E5%BD%95"><span class="nav-number">8.</span> <span class="nav-text">配置 SSH 登录</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E5%85%B3%E8%81%94%E8%BF%9C%E7%A8%8B%E4%BB%93%E5%BA%93"><span class="nav-number">9.</span> <span class="nav-text">关联远程仓库</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E9%80%81%E4%BB%A3%E7%A0%81%E5%88%B0-github"><span class="nav-number">10.</span> <span class="nav-text">推送代码到 GitHub</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%8E%A8%E8%8D%90%E5%AE%89%E8%A3%85%E7%9A%84%E6%8F%92%E4%BB%B6"><span class="nav-number">11.</span> <span class="nav-text">推荐安装的插件</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#calendar"><span class="nav-number">11.1.</span> <span class="nav-text">Calendar</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#dataview"><span class="nav-number">11.2.</span> <span class="nav-text">Dataview</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#excalidraw"><span class="nav-number">11.3.</span> <span class="nav-text">Excalidraw</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#obsidian-git"><span class="nav-number">11.4.</span> <span class="nav-text">Obsidian Git</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#obsidian-%E7%9A%84%E6%A0%B8%E5%BF%83%E4%BB%B7%E5%80%BC"><span class="nav-number">12.</span> <span class="nav-text">Obsidian 的核心价值</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%88%91%E7%9A%84%E7%9F%A5%E8%AF%86%E5%BA%93%E8%A7%84%E5%88%92"><span class="nav-number">13.</span> <span class="nav-text">我的知识库规划</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E5%B7%A5%E4%BD%9C"><span class="nav-number">13.1.</span> <span class="nav-text">工作</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#ai"><span class="nav-number">13.2.</span> <span class="nav-text">AI</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%BC%96%E7%A8%8B"><span class="nav-number">13.3.</span> <span class="nav-text">编程</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E8%8B%B1%E8%AF%AD"><span class="nav-number">13.4.</span> <span class="nav-text">英语</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E9%87%8F%E5%8C%96%E4%BA%A4%E6%98%93"><span class="nav-number">13.5.</span> <span class="nav-text">量化交易</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%BB%E7%BB%93"><span class="nav-number">14.</span> <span class="nav-text">总结</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -267,10 +267,11 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><h1
+    <div class="post-body" itemprop="articleBody"><h2
 id="从零搭建个人知识库obsidian-github-实战指南">从零搭建个人知识库：Obsidian
-+ GitHub 实战指南</h1>
-<h2 id="前言">前言</h2>
++ GitHub 实战指南</h2>
+<span id="more"></span>
+<h3 id="前言">前言</h3>
 <p>随着工作年限的增长，我发现自己积累了大量技术知识和项目经验：</p>
 <ul>
 <li>RF Calibration开发经验</li>
@@ -291,7 +292,7 @@ Brain）」。</p>
 </ul>
 <p>本文记录完整搭建过程。</p>
 <hr />
-<h1 id="为什么选择-obsidian">为什么选择 Obsidian</h1>
+<h2 id="为什么选择-obsidian">为什么选择 Obsidian</h2>
 <p>在选择知识管理工具之前，我对比了几种主流方案：</p>
 <table>
 <thead>
@@ -334,10 +335,10 @@ Brain）」。</p>
 <li>对程序员非常友好</li>
 </ol>
 <hr />
-<h1 id="环境准备">环境准备</h1>
-<h2 id="操作系统">操作系统</h2>
+<h2 id="环境准备">环境准备</h2>
+<h3 id="操作系统">操作系统</h3>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">macOS Intel</span><br></pre></td></tr></table></figure>
-<h2 id="软件准备">软件准备</h2>
+<h3 id="软件准备">软件准备</h3>
 <p>安装以下软件：</p>
 <ul>
 <li>Obsidian</li>
@@ -349,10 +350,10 @@ Brain）」。</p>
 <p>输出类似：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git version 2.51.0</span><br></pre></td></tr></table></figure>
 <hr />
-<h1 id="创建-obsidian-vault">创建 Obsidian Vault</h1>
-<h2 id="创建知识库目录">创建知识库目录</h2>
+<h2 id="创建-obsidian-vault">创建 Obsidian Vault</h2>
+<h3 id="创建知识库目录">创建知识库目录</h3>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">mkdir</span> ~/KnowledgeBase</span><br></pre></td></tr></table></figure>
-<h2 id="打开-obsidian">打开 Obsidian</h2>
+<h3 id="打开-obsidian">打开 Obsidian</h3>
 <p>选择：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Create New Vault</span><br></pre></td></tr></table></figure>
 <p>命名：</p>
@@ -361,12 +362,12 @@ Brain）」。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">~/KnowledgeBase</span><br></pre></td></tr></table></figure>
 <p>创建完成后即可开始记录笔记。</p>
 <hr />
-<h1 id="规划目录结构">规划目录结构</h1>
+<h2 id="规划目录结构">规划目录结构</h2>
 <p>根据个人职业发展方向设计目录：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br><span class="line">21</span><br><span class="line">22</span><br><span class="line">23</span><br><span class="line">24</span><br></pre></td><td class="code"><pre><span class="line">KnowledgeBase</span><br><span class="line">│</span><br><span class="line">├── 01_Work</span><br><span class="line">│   ├── Qualcomm</span><br><span class="line">│   ├── RF_Calibration</span><br><span class="line">│   └── Linux_Performance</span><br><span class="line">│</span><br><span class="line">├── 02_AI</span><br><span class="line">│   ├── Transformer</span><br><span class="line">│   ├── LLM</span><br><span class="line">│   └── Agent</span><br><span class="line">│</span><br><span class="line">├── 03_Programming</span><br><span class="line">│   ├── C++</span><br><span class="line">│   ├── Linux</span><br><span class="line">│   └── RTOS</span><br><span class="line">│</span><br><span class="line">├── 04_Quant</span><br><span class="line">│</span><br><span class="line">├── 05_English</span><br><span class="line">│</span><br><span class="line">├── 06_DailyNotes</span><br><span class="line">│</span><br><span class="line">└── Attachments</span><br></pre></td></tr></table></figure>
 <p>这样可以将工作、学习和成长记录统一管理。</p>
 <hr />
-<h1 id="初始化-git-仓库">初始化 Git 仓库</h1>
+<h2 id="初始化-git-仓库">初始化 Git 仓库</h2>
 <p>进入知识库目录：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line"><span class="built_in">cd</span> ~/KnowledgeBase</span><br></pre></td></tr></table></figure>
 <p>初始化：</p>
@@ -376,7 +377,7 @@ Brain）」。</p>
 <p>首次提交：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit -m <span class="string">&quot;Initial Commit&quot;</span></span><br></pre></td></tr></table></figure>
 <hr />
-<h1 id="创建-github-仓库">创建 GitHub 仓库</h1>
+<h2 id="创建-github-仓库">创建 GitHub 仓库</h2>
 <p>在 GitHub 创建仓库：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">KnowledgeBase</span><br></pre></td></tr></table></figure>
 <p>注意：</p>
@@ -388,7 +389,7 @@ Brain）」。</p>
 </ul>
 <p>避免后续推送产生冲突。</p>
 <hr />
-<h1 id="配置-ssh-登录">配置 SSH 登录</h1>
+<h2 id="配置-ssh-登录">配置 SSH 登录</h2>
 <p>GitHub 已经不再支持账号密码推送。</p>
 <p>推荐使用 SSH。</p>
 <p>生成密钥：</p>
@@ -404,7 +405,7 @@ Brain）」。</p>
 <p>成功输出：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hi username! You<span class="string">&#x27;ve successfully authenticated.</span></span><br></pre></td></tr></table></figure>
 <hr />
-<h1 id="关联远程仓库">关联远程仓库</h1>
+<h2 id="关联远程仓库">关联远程仓库</h2>
 <p>添加远程地址：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git remote add origin git@github.com:username/KnowledgeBase.git</span><br></pre></td></tr></table></figure>
 <p>检查配置：</p>
@@ -412,7 +413,7 @@ Brain）」。</p>
 <p>输出：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">origin git@github.com:username/KnowledgeBase.git</span><br></pre></td></tr></table></figure>
 <hr />
-<h1 id="推送代码到-github">推送代码到 GitHub</h1>
+<h2 id="推送代码到-github">推送代码到 GitHub</h2>
 <p>第一次推送：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git branch -M main</span><br><span class="line"></span><br><span class="line">git push -u origin main</span><br></pre></td></tr></table></figure>
 <p>如果出现：</p>
@@ -421,20 +422,20 @@ Brain）」。</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git push --set-upstream origin main</span><br></pre></td></tr></table></figure>
 <p>即可解决。</p>
 <hr />
-<h1 id="推荐安装的插件">推荐安装的插件</h1>
-<h2 id="calendar">Calendar</h2>
+<h2 id="推荐安装的插件">推荐安装的插件</h2>
+<h3 id="calendar">Calendar</h3>
 <p>用于每日笔记管理。</p>
 <p>效果：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">2026-06-24.md</span><br><span class="line">2026-06-25.md</span><br><span class="line">2026-06-26.md</span><br></pre></td></tr></table></figure>
 <p>每天自动生成工作与学习记录。</p>
 <hr />
-<h2 id="dataview">Dataview</h2>
+<h3 id="dataview">Dataview</h3>
 <p>动态查询知识库内容。</p>
 <p>例如：</p>
 <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">TABLE</span><br><span class="line">file.mtime as 更新时间</span><br><span class="line">FROM &quot;02_AI&quot;</span><br><span class="line">SORT file.mtime DESC</span><br><span class="line">LIMIT 10</span><br></pre></td></tr></table></figure>
 <p>自动统计最近更新内容。</p>
 <hr />
-<h2 id="excalidraw">Excalidraw</h2>
+<h3 id="excalidraw">Excalidraw</h3>
 <p>绘制：</p>
 <ul>
 <li>架构图</li>
@@ -444,12 +445,12 @@ Brain）」。</p>
 </ul>
 <p>是技术人员必备插件之一。</p>
 <hr />
-<h2 id="obsidian-git">Obsidian Git</h2>
+<h3 id="obsidian-git">Obsidian Git</h3>
 <p>自动执行：</p>
 <figure class="highlight bash"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git add .</span><br><span class="line">git commit</span><br><span class="line">git push</span><br></pre></td></tr></table></figure>
 <p>实现知识库自动备份。</p>
 <hr />
-<h1 id="obsidian-的核心价值">Obsidian 的核心价值</h1>
+<h2 id="obsidian-的核心价值">Obsidian 的核心价值</h2>
 <p>普通文件夹：</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Transformer.docx</span><br><span class="line">Attention.docx</span><br><span class="line">LLM.docx</span><br></pre></td></tr></table></figure>
 <p>彼此独立。</p>
@@ -459,40 +460,40 @@ Brain）」。</p>
 <figure class="highlight text"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">LLM</span><br><span class="line"> │</span><br><span class="line">Transformer</span><br><span class="line"> │</span><br><span class="line">Attention</span><br></pre></td></tr></table></figure>
 <p>随着笔记增加，会逐渐形成自己的知识图谱。</p>
 <hr />
-<h1 id="我的知识库规划">我的知识库规划</h1>
+<h2 id="我的知识库规划">我的知识库规划</h2>
 <p>未来计划持续沉淀以下内容：</p>
-<h2 id="工作">工作</h2>
+<h3 id="工作">工作</h3>
 <ul>
 <li>RF Calibration</li>
 <li>Modem性能优化</li>
 <li>Linux Performance</li>
 </ul>
-<h2 id="ai">AI</h2>
+<h3 id="ai">AI</h3>
 <ul>
 <li>Transformer</li>
 <li>LLM</li>
 <li>Agent</li>
 </ul>
-<h2 id="编程">编程</h2>
+<h3 id="编程">编程</h3>
 <ul>
 <li>C++</li>
 <li>Linux</li>
 <li>RTOS</li>
 </ul>
-<h2 id="英语">英语</h2>
+<h3 id="英语">英语</h3>
 <ul>
 <li>面试表达</li>
 <li>技术会议表达</li>
 <li>常用商务邮件</li>
 </ul>
-<h2 id="量化交易">量化交易</h2>
+<h3 id="量化交易">量化交易</h3>
 <ul>
 <li>策略研究</li>
 <li>回测记录</li>
 <li>实盘复盘</li>
 </ul>
 <hr />
-<h1 id="总结">总结</h1>
+<h2 id="总结">总结</h2>
 <p>知识的价值不在于收藏，而在于不断沉淀与复用。</p>
 <p>Obsidian + GitHub 的组合：</p>
 <ul>
