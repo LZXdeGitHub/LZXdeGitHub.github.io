@@ -19,27 +19,27 @@
 
 <script class="next-config" data-name="main" type="application/json">{"hostname":"github.com","root":"/","images":"/images","scheme":"Muse","darkmode":false,"version":"8.27.0","exturl":false,"sidebar":{"position":"left","width_expanded":320,"width_dual_column":240,"display":"post","padding":18,"offset":12},"hljswrap":true,"codeblock":{"theme":{"light":"default","dark":"stackoverflow-dark"},"prism":{"light":"prism","dark":"prism-dark"},"copy_button":{"enable":false,"style":null},"fold":{"enable":false,"height":500},"language":false},"bookmark":{"enable":false,"color":"#222","save":"auto"},"mediumzoom":false,"lazyload":false,"pangu":false,"comments":{"style":"tabs","active":null,"storage":true,"lazyload":false,"nav":null},"stickytabs":false,"motion":{"enable":true,"async":false,"duration":200,"transition":{"menu_item":"fadeInDown","post_block":"fadeIn","post_header":"fadeInDown","post_body":"fadeInDown","coll_header":"fadeInLeft","sidebar":"fadeInUp"}},"i18n":{"placeholder":"搜索...","empty":"没有找到任何搜索结果：${query}","hits_time":"找到 ${hits} 个搜索结果（用时 ${time} 毫秒）","hits":"找到 ${hits} 个搜索结果"},"path":"/search.xml","localsearch":{"enable":true,"top_n_per_article":1,"unescape":true,"preload":true,"pjax":false}}</script><script src="/js/config.js" defer></script>
 
-    <meta name="description" content="cd 到某个目录，然后在command窗口git clone https:&#x2F;&#x2F;github.com&#x2F;google&#x2F;googletest.git 下载gtest源码 Reference ​ https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1L7411L7aZ?spm_id_from&#x3D;333.337.search-card.all.click">
+    <meta name="description" content="按需求分两大类方案：接云端 AI（Claude 等） 和 接本地开源模型（隐私优先），可以只选一种，也可以两套插件同时装、按需切换。">
 <meta property="og:type" content="article">
-<meta property="og:title" content="macOS+gtest+vscode环境搭建">
-<meta property="og:url" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2022/03/20/20220320/index.html">
+<meta property="og:title" content="Obsidian 接入 AI 完整指南">
+<meta property="og:url" content="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/06/25/obsidian-ai/index.html">
 <meta property="og:site_name" content="Nick Liu&#39;s Blog">
-<meta property="og:description" content="cd 到某个目录，然后在command窗口git clone https:&#x2F;&#x2F;github.com&#x2F;google&#x2F;googletest.git 下载gtest源码 Reference ​ https:&#x2F;&#x2F;www.bilibili.com&#x2F;video&#x2F;BV1L7411L7aZ?spm_id_from&#x3D;333.337.search-card.all.click">
+<meta property="og:description" content="按需求分两大类方案：接云端 AI（Claude 等） 和 接本地开源模型（隐私优先），可以只选一种，也可以两套插件同时装、按需切换。">
 <meta property="og:locale" content="zh_CN">
-<meta property="article:published_time" content="2022-03-20T09:26:31.000Z">
-<meta property="article:modified_time" content="2022-04-24T13:09:52.881Z">
+<meta property="article:published_time" content="2026-06-25T13:53:58.000Z">
+<meta property="article:modified_time" content="2026-06-25T14:01:00.861Z">
 <meta property="article:author" content="Nick Liu">
-<meta property="article:tag" content="gtest vscode">
+<meta property="article:tag" content="Obsidian AI">
 <meta name="twitter:card" content="summary">
 
 
-<link rel="canonical" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2022/03/20/20220320/">
+<link rel="canonical" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/06/25/obsidian-ai/">
 
 
-<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2022/03/20/20220320/","path":"2022/03/20/20220320/","title":"macOS+gtest+vscode环境搭建"}</script>
+<script class="next-config" data-name="page" type="application/json">{"sidebar":"","isHome":false,"isPost":true,"lang":"zh-CN","comments":true,"permalink":"https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/06/25/obsidian-ai/","path":"2026/06/25/obsidian-ai/","title":"Obsidian 接入 AI 完整指南"}</script>
 
 <script class="next-config" data-name="calendar" type="application/json">""</script>
-<title>macOS+gtest+vscode环境搭建 | Nick Liu's Blog</title>
+<title>Obsidian 接入 AI 完整指南 | Nick Liu's Blog</title>
   
 
 
@@ -153,7 +153,7 @@
   
   <aside class="sidebar">
 
-    <div class="sidebar-inner sidebar-overview-active">
+    <div class="sidebar-inner sidebar-nav-active sidebar-toc-active">
       <ul class="sidebar-nav">
         <li class="sidebar-nav-toc">
           文章目录
@@ -166,6 +166,12 @@
       <div class="sidebar-panel-container">
         <!--noindex-->
         <div class="post-toc-wrap sidebar-panel">
+            <div class="post-toc animated"><ol class="nav"><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88-a%E6%8E%A5%E4%BA%91%E7%AB%AF-ai-claudian-%E6%8F%92%E4%BB%B6%E6%9C%80%E5%BC%BA%E6%B7%B1%E5%BA%A6%E6%93%8D%E4%BD%9C%E7%AC%94%E8%AE%B0%E5%BA%93"><span class="nav-number">1.</span> <span class="nav-text">方案 A：接云端
+AI —— Claudian 插件（最强，深度操作笔记库）</span></a></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%96%B9%E6%A1%88-b%E6%8E%A5%E6%9C%AC%E5%9C%B0%E5%BC%80%E6%BA%90%E6%A8%A1%E5%9E%8B-ollama-obsidian-copilot%E9%9A%90%E7%A7%81%E4%BC%98%E5%85%88%E5%AE%8C%E5%85%A8%E7%A6%BB%E7%BA%BF"><span class="nav-number">2.</span> <span class="nav-text">方案
+B：接本地开源模型 —— Ollama + Obsidian
+Copilot（隐私优先，完全离线）</span></a><ol class="nav-child"><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%80%E6%AD%A5%E8%A3%85-ollama-%E5%B9%B6%E6%8B%89%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.1.</span> <span class="nav-text">第一步：装 Ollama 并拉模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%8C%E6%AD%A5%E5%BC%80%E6%94%BE-ollama-%E7%BB%99-obsidian-%E8%AE%BF%E9%97%AE"><span class="nav-number">2.2.</span> <span class="nav-text">第二步：开放 Ollama 给
+Obsidian 访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%B8%89%E6%AD%A5%E8%A3%85-obsidian-copilot-%E6%8F%92%E4%BB%B6"><span class="nav-number">2.3.</span> <span class="nav-text">第三步：装 Obsidian Copilot
+插件</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E5%9B%9B%E6%AD%A5%E6%8E%A5%E5%85%A5%E6%9C%AC%E5%9C%B0%E6%A8%A1%E5%9E%8B"><span class="nav-number">2.4.</span> <span class="nav-text">第四步：接入本地模型</span></a></li><li class="nav-item nav-level-3"><a class="nav-link" href="#%E7%AC%AC%E4%BA%94%E6%AD%A5%E4%BD%BF%E7%94%A8"><span class="nav-number">2.5.</span> <span class="nav-text">第五步：使用</span></a></li></ol></li><li class="nav-item nav-level-2"><a class="nav-link" href="#%E6%80%8E%E4%B9%88%E9%80%89"><span class="nav-number">3.</span> <span class="nav-text">怎么选</span></a></li></ol></div>
         </div>
         <!--/noindex-->
 
@@ -215,7 +221,7 @@
   
 
   <article itemscope itemtype="http://schema.org/Article" class="post-content" lang="zh-CN">
-    <link itemprop="mainEntityOfPage" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2022/03/20/20220320/">
+    <link itemprop="mainEntityOfPage" href="https://github.com/LZXdeGitHub/LZXdeGitHub.github.io/2026/06/25/obsidian-ai/">
 
     <span hidden itemprop="author" itemscope itemtype="http://schema.org/Person">
       <meta itemprop="image" content="/images/avatar.gif">
@@ -228,12 +234,12 @@
     </span>
 
     <span hidden itemprop="post" itemscope itemtype="http://schema.org/CreativeWork">
-      <meta itemprop="name" content="macOS+gtest+vscode环境搭建 | Nick Liu's Blog">
+      <meta itemprop="name" content="Obsidian 接入 AI 完整指南 | Nick Liu's Blog">
       <meta itemprop="description" content="">
     </span>
       <header class="post-header">
         <h1 class="post-title" itemprop="name headline">
-          macOS+gtest+vscode环境搭建
+          Obsidian 接入 AI 完整指南
         </h1>
 
         <div class="post-meta-container">
@@ -244,7 +250,7 @@
       </span>
       <span class="post-meta-item-text">发表于</span>
 
-      <time title="创建时间：2022-03-20 17:26:31" itemprop="dateCreated datePublished" datetime="2022-03-20T17:26:31+08:00">2022-03-20</time>
+      <time title="创建时间：2026-06-25 21:53:58" itemprop="dateCreated datePublished" datetime="2026-06-25T21:53:58+08:00">2026-06-25</time>
     </span>
 
   
@@ -253,7 +259,7 @@
         <i class="far fa-tags"></i>
       </span>
       <span class="post-meta-item-text">标签：</span>
-        <a href="/tags/gtest-vscode/" rel="tag"># gtest vscode</a>
+        <a href="/tags/Obsidian-AI/" rel="tag"># Obsidian AI</a>
     </span>
 
   
@@ -265,11 +271,80 @@
     
     
     
-    <div class="post-body" itemprop="articleBody"><p>cd 到某个目录，然后在command窗口git clone
-https://github.com/google/googletest.git 下载gtest源码</p>
-<p>Reference</p>
-<p>​
-https://www.bilibili.com/video/BV1L7411L7aZ?spm_id_from=333.337.search-card.all.click</p>
+    <div class="post-body" itemprop="articleBody"><p>按需求分两大类方案：<strong>接云端 AI（Claude 等）</strong> 和
+<strong>接本地开源模型（隐私优先）</strong>，可以只选一种，也可以两套插件同时装、按需切换。</p>
+<span id="more"></span>
+<hr />
+<h2 id="方案-a接云端-ai-claudian-插件最强深度操作笔记库">方案 A：接云端
+AI —— Claudian 插件（最强，深度操作笔记库）</h2>
+<p>把 <strong>Claude Code</strong> 直接嵌入 Obsidian，AI 能读写你 vault
+里的笔记文件，功能最完整。</p>
+<p><strong>安装步骤：</strong> 1. 装 Node.js，然后装 Claude Code CLI：
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure> 2. Obsidian 设置 → 第三方插件 → 关闭安全模式 →
+搜索安装「<strong>Claudian</strong>」并启用 3.
+打开任意笔记，点侧边栏机器人图标（或 Cmd/Ctrl+P 搜索 “Claudian: Open
+Chat”） 4. 首次发消息会弹出登录链接，用 Claude
+账号/订阅授权即可，无需单独配 API Key</p>
+<p><strong>特点：</strong> - vault 会变成 agent
+的工作目录，文件读写、搜索、命令执行、多步骤工作流开箱即用 -
+支持选中文本快捷键直接行内编辑，带逐字 diff 预览 - 支持斜杠命令调用
+Skills，也支持 @ 提及 vault 文件、子代理或 MCP 服务器 - 不想用官方
+API，也能在插件里改环境变量接入兼容 Anthropic
+格式的国产模型（GLM、Kimi、MiniMax 等）</p>
+<p><strong>轻量替代：</strong> 如果只想要”聊天/续写/润色”，不需要 AI
+深度操作文件，可以用 <strong>Copilot for Obsidian</strong> 插件配置云端
+API Key（支持 Claude、GPT、智谱等），上手更快。</p>
+<hr />
+<h2
+id="方案-b接本地开源模型-ollama-obsidian-copilot隐私优先完全离线">方案
+B：接本地开源模型 —— Ollama + Obsidian
+Copilot（隐私优先，完全离线）</h2>
+<p>全程不联网、数据不出本机，代价是模型能力比云端弱。</p>
+<h3 id="第一步装-ollama-并拉模型">第一步：装 Ollama 并拉模型</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">ollama pull qwen2.5:7b        # 对话模型</span><br><span class="line">ollama pull nomic-embed-text  # 嵌入模型，做笔记库语义搜索</span><br></pre></td></tr></table></figure>
+<p>经验法则：显存（GB）÷ 2 ≈ 能轻松跑的模型参数量（B），8GB 显存建议选
+4B 左右的模型。</p>
+<h3 id="第二步开放-ollama-给-obsidian-访问">第二步：开放 Ollama 给
+Obsidian 访问</h3>
+<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">OLLAMA_ORIGINS=app://obsidian.md* ollama serve</span><br></pre></td></tr></table></figure>
+<p>（Windows 改系统变量后重启 Ollama 服务）</p>
+<h3 id="第三步装-obsidian-copilot-插件">第三步：装 Obsidian Copilot
+插件</h3>
+<p>设置 → 第三方插件 → 搜索安装「<strong>Copilot</strong>」（作者 Logan
+Yang）。</p>
+<h3 id="第四步接入本地模型">第四步：接入本地模型</h3>
+<p>Copilot 设置 → Models → Chat Models 点 <strong>Add Custom
+Model</strong>，Provider 选 <strong>Ollama</strong>，填模型名，勾选
+CORS，Verify 通过即可；Embedding Model 同理加
+<code>nomic-embed-text</code>。回到 Basic
+设置把默认模型都切到本地的。</p>
+<h3 id="第五步使用">第五步：使用</h3>
+<p>聊天侧边栏三种模式：<strong>Chat</strong>（普通对话）、<strong>Long
+Note QA</strong>（针对当前笔记问答）、<strong>Vault
+QA</strong>（全库检索问答，需先跑一次
+<code>Copilot: Force re-index vault for QA</code>
+建索引）。也可选中文字快捷键直接扩写/总结/翻译。</p>
+<p><strong>其他本地方案：</strong> | 插件 | 特点 | |—|—| |
+<strong>Ollama 插件</strong>（轻量） | 连接本地 Ollama
+服务器，可预配置常用提示词，专注总结/改写 | | <strong>Smart Connections
+/ Smart Second Brain</strong> |
+适合只想语义检索、不想被插件索引全部笔记内容的人 | | <strong>LM Studio
+代替 Ollama</strong> | 喜欢图形界面管理模型的话，LM Studio
+提供直观图形界面，配置后能与 Obsidian Copilot 无缝交互 |</p>
+<hr />
+<h2 id="怎么选">怎么选</h2>
+<ul>
+<li><strong>想要 AI
+深度操作笔记库</strong>（批量整理、跨文件关联、自动化工作流）→ Claudian
++ Claude</li>
+<li><strong>重视隐私、不想数据出本机、可以接受模型能力打折</strong> →
+Ollama + Copilot 插件本地模型</li>
+<li><strong>两者都要</strong>：Copilot 插件本身支持同时配置多个
+provider，云端/本地模型随时切换，不用装两套</li>
+<li>本地 LLM
+的最大优势是数据隐私和安全——所有运算都在自己电脑完成，不必担心数据被传给服务提供商，但能力天然不如云端大模型，复杂任务建议还是切回
+Claude 等云端模型</li>
+</ul>
 
     </div>
 
@@ -279,21 +354,18 @@ https://www.bilibili.com/video/BV1L7411L7aZ?spm_id_from=333.337.search-card.all.
 
     <footer class="post-footer">
           <div class="post-tags">
-              <a href="/tags/gtest-vscode/" rel="tag"># gtest vscode</a>
+              <a href="/tags/Obsidian-AI/" rel="tag"># Obsidian AI</a>
           </div>
 
         
 
           <div class="post-nav">
             <div class="post-nav-item">
-                <a href="/2021/02/17/mac-finder-file/" rel="prev" title="硬盘文件在Mac上操作不了的问题">
-                  <i class="fa fa-angle-left"></i> 硬盘文件在Mac上操作不了的问题
+                <a href="/2026/06/24/obsidian/" rel="prev" title="程序员的第二大脑：Obsidian + GitHub 搭建本地知识库实战">
+                  <i class="fa fa-angle-left"></i> 程序员的第二大脑：Obsidian + GitHub 搭建本地知识库实战
                 </a>
             </div>
             <div class="post-nav-item">
-                <a href="/2022/03/20/20220320-1/" rel="next" title="工具内存优化(C++)">
-                  工具内存优化(C++) <i class="fa fa-angle-right"></i>
-                </a>
             </div>
           </div>
     </footer>
