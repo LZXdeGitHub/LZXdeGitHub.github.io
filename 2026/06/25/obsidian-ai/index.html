@@ -27,7 +27,7 @@
 <meta property="og:description" content="按需求分两大类方案：接云端 AI（Claude 等） 和 接本地开源模型（隐私优先），可以只选一种，也可以两套插件同时装、按需切换。">
 <meta property="og:locale" content="zh_CN">
 <meta property="article:published_time" content="2026-06-25T13:53:58.000Z">
-<meta property="article:modified_time" content="2026-06-25T14:01:00.861Z">
+<meta property="article:modified_time" content="2026-06-28T07:40:20.017Z">
 <meta property="article:author" content="Nick Liu">
 <meta property="article:tag" content="Obsidian AI">
 <meta name="twitter:card" content="summary">
@@ -279,18 +279,26 @@ Obsidian 访问</span></a></li><li class="nav-item nav-level-3"><a class="nav-li
 AI —— Claudian 插件（最强，深度操作笔记库）</h2>
 <p>把 <strong>Claude Code</strong> 直接嵌入 Obsidian，AI 能读写你 vault
 里的笔记文件，功能最完整。</p>
-<p><strong>安装步骤：</strong> 1. 装 Node.js，然后装 Claude Code CLI：
-<figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure> 2. Obsidian 设置 → 第三方插件 → 关闭安全模式 →
-搜索安装「<strong>Claudian</strong>」并启用 3.
-打开任意笔记，点侧边栏机器人图标（或 Cmd/Ctrl+P 搜索 “Claudian: Open
-Chat”） 4. 首次发消息会弹出登录链接，用 Claude
-账号/订阅授权即可，无需单独配 API Key</p>
-<p><strong>特点：</strong> - vault 会变成 agent
-的工作目录，文件读写、搜索、命令执行、多步骤工作流开箱即用 -
-支持选中文本快捷键直接行内编辑，带逐字 diff 预览 - 支持斜杠命令调用
-Skills，也支持 @ 提及 vault 文件、子代理或 MCP 服务器 - 不想用官方
-API，也能在插件里改环境变量接入兼容 Anthropic
-格式的国产模型（GLM、Kimi、MiniMax 等）</p>
+<p><strong>安装步骤：</strong></p>
+<ol type="1">
+<li>装 Node.js，然后装 Claude Code CLI： <figure class="highlight plaintext"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">npm install -g @anthropic-ai/claude-code</span><br></pre></td></tr></table></figure></li>
+<li>Obsidian 设置 → 第三方插件 → 关闭安全模式 →
+搜索安装「<strong>Claudian</strong>」并启用</li>
+<li>打开任意笔记，点侧边栏机器人图标（或 Cmd/Ctrl+P 搜索 “Claudian: Open
+Chat”）</li>
+<li>首次发消息会弹出登录链接，用 Claude 账号/订阅授权即可，无需单独配
+API Key</li>
+</ol>
+<p><strong>特点：</strong></p>
+<ul>
+<li>vault 会变成 agent
+的工作目录，文件读写、搜索、命令执行、多步骤工作流开箱即用</li>
+<li>支持选中文本快捷键直接行内编辑，带逐字 diff 预览</li>
+<li>支持斜杠命令调用 Skills，也支持 @ 提及 vault 文件、子代理或 MCP
+服务器</li>
+<li>不想用官方 API，也能在插件里改环境变量接入兼容 Anthropic
+格式的国产模型（GLM、Kimi、MiniMax 等）</li>
+</ul>
 <p><strong>轻量替代：</strong> 如果只想要”聊天/续写/润色”，不需要 AI
 深度操作文件，可以用 <strong>Copilot for Obsidian</strong> 插件配置云端
 API Key（支持 Claude、GPT、智谱等），上手更快。</p>
@@ -324,13 +332,34 @@ Note QA</strong>（针对当前笔记问答）、<strong>Vault
 QA</strong>（全库检索问答，需先跑一次
 <code>Copilot: Force re-index vault for QA</code>
 建索引）。也可选中文字快捷键直接扩写/总结/翻译。</p>
-<p><strong>其他本地方案：</strong> | 插件 | 特点 | |—|—| |
-<strong>Ollama 插件</strong>（轻量） | 连接本地 Ollama
-服务器，可预配置常用提示词，专注总结/改写 | | <strong>Smart Connections
-/ Smart Second Brain</strong> |
-适合只想语义检索、不想被插件索引全部笔记内容的人 | | <strong>LM Studio
-代替 Ollama</strong> | 喜欢图形界面管理模型的话，LM Studio
-提供直观图形界面，配置后能与 Obsidian Copilot 无缝交互 |</p>
+<p><strong>其他本地方案：</strong></p>
+<table>
+<colgroup>
+<col style="width: 50%" />
+<col style="width: 50%" />
+</colgroup>
+<thead>
+<tr>
+<th>插件</th>
+<th>特点</th>
+</tr>
+</thead>
+<tbody>
+<tr>
+<td><strong>Ollama 插件</strong>（轻量）</td>
+<td>连接本地 Ollama 服务器，可预配置常用提示词，专注总结/改写</td>
+</tr>
+<tr>
+<td><strong>Smart Connections / Smart Second Brain</strong></td>
+<td>适合只想语义检索、不想被插件索引全部笔记内容的人</td>
+</tr>
+<tr>
+<td><strong>LM Studio 代替 Ollama</strong></td>
+<td>喜欢图形界面管理模型的话，LM Studio 提供直观图形界面，配置后能与
+Obsidian Copilot 无缝交互</td>
+</tr>
+</tbody>
+</table>
 <hr />
 <h2 id="怎么选">怎么选</h2>
 <ul>
